@@ -1,7 +1,6 @@
 package server;
 
 import clases.Usuario;
-import interfaces.RMIAlmacen;
 import interfaces.RMIVentas;
 
 import java.rmi.RemoteException;

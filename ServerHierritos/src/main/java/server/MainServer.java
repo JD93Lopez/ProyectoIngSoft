@@ -12,8 +12,9 @@ public class MainServer {
                 (String) properties.get("PORT"),
                 (String) properties.get("SERVICENAME")
             );*/
-            Server server = new Server("localhost","5000","servicioAlmacen");
-            server.deployServiceAlmacen();
+            Server server = new Server("localhost");
+            server.deployServiceAlmacen("5000","servicioAlmacen");
+            server.deployServiceVentas("5001","servicioVentas");
             System.out.println("servicioAlmacen on");
         } catch (Exception e) {
             e.printStackTrace();

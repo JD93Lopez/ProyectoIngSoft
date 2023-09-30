@@ -6,12 +6,11 @@ import interfaces.RMIAlmacen;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 
 public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     private boolean sesionIniciada = false;
-    private Usuario user=new Usuario(Usuario.TipoUsuario.BODEGUERO,"paola","1234");
+    private Usuario user=new Usuario(Usuario.TipoUsuario.BODEGUERO,"paola","1234");//TEMP
 
     public ServiceAlmacen() throws RemoteException {
     }
