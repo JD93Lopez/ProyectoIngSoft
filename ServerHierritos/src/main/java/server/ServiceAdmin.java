@@ -14,7 +14,7 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException {
-        if(user.getNombreUsuario().equals(usuario)&&user.getContrasena().equals(contrasena)&&user.getTipoUsuario().equals(Usuario.TipoUsuario.BODEGUERO)){
+        if(user.getNombreUsuario().equals(usuario)&&user.getContrasena().equals(contrasena)&&user.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE)){
             return true;
         }
         return false;

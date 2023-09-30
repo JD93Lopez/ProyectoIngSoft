@@ -14,7 +14,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
 
     @Override
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException {
-        if(user.getNombreUsuario().equals(usuario)&&user.getContrasena().equals(contrasena)&&user.getTipoUsuario().equals(Usuario.TipoUsuario.BODEGUERO)){
+        if(user.getNombreUsuario().equals(usuario)&&user.getContrasena().equals(contrasena)&&user.getTipoUsuario().equals(Usuario.TipoUsuario.VENDEDOR)){
             return true;
         }
         return false;
