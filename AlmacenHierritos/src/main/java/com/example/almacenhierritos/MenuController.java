@@ -12,14 +12,13 @@ import java.io.IOException;
 public class MenuController {
 
     static Scene scene;
-    static Stage stage;
     @FXML
     protected void clickNuevaOrden() {
-        stage.setScene(NuevaOrdenController.scene);
+        Main.mainStage.setScene(NuevaOrdenController.scene);
     }
     @FXML
     protected void clickBuscarProveedor() {
-        stage.setScene(BuscarProveedorController.scene);
+        Main.mainStage.setScene(BuscarProveedorController.scene);
     }
     @FXML
     protected void clickAccederInventario() {

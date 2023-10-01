@@ -44,7 +44,7 @@
       </HBox>
       <VBox alignment="CENTER" maxWidth="911.0" prefHeight="482.0" prefWidth="900.0" style="-fx-spacing: 20;">
          <children>
-            <HBox alignment="CENTER" prefHeight="433.0" prefWidth="844.0" style="-fx-background-color: E0E7FE; -fx-spacing: 20; -fx-pref-height: fill; -fx-max-width: 844;" />
+            <HBox id="hBoxTarjetas" alignment="CENTER" prefHeight="433.0" prefWidth="844.0" style="-fx-background-color: E0E7FE; -fx-spacing: 20; -fx-pref-height: fill; -fx-max-width: 844;" />
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 15;">
                <children>
                   <Button fx:id="botonCrear" mnemonicParsing="false" onAction="#clickBotonCrear" prefHeight="37.0" prefWidth="130.0" style="-fx-background-color: rgba(132, 153, 226, 1);" text="Crear" textFill="#f7f7f7">

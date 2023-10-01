@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 public class NuevaOrdenController {
 
     static Scene scene;
-    static Stage stage;
     @FXML
     protected void clickBotonBuscar() {
 
@@ -18,7 +17,7 @@ public class NuevaOrdenController {
     }
     @FXML
     protected void clickBotonCancelar() {
-        stage.setScene(MenuController.scene);
+        Main.mainStage.setScene(MenuController.scene);
 
     }
 

@@ -19,7 +19,6 @@ import java.rmi.RemoteException;
 public class InicioDeSesionController {
 
     static Scene scene;
-    static Stage stage;
     @FXML
     private VBox vbox;
     @FXML
@@ -37,7 +36,7 @@ public class InicioDeSesionController {
                 labelError.setText("Ups! Tenemos problemas de conexión.");
                 labelError.setStyle("-fx-background-color: #ff6666;");
             }else if(Client.client.iniciarSesion(textfieldUsuario.getText(),textfieldContrasena.getText())){
-                stage.setScene(MenuController.scene);
+                Main.mainStage.setScene(MenuController.scene);
             }else{
                 labelError.setText("Usuario o contraseña incorrectos.");
                 labelError.setStyle("-fx-background-color: #ff6666;");
