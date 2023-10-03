@@ -2,12 +2,13 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBoxTarjeta" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.5" prefWidth="254.0" style="-fx-padding: 10; -fx-spacing: 5;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.almacenhierritos.TarjetaController">
+<VBox fx:id="vBoxTarjeta" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.5" prefWidth="254.0" style="-fx-padding: 10; -fx-spacing: 5; -fx-background-color: white; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.almacenhierritos.TarjetaController">
    <children>
       <Label fx:id="labelNombreProducto" alignment="CENTER" prefHeight="18.0" prefWidth="305.0" style="-fx-background-color: #0e103c;" text="Nombre del producto" textFill="WHITE">
          <font>
@@ -50,8 +51,14 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="72.0" style="-fx-padding: 5; -fx-spacing: 5;">
                <children>
-                  <ImageView fx:id="imageOk" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imageWarning" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageOk" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/okey.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="imageWarning" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/advertencia.png" />
+                     </image></ImageView>
                </children></VBox>
          </children>
       </HBox>
