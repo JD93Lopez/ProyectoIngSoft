@@ -1,4 +1,4 @@
-package Database;
+package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class Consulta {
 
         try {
 
-/*            String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
+/*          String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
             String usuarioDB = "root";
             String contrasenaDB = "root";
 
@@ -102,11 +102,11 @@ public class Consulta {
         }
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Consulta consulta = new Consulta();
         consulta.nuevoUsuario("4","nombres","telefono","tipoDocumento","numDocumento",
                 "direccion","correo","tipoUsuario","nombreUsuario","contrasena");
-    }
+    }*/
 
 /*    public static void main(String[] args) {
         Consulta consulta = new Consulta();
