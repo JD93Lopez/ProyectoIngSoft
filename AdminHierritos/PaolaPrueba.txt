@@ -11,4 +11,4 @@ Hola, prueba incial del git, 1 de Octubre
  Creo una rama nueva para tener que solicitar de nuevo el permiso
 
 
-Prueba con Majo
+Prueba con Majo ._.
