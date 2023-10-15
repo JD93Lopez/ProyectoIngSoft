@@ -17,6 +17,9 @@ public class NuevaOrdenController {
     ComboBox comboboxFormaPago;
 
     @FXML
+    ComboBox comboboxNombreProducto;
+
+    @FXML
     protected void clickBotonBuscar() {
 
     }
@@ -56,7 +59,7 @@ public class NuevaOrdenController {
             items.add("Producto 2");
             items.add("Producto 3");
 
-            comboboxFormaPago.setItems(items);
+            comboboxNombreProducto.setItems(items);
         }catch (Exception e){
             e.printStackTrace();
         }
