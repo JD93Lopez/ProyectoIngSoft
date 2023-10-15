@@ -18,8 +18,10 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException {
         Consulta consulta = new Consulta();
         String contrasenaDB = consulta.obtenerContraseñaPorNombre(usuario);
-        if(contrasenaDB.equals(contrasena)){
-            return true;
+        if(contrasenaDB!=null&&contrasena!=null){
+            if(contrasenaDB.equals(contrasena)){
+                return true;
+            }
         }
         return false;
     }

@@ -34,24 +34,27 @@ public class Consulta {
         ResultSet resultSet = null;
 
         try {
+            if(nombreDeUsuario!=null) {
+                /*String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
+                String usuarioDB = "root";
+                String contrasenaDB = "root";
 
-/*            String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
-            String usuarioDB = "root";
-            String contrasenaDB = "root";
+                connection = DriverManager.getConnection(url, usuarioDB, contrasenaDB);*/
+                String sql = "SELECT contrasena FROM usuarios WHERE nombres = ?";
 
-            connection = DriverManager.getConnection(url, usuarioDB, contrasenaDB);*/
-            String sql = "SELECT contrasena FROM usuarios WHERE nombres = ?";
+                conectar();
 
-            conectar();
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, nombreDeUsuario);
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    contrasena = resultSet.getString("contrasena");
+                }
 
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, nombreDeUsuario);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                contrasena = resultSet.getString("contrasena");
+                desconectar();
+            }else{
+                return "";
             }
-
-            desconectar();
         } catch (SQLException e) {
             e.printStackTrace();
 

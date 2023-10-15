@@ -32,14 +32,25 @@ public class InicioDeSesionController {
     @FXML
     protected void clickBotonInicio() {
         try {
-            if(!Client.client.isConnected()){
-                labelError.setText("Ups! Tenemos problemas de conexión.");
-                labelError.setStyle("-fx-background-color: #ff6666;");
-            }else if(Client.client.iniciarSesion(textfieldUsuario.getText(),textfieldContrasena.getText())){
-                Main.mainStage.setScene(MenuController.scene);
-            }else{
-                labelError.setText("Usuario o contraseña incorrectos.");
-                labelError.setStyle("-fx-background-color: #ff6666;");
+            if(true) {
+                if (!Client.client.isConnected()) {
+                    labelError.setText("Ups! Tenemos problemas de conexión.");
+                    labelError.setStyle("-fx-background-color: #ff6666;");
+                } else{
+                    String nUser = textfieldUsuario.getText();
+                    String pass = textfieldContrasena.getText();
+                    if(nUser!=""&&pass!=""){
+                        if (Client.client.iniciarSesion(nUser, pass)) {
+                            Main.mainStage.setScene(MenuController.scene);
+                        }else {
+                            labelError.setText("Usuario o contraseña incorrectos.");
+                            labelError.setStyle("-fx-background-color: #ff6666;");
+                        }
+                    }else {
+                        labelError.setText("Rellene todos los campos.");
+                        labelError.setStyle("-fx-background-color: #ff6666;");
+                    }
+                }
             }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
