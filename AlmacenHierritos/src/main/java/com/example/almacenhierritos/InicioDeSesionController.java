@@ -35,7 +35,7 @@ public class InicioDeSesionController {
             if(!Client.client.isConnected()){
                 labelError.setText("Ups! Tenemos problemas de conexión.");
                 labelError.setStyle("-fx-background-color: #ff6666;");
-            }else if(true/*quitar*/ || Client.client.iniciarSesion(textfieldUsuario.getText(),textfieldContrasena.getText())){
+            }else if(Client.client.iniciarSesion(textfieldUsuario.getText(),textfieldContrasena.getText())){
                 Main.mainStage.setScene(MenuController.scene);
             }else{
                 labelError.setText("Usuario o contraseña incorrectos.");

@@ -1,7 +1,5 @@
 package interfaces;
 
-import clases.EmpresaProveedora;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
