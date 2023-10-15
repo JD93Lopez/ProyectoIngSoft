@@ -1,5 +1,6 @@
 package com.example.almacenhierritos;
 
+import clases.Producto;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -28,7 +29,7 @@ public class BuscarProveedorController {
     TextField textfieldBuscar;
     @FXML
     protected void clickBotonBuscar() {
-        insertarTarjeta();
+        insertarTarjeta(new Producto());
     }
     @FXML
     protected void clickBotonCrear() {
@@ -43,7 +44,7 @@ public class BuscarProveedorController {
     private int fil=1;
     private int i=0;
 
-    public void insertarTarjeta(){
+    public void insertarTarjeta(Producto producto){
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto.fxml"));
         try {
@@ -52,8 +53,8 @@ public class BuscarProveedorController {
             throw new RuntimeException(e);
         }
         TarjetaController tarjetaController = fxmlLoader.getController();
-        tarjetaController.setLabelNombreProducto("NOMBREEE");
-        tarjetaController.setLabelDescProducto(fil+", "+col);
+        tarjetaController.setLabelNombreProducto(producto.getNombre());
+        tarjetaController.setLabelDescProducto(producto.getDescripcion());
         gridPane.add(tarjeta, col++, fil);
         GridPane.setMargin(tarjeta,new Insets(10));
         if (col == 3) {
