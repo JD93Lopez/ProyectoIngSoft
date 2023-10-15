@@ -14,6 +14,8 @@ public class MenuController {
     static Scene scene;
     @FXML
     protected void clickNuevaOrden() {
+        NuevaOrdenController.controller.formasDePago();
+        NuevaOrdenController.controller.desplegableProductos();
         Main.mainStage.setScene(NuevaOrdenController.scene);
     }
     @FXML

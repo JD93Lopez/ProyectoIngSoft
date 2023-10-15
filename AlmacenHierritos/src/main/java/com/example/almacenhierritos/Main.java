@@ -30,6 +30,7 @@ public class Main extends Application {
         fxmlLoader = new FXMLLoader(Main.class.getResource("nuevaorden_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         NuevaOrdenController.scene=scene;
+        NuevaOrdenController.controller = fxmlLoader.getController();
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarproveedor_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         BuscarProveedorController.scene=scene;
