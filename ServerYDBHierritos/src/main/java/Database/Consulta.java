@@ -1,5 +1,6 @@
 package Database;
 import clases.Cliente;
+import clases.Persona;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -85,7 +86,8 @@ public class Consulta {
                 cliente.setTelefono(resultSet.getString("telefono"));
                 cliente.setNumDocumento(resultSet.getString("numDocumento"));
                 String tipoPersona=resultSet.getString("tipoPersona");
-                String tipoDocumento=resultSet.getString("tipoDocumento");
+                cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
+                cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
                 cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
             }
         } catch (SQLException e) {
@@ -108,7 +110,7 @@ public class Consulta {
 
     public static void main(String[] args) {
         Cliente cliente = Consulta.obtenerClientePorTelefono("3016995315");
-        System.out.println(cliente.getNombres()+cliente.getResponsableDeIva());
+        System.out.println(cliente.getNombres()+" "+cliente.getResponsableDeIva()+" "+cliente.getTipoDocumento()+cliente.getTipoPersona());
     }
 
 /*    public static void main(String[] args) {
