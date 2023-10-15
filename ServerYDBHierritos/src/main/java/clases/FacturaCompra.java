@@ -2,9 +2,11 @@
 package clases;
 
 import clases.EmpresaProveedora.FormaDePago;
+
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class FacturaCompra {
+public class FacturaCompra implements Serializable {
     
     private EmpresaProveedora empresaProveedora;
     private String nombreVendedor;

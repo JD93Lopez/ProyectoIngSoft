@@ -3,15 +3,16 @@ package clases;
 
 import clases.EmpresaProveedora.FormaDePago;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class FacturaCompra {
+public class FacturaCompra implements Serializable {
     
     private EmpresaProveedora empresaProveedora;
     private String nombreVendedor;
     private LinkedList<Producto> productos;
     private FormaDePago formaDePago;
-    private int total;
+    private double total;
 
     public FacturaCompra() {
     }
@@ -55,11 +56,11 @@ public class FacturaCompra {
         this.formaDePago = formaDePago;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

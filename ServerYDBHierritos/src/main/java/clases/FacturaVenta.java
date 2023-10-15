@@ -1,9 +1,10 @@
 
 package clases;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class FacturaVenta {
+public class FacturaVenta implements Serializable {
     
     private Ferreteria ferreteria;
     private String fechaYHora;

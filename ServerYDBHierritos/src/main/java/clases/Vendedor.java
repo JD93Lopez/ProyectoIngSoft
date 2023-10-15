@@ -4,11 +4,13 @@
  */
 package clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author juand
  */
-public class Vendedor extends Usuario{
+public class Vendedor extends Usuario implements Serializable {
     
     int dineroTotalVentasMes;
 

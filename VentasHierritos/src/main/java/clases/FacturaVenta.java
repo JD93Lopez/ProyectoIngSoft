@@ -1,9 +1,10 @@
 
 package clases;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class FacturaVenta {
+public class FacturaVenta implements Serializable {
     
     private Ferreteria ferreteria;
     private String fechaYHora;
@@ -12,7 +13,7 @@ public class FacturaVenta {
     private Cliente cliente;
     private String formaDePago;
     private LinkedList<Producto> productos;
-    private int total;
+    private double total;
 
     public Ferreteria getFerreteria() {
         return ferreteria;
@@ -69,11 +70,11 @@ public class FacturaVenta {
         this.productos = productos;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

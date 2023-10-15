@@ -1,7 +1,9 @@
 
 package clases;
 
-public class Ferreteria {
+import java.io.Serializable;
+
+public class Ferreteria implements Serializable {
     
     private String nombre;
     private String telefono;

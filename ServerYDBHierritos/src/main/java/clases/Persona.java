@@ -1,8 +1,10 @@
 
 package clases;
 
-public class Persona {
-    public enum TipoDocumento{
+import java.io.Serializable;
+
+public class Persona implements Serializable {
+    public enum TipoDocumento implements Serializable {
         CEDULA_CIUDADANIA, CEDULA_EXTRANJERIA, PASAPORTE,NIT;
     }
     
