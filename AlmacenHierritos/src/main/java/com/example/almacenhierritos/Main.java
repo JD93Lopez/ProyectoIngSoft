@@ -27,17 +27,20 @@ public class Main extends Application {
         fxmlLoader = new FXMLLoader(Main.class.getResource("menu_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         MenuController.scene=scene;
+
         fxmlLoader = new FXMLLoader(Main.class.getResource("nuevaorden_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         NuevaOrdenController.scene=scene;
         NuevaOrdenController.controller = fxmlLoader.getController();
+
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarproveedor_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         BuscarProveedorController.scene=scene;
+
         fxmlLoader = new FXMLLoader(Main.class.getResource("inventario_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         InventarioController.scene = scene;
-
+        InventarioController.controller = fxmlLoader.getController();
 
 
     }

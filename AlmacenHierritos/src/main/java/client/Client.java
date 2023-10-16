@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public class Client implements RMIAlmacen {
 
@@ -55,4 +56,18 @@ public class Client implements RMIAlmacen {
             return null;
         }
     }
+
+    @Override
+    public List ListaProductosInventario() throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            return service.ListaProductosInventario();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
 }
