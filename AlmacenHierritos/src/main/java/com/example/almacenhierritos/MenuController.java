@@ -23,7 +23,7 @@ public class MenuController {
     }
     @FXML
     protected void clickAccederInventario() {
-
+        Main.mainStage.setScene(InventarioController.scene);
     }
 
 

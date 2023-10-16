@@ -34,6 +34,12 @@ public class Main extends Application {
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarproveedor_almacen.fxml"));
         scene = new Scene(fxmlLoader.load());
         BuscarProveedorController.scene=scene;
+        fxmlLoader = new FXMLLoader(Main.class.getResource("inventario_almacen.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        InventarioController.scene = scene;
+
+
+
     }
 
     public static void main(String[] args) {
