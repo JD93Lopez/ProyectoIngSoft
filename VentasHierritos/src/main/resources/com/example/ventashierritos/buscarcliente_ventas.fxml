@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 0px; -fx-spacing: 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prueba.HelloController">
+<VBox prefHeight="600.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 0px; -fx-spacing: 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ventashierritos.BuscarClienteController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -24,7 +24,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="298.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: 10;">
                <image>
-                  <Image url="@../../../../Images/logo.png" />
+                  <Image url="@Images/logo.png" />
                </image>
             </ImageView>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="546.0" style="-fx-background-color: C5D0F6; -fx-background-radius: 20; -fx-max-height: 30; -fx-translate-y: 33; -fx-padding: 4; -fx-spacing: 10;">
@@ -34,7 +34,7 @@
                         <Font name="Segoe UI" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="botonBuscar" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: F6F7FF; -fx-background-radius: 20; -fx-pref-height: 17; -fx-max-height: 17;" text="Buscar" textFill="#0e103c">
+                  <Button fx:id="botonBuscar" mnemonicParsing="false" onAction="#clickBotonBuscar" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: F6F7FF; -fx-background-radius: 20; -fx-pref-height: 17; -fx-max-height: 17;" text="Buscar" textFill="#0e103c">
                      <font>
                         <Font name="Segoe UI Bold" size="12.0" />
                      </font>
@@ -76,17 +76,17 @@
             </Pane>
             <VBox alignment="CENTER" prefHeight="508.0" prefWidth="237.0" style="-fx-spacing: 10; -fx-padding: 40;">
                <children>
-                  <Button fx:id="botonSiguiente" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: C5D0F6;" text="Siguiente" textFill="#0e103c">
+                  <Button fx:id="botonSiguiente" mnemonicParsing="false" onAction="#clickBotonSiguiente" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: C5D0F6;" text="Siguiente" textFill="#0e103c">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="botonAgCliente" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Agregar Cliente" textFill="#f7f7f7">
+                  <Button fx:id="botonAgCliente" mnemonicParsing="false" onAction="#clickBotonAgCliente" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Agregar Cliente" textFill="#f7f7f7">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="botonPagarCot" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Pagar Cotización" textFill="#f7f7f7">
+                  <Button fx:id="botonPagarCot" mnemonicParsing="false" onAction="#clickBotonPagarCot" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Pagar Cotización" textFill="#f7f7f7">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
