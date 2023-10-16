@@ -13,9 +13,12 @@ public class MainServer {
                 (String) properties.get("SERVICENAME")
             );*/
             Server server = new Server("localhost");
-            server.deployServiceAlmacen("5000","servicioAlmacen");
-            server.deployServiceVentas("5001","servicioVentas");
-            System.out.println("servicioAlmacen on");
+            if(server.deployServiceAlmacen("5000","servicioAlmacen")){
+                System.out.println("servicioAlmacen on");
+            }
+            if(server.deployServiceVentas("5001","servicioVentas")) {
+                System.out.println("servicioVentas on");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } /*catch (FileNotFoundException e) {
