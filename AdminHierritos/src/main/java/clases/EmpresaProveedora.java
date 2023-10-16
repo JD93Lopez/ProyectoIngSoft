@@ -15,6 +15,8 @@ public class EmpresaProveedora implements Serializable {
     private String banco;
     private String cuentaBancaria;
 
+    private int id;
+
     public EmpresaProveedora() {
     }
 
@@ -70,5 +72,20 @@ public class EmpresaProveedora implements Serializable {
     public void setCuentaBancaria(String cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
-    
+
+    public LinkedList<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(LinkedList<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
