@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 
 public class FacturaController {
     static Scene scene;
-    public void clickBotonPagarCot(){
-
+    public void clickBotonSalir(){
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
 }

@@ -57,7 +57,7 @@
             </Pane>
             <VBox alignment="BOTTOM_CENTER" prefHeight="508.0" prefWidth="237.0" style="-fx-spacing: 10; -fx-padding: 30;">
                <children>
-                  <Button fx:id="botonPagarCot" mnemonicParsing="false" onAction="#clickBotonPagarCot" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Salir" textFill="#f7f7f7">
+                  <Button fx:id="botonSalir" mnemonicParsing="false" onAction="#clickBotonSalir" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Salir" textFill="#f7f7f7">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>

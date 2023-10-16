@@ -36,6 +36,6 @@ public class BuscarClienteController {
     }
 
     public void clickBotonPagarCot() {
-        Main.mainStage.setScene(FacturaController.scene);
+        Main.mainStage.setScene(CotizacionController.scene);
     }
 }

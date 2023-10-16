@@ -11,11 +11,15 @@ public class BuscarCliente2Controller {
     public void clickBotonBuscar() {
     }
     public void clickRegresar() {
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonAceptar() {
+        Main.mainStage.setScene(FacturaController.scene);
     }
     public void clickBotonCancelar() {
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonHacerCot() {
+        Main.mainStage.setScene(CotizacionController.scene);
     }
 }

@@ -9,9 +9,12 @@ public class CotizacionController {
     @FXML
     TextField textFieldId;
     public void clickBotonBuscar() {
+
     }
     public void clickBotonCancelar() {
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonPagarCot() {
+        Main.mainStage.setScene(FacturaController.scene);
     }
 }
