@@ -26,11 +26,24 @@ public class Main extends Application{
         scene = new Scene(fxmlLoader.load());
         BuscarClienteController.scene = scene;
 
-
         fxmlLoader = new FXMLLoader(Main.class.getResource("agregarcliente_ventas.fxml"));
         scene = new Scene(fxmlLoader.load());
         AgregarClienteController.scene = scene;
 
+        fxmlLoader = new FXMLLoader(Main.class.getResource("buscarcliente2_ventas.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        BuscarCliente2Controller.scene = scene;
 
+        fxmlLoader = new FXMLLoader(Main.class.getResource("cotizacion.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        CotizacionController.scene = scene;
+
+        fxmlLoader = new FXMLLoader(Main.class.getResource("factura.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        FacturaController.scene = scene;
+
+        fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaproducto2.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        TarjetaProducto2Controller.scene = scene;
     }
 }
