@@ -11,6 +11,8 @@ public class Ferreteria implements Serializable {
     private String direccion;
     private String correo;
 
+    private int idFerreteria;
+
     public Ferreteria() {
     }
 
@@ -60,6 +62,13 @@ public class Ferreteria implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public int getIdFerreteria() {return idFerreteria;
+    }
+
+    public void setIdFerreteria(int idFerreteria) {
+        this.idFerreteria = idFerreteria;
     }
     
 }

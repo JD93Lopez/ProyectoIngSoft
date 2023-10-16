@@ -16,6 +16,7 @@ public class Producto implements Serializable {
     private double cantidadMaxima;
     private double pDescuento;
     private double pIva;
+    private int idProducto;
 
     public Producto() {
     }
@@ -127,5 +128,13 @@ public class Producto implements Serializable {
 
     public void setCantidadMaxima(double cantidadMaxima) {
         this.cantidadMaxima = cantidadMaxima;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
     }
 }
