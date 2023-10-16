@@ -19,6 +19,7 @@ public class BuscarClienteController {
     }
 
     public void clickBotonSiguiente() {
+        Main.mainStage.setScene(BuscarCliente2Controller.scene);
     }
 
     public void clickBotonAgCliente( ) {
@@ -26,5 +27,6 @@ public class BuscarClienteController {
     }
 
     public void clickBotonPagarCot() {
+        Main.mainStage.setScene(CotizacionController.scene);
     }
 }

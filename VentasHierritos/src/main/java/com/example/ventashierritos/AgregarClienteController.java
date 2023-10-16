@@ -18,21 +18,24 @@ public class AgregarClienteController {
     @FXML
     TextField textfieldNumTel;
     @FXML
-    SplitMenuButton menuTipoDoc;
+    SplitMenuButton menuTipoDocumento;
     @FXML
     TextField textfieldDireccion;
     @FXML
     TextField textfieldCorreo;
     @FXML
-    SplitMenuButton menuTipoPers;
+    SplitMenuButton menuTipoPersona;
     @FXML
     SplitMenuButton menuIVA;
 
     public void clickBotonBuscar() {
     }
     public void clickBotonAceptar() {
+        //TODO guardar cliente
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
 
     public void clickBotonCancelar() {
+        Main.mainStage.setScene(BuscarClienteController.scene);
     }
 }

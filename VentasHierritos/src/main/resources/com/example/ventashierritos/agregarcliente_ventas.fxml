@@ -71,7 +71,7 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <SplitMenuButton fx:id="menuTipoDoc" mnemonicParsing="false" prefHeight="25.0" prefWidth="362.0" style="-fx-background-color: white;" text="Escoge">
+                        <SplitMenuButton fx:id="menuTipoDocumento" mnemonicParsing="false" prefHeight="25.0" prefWidth="362.0" style="-fx-background-color: white;" text="Escoge">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Cédula de ciudadanía" />
                             <MenuItem mnemonicParsing="false" text="Cédula de extranjería" />
@@ -117,7 +117,7 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <SplitMenuButton fx:id="menuTipoPers" mnemonicParsing="false" prefHeight="25.0" prefWidth="362.0" style="-fx-background-color: white;" text="Escoge">
+                        <SplitMenuButton fx:id="menuTipoPersona" mnemonicParsing="false" prefHeight="25.0" prefWidth="362.0" style="-fx-background-color: white;" text="Escoge">
                            <items>
                               <MenuItem mnemonicParsing="false" text="Natural" />
                               <MenuItem mnemonicParsing="false" text="Jurídica" />
@@ -130,8 +130,8 @@
                         </Label>
                         <SplitMenuButton fx:id="menuIVA" mnemonicParsing="false" prefHeight="25.0" prefWidth="362.0" style="-fx-background-color: white;" text="Escoge">
                            <items>
-                              <MenuItem mnemonicParsing="false" text="Natural" />
-                              <MenuItem mnemonicParsing="false" text="Jurídica" />
+                              <MenuItem mnemonicParsing="false" text="Sí" />
+                              <MenuItem mnemonicParsing="false" text="No" />
                            </items>
                         </SplitMenuButton>
                      </children>
