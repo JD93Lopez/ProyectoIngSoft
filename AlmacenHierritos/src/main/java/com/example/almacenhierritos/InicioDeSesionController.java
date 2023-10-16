@@ -32,6 +32,7 @@ public class InicioDeSesionController {
     @FXML
     protected void clickBotonInicio() {
         try {
+            Main.mainStage.setScene(MenuController.scene);
             if(true) {
                 if (!Client.client.isConnected()) {
                     labelError.setText("Ups! Tenemos problemas de conexión.");

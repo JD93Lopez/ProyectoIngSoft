@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 public class MenuController {
 
@@ -22,8 +23,9 @@ public class MenuController {
         Main.mainStage.setScene(BuscarProveedorController.scene);
     }
     @FXML
-    protected void clickAccederInventario() {
-
+    protected void clickAccederInventario() throws RemoteException {
+        InventarioController.controller.ListaProductos();
+        Main.mainStage.setScene(InventarioController.scene);
     }
 
 

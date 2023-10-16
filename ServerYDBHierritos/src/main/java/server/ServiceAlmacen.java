@@ -1,11 +1,14 @@
 package server;
 
 import clases.EmpresaProveedora;
+import clases.Producto;
 import clases.Usuario;
 import interfaces.RMIAlmacen;
 import Database.Consulta;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
@@ -37,6 +40,14 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
     @Override
     public EmpresaProveedora buscarProveedor(String nit) throws RemoteException {
         return new EmpresaProveedora();
+    }
+
+    @Override
+    public List ListaProductosInventario() throws RemoteException {
+
+        List listaProductos = new ArrayList<>();
+        listaProductos.add(new Producto(  "codigo1", "nombreTornillo",  "descripcionLargo",  200,  3,  0.19,  100));
+        return listaProductos;
     }
 
 }
