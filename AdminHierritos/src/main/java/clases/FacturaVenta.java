@@ -3,6 +3,7 @@ package clases;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import clases.EmpresaProveedora.FormaDePago;
 
 public class FacturaVenta implements Serializable {
     
@@ -11,7 +12,7 @@ public class FacturaVenta implements Serializable {
     private Usuario vendedor;
     private int consecutivoDian;
     private Cliente cliente;
-    private String formaDePago;
+    private FormaDePago formaDePago;
     private LinkedList<Producto> productos;
     private double total;
 
@@ -54,11 +55,11 @@ public class FacturaVenta implements Serializable {
         this.cliente = cliente;
     }
 
-    public String getFormaDePago() {
+    public FormaDePago getFormaDePago() {
         return formaDePago;
     }
 
-    public void setFormaDePago(String formaDePago) {
+    public void setFormaDePago(FormaDePago formaDePago) {
         this.formaDePago = formaDePago;
     }
 

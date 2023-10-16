@@ -1,11 +1,12 @@
 
 package clases;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class EmpresaProveedora {
-    public enum FormaDePago{
-        EFECTIVO,TARJETA, TRANSFERENCIA;
+public class EmpresaProveedora implements Serializable {
+    public enum FormaDePago implements Serializable {
+        EFECTIVO, TARJETA, TRANSFERENCIA;
     }
     private String nombre;
     private String nit;

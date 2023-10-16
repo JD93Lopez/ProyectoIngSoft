@@ -1,9 +1,11 @@
 
 package clases;
 
-public class Cliente extends Persona{
+import java.io.Serializable;
+
+public class Cliente extends Persona implements Serializable {
     
-    public enum TipoPersona{
+    public enum TipoPersona implements Serializable{
         NATURAL, JURIDICA;
     }
 
