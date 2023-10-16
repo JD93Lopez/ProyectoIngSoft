@@ -13,6 +13,9 @@ public class Cliente extends Persona implements Serializable {
     private boolean responsableDeIva;
     private boolean clienteFrecuente;
 
+    private int idEmpresaProveedora;
+
+
     public Cliente() {
         this.clienteFrecuente = false;
     }
@@ -107,6 +110,13 @@ public class Cliente extends Persona implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public int getIdEmpresaProveedora() {return idEmpresaProveedora;
+    }
+
+    public void setIdEmpresaProveedora(int idEmpresaProveedora) {
+        this.idEmpresaProveedora = idEmpresaProveedora;
     }
     
 }

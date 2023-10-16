@@ -16,6 +16,8 @@ public class FacturaVenta implements Serializable {
     private LinkedList<Producto> productos;
     private double total;
 
+    private int idFacturaVenta;
+
     public Ferreteria getFerreteria() {
         return ferreteria;
     }
@@ -77,5 +79,12 @@ public class FacturaVenta implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public int getIdFacturaVenta() {return idFacturaVenta;
+    }
+
+    public void setIdFacturaVenta(int idFacturaVenta) {
+        this.idFacturaVenta = idFacturaVenta;
     }
 }
