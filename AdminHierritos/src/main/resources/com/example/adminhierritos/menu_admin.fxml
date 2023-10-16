@@ -20,6 +20,15 @@
                   <Image url="@Images/logo.png" />
                </image>
             </ImageView>
+            <Button fx:id="botonConfig" mnemonicParsing="false" prefHeight="29.0" prefWidth="26.0" style="-fx-translate-y: 28; -fx-translate-x: 525; -fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="boton" fitHeight="33.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/config.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
       <VBox alignment="CENTER" prefHeight="402.0" prefWidth="900.0" style="-fx-padding: 70 px;">
