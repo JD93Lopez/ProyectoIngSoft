@@ -17,7 +17,7 @@ public class BuscarCliente2Controller {
         Main.mainStage.setScene(FacturaController.scene);
     }
     public void clickBotonCancelar() {
-        BuscarClienteController.limpiarCampos();
+        BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonHacerCot() {

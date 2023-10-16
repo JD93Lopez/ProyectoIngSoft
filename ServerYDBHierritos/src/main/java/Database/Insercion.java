@@ -61,8 +61,7 @@ public class Insercion {
         }
     }
 
-    public static boolean nuevoCliente(
-            String idcliente,String nombres,String telefono,
+    public static boolean nuevoCliente(String nombres,String telefono,
             String tipoDocumento,String numDocumento,String direccion,
             String correo,String tipoPersona,String responsableDeIva, String clienteFrecuente)
 
@@ -72,20 +71,19 @@ public class Insercion {
 
 
         // Consulta SQL para insertar un nuevo cliente
-        String sql = "INSERT INTO clientes (idCliente,nombres,telefono,tipoDocumento,numDocumento," +
-                "direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clientes (nombres,telefono,tipoDocumento,numDocumento," +
+                "direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, idcliente);
-            statement.setString(2, nombres);
-            statement.setString(3, telefono);
-            statement.setString(4, tipoDocumento);
-            statement.setString(5, numDocumento);
-            statement.setString(6, direccion);
-            statement.setString(7, correo);
-            statement.setString(8, tipoPersona);
-            statement.setString(9, responsableDeIva);
-            statement.setString(10, clienteFrecuente);
+            statement.setString(1, nombres);
+            statement.setString(2, telefono);
+            statement.setString(3, tipoDocumento);
+            statement.setString(4, numDocumento);
+            statement.setString(5, direccion);
+            statement.setString(6, correo);
+            statement.setString(7, tipoPersona);
+            statement.setString(8, responsableDeIva);
+            statement.setString(9, clienteFrecuente);
 
             // Ejecutar la consulta de inserción
             int filasAfectadas = statement.executeUpdate();

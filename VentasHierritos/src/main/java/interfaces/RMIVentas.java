@@ -14,4 +14,5 @@ public interface RMIVentas extends Remote {
 
     public Producto buscarProducto (String codigo) throws RemoteException;
 
+    public int agregarCliente(Cliente cliente) throws RemoteException;
 }

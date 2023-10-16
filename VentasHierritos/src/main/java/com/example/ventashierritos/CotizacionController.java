@@ -12,11 +12,11 @@ public class CotizacionController {
 
     }
     public void clickBotonCancelar() {
-        BuscarClienteController.limpiarCampos();
+        BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonPagarCot() {
-        BuscarClienteController.limpiarCampos();
+        BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(FacturaController.scene);
     }
 }

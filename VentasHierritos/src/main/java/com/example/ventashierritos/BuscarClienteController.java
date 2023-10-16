@@ -13,15 +13,14 @@ import java.rmi.RemoteException;
 public class BuscarClienteController {
 
     static Scene scene;
+    static BuscarClienteController controller;
 
     @FXML
     TextArea textArea;
     @FXML
     TextField textfieldBuscar;
-
-    static TextArea areaInfo=null;
-    static TextField barraBusqueda=null;
     static Cliente clienteActual=null;
+
     public void clickBotonBuscar( ) throws RemoteException {
         Cliente cliente;
 
@@ -48,19 +47,32 @@ public class BuscarClienteController {
 
     }
 
-    public static void limpiarCampos(){
+    public void limpiarCampos(){
         BuscarClienteController.clienteActual=null;
-        BuscarClienteController.barraBusqueda.setText("");
-        BuscarClienteController.areaInfo.setText("");
+        textfieldBuscar.setText("");
+        textArea.setText("");
+    }
+
+    public void dibujarCliente() {
+        textArea.setText("\n    Nombres: " + clienteActual.getNombres() + "\n    "
+                + clienteActual.getTipoDocumento().toString().toLowerCase() + ": " + clienteActual.getNumDocumento() + "\n    "
+                + "\n    Teléfono: " + clienteActual.getTelefono() + "\n    "
+                + "\n    Dirección: " + clienteActual.getDireccion() + "\n    "
+                + "Correo Electrónico: " + clienteActual.getCorreo() + "\n    "
+                + "\n    Tipo de persona: " + clienteActual.getTipoPersona().toString().toLowerCase() + "\n    "
+                + "Responsable de Iva: " + (clienteActual.getResponsableDeIva() ? "Sí" : "No") + "\n    "
+                + "\n    \n    \n    "
+                + "Cliente Frecuente: " + (clienteActual.getClienteFrecuente() ? "Sí" : "No") + "\n    "
+                + "ID interno: " + clienteActual.getId() + "\n    "
+        );
     }
 
     public void clickBotonSiguiente() {
-        areaInfo = textArea;
-        barraBusqueda = textfieldBuscar;
         Main.mainStage.setScene(BuscarCliente2Controller.scene);
     }
 
     public void clickBotonAgCliente( ) {
+        AgregarClienteController.controller.desplegables();
         Main.mainStage.setScene(AgregarClienteController.scene);
     }
 

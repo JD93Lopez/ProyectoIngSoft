@@ -70,7 +70,7 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboBoxTipoDoc" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
+                        <ComboBox fx:id="menuTipoDocumento" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                         <Label prefHeight="18.0" prefWidth="400.0" text="Número de documento" textFill="#0e103c">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
@@ -110,13 +110,13 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboBoxTipoPers" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
+                        <ComboBox fx:id="menuTipoPersona" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                         <Label prefHeight="18.0" prefWidth="400.0" text="Responsable de IVA" textFill="#0e103c">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboBoxRespIVA" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
+                        <ComboBox fx:id="menuIVA" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                      </children>
                   </VBox>
                </children>
