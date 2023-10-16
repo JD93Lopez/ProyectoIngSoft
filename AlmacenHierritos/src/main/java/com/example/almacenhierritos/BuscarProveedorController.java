@@ -42,7 +42,6 @@ public class BuscarProveedorController {
 
     private int col=0;
     private int fil=1;
-    private int i=0;
 
     public void insertarTarjeta(Producto producto){
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0

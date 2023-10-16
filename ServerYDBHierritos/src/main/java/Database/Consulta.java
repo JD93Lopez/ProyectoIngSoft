@@ -426,7 +426,7 @@ public class Consulta {
 
     }
 
-    public LinkedList<Producto> listaProductosStock() {
+    public static LinkedList<Producto> listaProductosStock() {
         LinkedList<Producto> productos = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

@@ -32,11 +32,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
 
     @Override
     public List ListaProductosInventario() throws RemoteException {
-
-        List listaProductos = new ArrayList<>();
-        listaProductos.add(new Producto(  "codigo1", "nombreTornillo",  "descripcionLargo",  200,  3,  0.19,  100));
-        return listaProductos;
-
+        return Consulta.listaProductosStock();
     }
 
     @Override

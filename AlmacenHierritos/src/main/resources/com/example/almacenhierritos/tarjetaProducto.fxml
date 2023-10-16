@@ -31,7 +31,7 @@
                               <Font name="Segoe UI" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textFieldCantidad" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="33.0" style="-fx-background-radius: 5; -fx-background-color: white;" text="1">
+                        <TextField fx:id="textFieldCantidad" alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="142.0" style="-fx-background-radius: 5; -fx-background-color: white;" text="1">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
@@ -57,7 +57,7 @@
                      </image></ImageView>
                   <ImageView fx:id="imageWarning" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/advertencia.png" />
+                        <!--Image url="@Images/advertencia.png" /-->
                      </image></ImageView>
                </children></VBox>
          </children>
