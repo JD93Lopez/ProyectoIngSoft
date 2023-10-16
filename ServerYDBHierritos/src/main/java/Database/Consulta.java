@@ -28,7 +28,6 @@ public class Consulta {
         ResultSet resultSet = null;
 
         try {
-
 /*          String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
             String usuarioDB = "root";
             String contrasenaDB = "root";
@@ -50,8 +49,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -93,8 +90,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -136,8 +131,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -174,8 +167,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -214,8 +205,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -254,8 +243,6 @@ public class Consulta {
             e.printStackTrace();
 
         } finally {
-
-
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
