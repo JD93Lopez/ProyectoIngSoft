@@ -37,10 +37,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
 
     @Override
     public Cliente buscarCliente(String telefono) throws RemoteException {
-        System.out.println("Entro al server");
-        Cliente clientePrueba  = new Cliente(Cliente.TipoPersona.JURIDICA, true);
-        System.out.println("Desde el server: "+ clientePrueba.getTipoPersona());
-        return clientePrueba;
+        return Consulta.obtenerClientePorTelefono(telefono);
     }
 
     @Override

@@ -79,6 +79,7 @@ public class Consulta {
 
 
             if (resultSet.next()) {
+                cliente.setId(resultSet.getString("idcliente"));
                 cliente.setNombres(resultSet.getString("nombres"));
                 cliente.setDireccion(resultSet.getString("direccion"));
                 cliente.setCorreo(resultSet.getString("correo"));
