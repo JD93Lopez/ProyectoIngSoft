@@ -12,7 +12,6 @@ public class Usuario extends Persona implements Serializable {
     protected TipoUsuario tipoUsuario;
     protected String nombreUsuario;
     protected String contrasena;
-    private int idUsuario;
 
     public Usuario() {
     }
@@ -115,14 +114,6 @@ public class Usuario extends Persona implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
     
 }

@@ -14,7 +14,6 @@ public class Vendedor extends Usuario implements Serializable {
     
     int dineroTotalVentasMes;
 
-    private  int idVendedor;
 
     public Vendedor() {
         dineroTotalVentasMes = 0;
@@ -113,12 +112,4 @@ public class Vendedor extends Usuario implements Serializable {
         this.contrasena = contrasena;
     }
 
-    public int getIdVendedor() {return idVendedor;
-    }
-
-    public void setIdVendedor(int idVendedor) {
-        this.idVendedor = idVendedor;
-    }
-    
-    
 }

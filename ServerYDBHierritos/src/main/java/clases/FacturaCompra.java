@@ -14,6 +14,8 @@ public class FacturaCompra implements Serializable {
     private FormaDePago formaDePago;
     private double total;
 
+    private int idFacturaCompra;
+
     public FacturaCompra() {
     }
 
@@ -62,5 +64,13 @@ public class FacturaCompra implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public int getIdFacturaCompra() {
+        return idFacturaCompra;
+    }
+
+    public void setIdFacturaCompra(int idFacturaCompra) {
+        this.idFacturaCompra = idFacturaCompra;
     }
 }
