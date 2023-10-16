@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-pref-height: 468; -fx-pref-width: 860;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -64,13 +62,7 @@
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <SplitMenuButton fx:id="menuTipoDoc" mnemonicParsing="false" prefHeight="25.0" prefWidth="419.0" style="-fx-background-color: white;" text="Escoge">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Cédula de ciudadanía" />
-                        <MenuItem mnemonicParsing="false" text="Cédula de extranjería" />
-                        <MenuItem mnemonicParsing="false" text="Pasaporte" />
-                     </items>
-                  </SplitMenuButton>
+                  <ComboBox fx:id="comboBoxTipoDoc" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                   <Label prefHeight="18.0" prefWidth="400.0" text="Número de documento" textFill="#0e103c">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
@@ -110,23 +102,13 @@
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <SplitMenuButton fx:id="menuTipoPers" mnemonicParsing="false" prefHeight="25.0" prefWidth="406.0" style="-fx-background-color: white;" text="Escoge">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Natural" />
-                        <MenuItem mnemonicParsing="false" text="Jurídica" />
-                     </items>
-                  </SplitMenuButton>
+                  <ComboBox fx:id="comboBoxTipoPers" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                   <Label prefHeight="18.0" prefWidth="400.0" text="Responsable de IVA" textFill="#0e103c">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <SplitMenuButton fx:id="menuIVA" mnemonicParsing="false" prefHeight="25.0" prefWidth="449.0" style="-fx-background-color: white;" text="Escoge">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Natural" />
-                        <MenuItem mnemonicParsing="false" text="Jurídica" />
-                     </items>
-                  </SplitMenuButton>
+                  <ComboBox fx:id="comboBoxTipoIVA" prefHeight="25.0" prefWidth="414.0" style="-fx-background-color: white;" />
                </children>
             </VBox>
          </children>
