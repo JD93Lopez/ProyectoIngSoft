@@ -1,17 +1,19 @@
 package client;
 
-import clases.EmpresaProveedora;
-import interfaces.RMIAlmacen;
+import clases.Cliente;
+import clases.Producto;
+import interfaces.RMIVentas;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
-public class Client implements RMIAlmacen {
+public class Client implements RMIVentas {
 
-    public static Client client = new Client("localhost","5000","servicioAlmacen");
-    private RMIAlmacen service;
+    public static Client client = new Client("localhost","5001","servicioVentas");
+    private RMIVentas service;
     private String ip;
     private String port;
     private String serviceName;
@@ -27,7 +29,7 @@ public class Client implements RMIAlmacen {
 
     public boolean isConnected(){
         try{
-            service = (RMIAlmacen) Naming.lookup(url);
+            service = (RMIVentas) Naming.lookup(url);
             return true;
         } catch (MalformedURLException | RemoteException | NotBoundException e) {
             return false;
@@ -37,7 +39,7 @@ public class Client implements RMIAlmacen {
     @Override
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException {
         try{
-            service = (RMIAlmacen) Naming.lookup(url);
+            service = (RMIVentas) Naming.lookup(url);
             return service.iniciarSesion(usuario,contrasena);
         } catch (MalformedURLException | RemoteException | NotBoundException e) {
             e.printStackTrace();
@@ -46,13 +48,37 @@ public class Client implements RMIAlmacen {
     }
 
     @Override
-    public EmpresaProveedora buscarProveedor(String nitONombre) throws RemoteException {
-        try{
-            service = (RMIAlmacen) Naming.lookup(url);
-            return service.buscarProveedor(nitONombre);
-        } catch (MalformedURLException | RemoteException | NotBoundException e) {
+    public List ListaProductosInventario() throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.ListaProductosInventario();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
         }
     }
+
+    @Override
+    public Cliente buscarCliente(String telefono) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.buscarCliente(telefono);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Producto buscarProducto(String codigo) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.buscarProducto(codigo);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

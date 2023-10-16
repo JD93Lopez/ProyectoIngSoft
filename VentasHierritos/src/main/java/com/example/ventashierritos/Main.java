@@ -34,9 +34,11 @@ public class Main extends Application{
         scene = new Scene(fxmlLoader.load());
         BuscarCliente2Controller.scene = scene;
 
+
         fxmlLoader = new FXMLLoader(Main.class.getResource("cotizacion.fxml"));
         scene = new Scene(fxmlLoader.load());
         CotizacionController.scene = scene;
+
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("factura.fxml"));
         scene = new Scene(fxmlLoader.load());

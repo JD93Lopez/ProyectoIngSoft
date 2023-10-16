@@ -1,10 +1,14 @@
 package com.example.ventashierritos;
 
+import clases.Cliente;
+import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.rmi.RemoteException;
 
 public class BuscarClienteController {
 
@@ -15,7 +19,12 @@ public class BuscarClienteController {
     @FXML
     TextField textfieldBuscar;
 
-    public void clickBotonBuscar( ) {
+    public void clickBotonBuscar( ) throws RemoteException {
+        Cliente clientePrueba;
+
+        clientePrueba  =  Client.client.buscarCliente(textfieldBuscar.getText());
+
+        System.out.println(clientePrueba.getTipoPersona());
     }
 
     public void clickBotonSiguiente() {
