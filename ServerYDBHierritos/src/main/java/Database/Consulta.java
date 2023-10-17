@@ -114,12 +114,12 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT LAST_INSERT_ID()";
+            String sql = "SELECT MAX(idfacturaDeVenta) AS idfacturaDeVenta FROM facturas_de_venta";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                id = ""+resultSet.getInt(2);
+                id = ""+resultSet.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -591,7 +591,7 @@ public class Consulta {
 
 
     public static void main(String[] args) {
-        Insercion.facturasDeVenta("3","10-10-10","1","1","1");
+//        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");
         System.out.println(Consulta.ultimaFacturaVenta());
     }
 

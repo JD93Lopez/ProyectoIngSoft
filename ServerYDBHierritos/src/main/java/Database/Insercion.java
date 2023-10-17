@@ -151,18 +151,23 @@ public class Insercion {
     }
 
     public static boolean facturasDeVenta(String fechaYHora,
-                                          String consecutivoDian,String formasDePago,String total)
+                                          String consecutivoDian,String formasDePago,String idFerretería,String idUsuario,String idCliente,String total)
     {
         conectar();
 
-        String sql = "INSERT INTO facturas_de_venta (fechaYHora,consecutivoDian,formasDePago,total"+
-                ")VALUES ( ?, ?, ?, ?)";
+        String sql = "INSERT INTO facturas_de_venta (fechaYHora,consecutivoDian,formasDePago,FERRETERIA_idferreteria," +
+                "USUARIOS_idusuario," +
+                "CLIENTES_idcliente,total"+
+                ")VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, fechaYHora);
-            statement.setString(2, consecutivoDian);
-            statement.setString(3, formasDePago);
-            statement.setString(4, total);
+            statement.setString(2, fechaYHora);
+            statement.setString(3, consecutivoDian);
+            statement.setString(4, formasDePago);
+            statement.setString(5, idFerretería);
+            statement.setString(6, idUsuario);
+            statement.setString(7, idCliente);
+            statement.setString(8, total);
 
 
             int filasAfectadas = statement.executeUpdate();
