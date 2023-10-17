@@ -1,10 +1,13 @@
 package com.example.ventashierritos;
 
+import clases.EmpresaProveedora;
+import clases.FacturaVenta;
 import clases.Producto;
 import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +24,8 @@ public class BuscarCliente2Controller {
     @FXML
     TextField textfieldBuscar;
     @FXML
+    Label labelTotal;
+    @FXML
     GridPane gridPane1;
     @FXML
     GridPane gridPane2;
@@ -30,8 +35,30 @@ public class BuscarCliente2Controller {
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonAceptar() {
+        armarFactura();
         Main.mainStage.setScene(FacturaController.scene);
     }
+
+    private FacturaVenta armarFactura() {
+        FacturaVenta facturaVenta = new FacturaVenta();
+        facturaVenta.setCliente(BuscarClienteController.clienteActual);
+        facturaVenta.setFechaYHora("now()");
+        facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
+        facturaVenta.setFormaDePago(cuadroFormaDePago());
+        facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
+        LinkedList<Producto> productosFactura = new LinkedList();
+        for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
+            productosFactura.add(tarjeta.getProducto());
+        }
+        facturaVenta.setProductos(productosFactura);
+        return facturaVenta;
+    }
+
+    private EmpresaProveedora.FormaDePago cuadroFormaDePago() {
+        //TODO
+        return EmpresaProveedora.FormaDePago.EFECTIVO;
+    }
+
     public void clickBotonCancelar() {
         BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(BuscarClienteController.scene);
@@ -57,7 +84,7 @@ public class BuscarCliente2Controller {
         tarjetaController.setLabelNombreProducto(producto.getNombre());
         tarjetaController.setLabelDescProducto(producto.getDescripcion());
         tarjetaController.setLabelPrecio(""+producto.getPrecioVenta());
-        tarjetaController.setTextFieldCantidad("0");
+        tarjetaController.setTextFieldCantidad("1");
 
         gridPane1.add(tarjeta, col++, fil);
         if (col == 2) {
@@ -68,7 +95,7 @@ public class BuscarCliente2Controller {
     }
 
     public static List<TarjetaProducto2Controller> tarjetasProductosSeleccionados = new LinkedList();
-    private static int fil2=4;
+    private static int fil2=1;
     public void insertarTarjetaPequena(Producto producto){
         HBox tarjeta;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto2.fxml"));
@@ -98,5 +125,9 @@ public class BuscarCliente2Controller {
             throw new RuntimeException(e);
         }
     }
+    double total=0;
 
+    public void setLabelTotal(String total) {
+        labelTotal.setText(total);
+    }
 }

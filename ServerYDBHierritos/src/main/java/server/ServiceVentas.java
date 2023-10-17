@@ -86,4 +86,9 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         }
     }
 
+    @Override
+    public Usuario obtenerVendedor(String usuario, String contrasena) throws RemoteException {
+        return Consulta.obtenerUsuarioPorNombre(usuario,contrasena);
+    }
+
 }

@@ -2,6 +2,7 @@ package client;
 
 import clases.Cliente;
 import clases.Producto;
+import clases.Usuario;
 import interfaces.RMIVentas;
 
 import java.net.MalformedURLException;
@@ -88,6 +89,17 @@ public class Client implements RMIVentas {
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    @Override
+    public Usuario obtenerVendedor(String usuario, String contrasena) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.obtenerVendedor(usuario,contrasena);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
         }
     }
 

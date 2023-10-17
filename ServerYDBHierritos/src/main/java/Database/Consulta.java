@@ -38,7 +38,7 @@ public class Consulta {
             connection = DriverManager.getConnection(url, usuarioDB, contrasenaDB);*/
             conectar();
 
-            String sql = "SELECT contrasena FROM usuarios WHERE nombres = ?";
+            String sql = "SELECT contrasena FROM usuarios WHERE nombreUsuario = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,nombreDeUsuario);
             resultSet = preparedStatement.executeQuery();
@@ -63,6 +63,79 @@ public class Consulta {
         }
 
     }
+
+
+    public static Usuario obtenerUsuarioPorNombre(String nombreUsuario, String contrasena) {
+        Usuario usuario = new Usuario();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM usuarios WHERE nombreUsuario = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,nombreUsuario);
+            resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                usuario.setNombres(resultSet.getString("nombres"));
+                usuario.setTelefono(resultSet.getString("telefono"));
+                usuario.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
+                usuario.setNumDocumento(resultSet.getString("numDocumento"));
+                usuario.setDireccion(resultSet.getString("direccion"));
+                usuario.setCorreo(resultSet.getString("correo"));
+                usuario.setTipoUsuario(Enum.valueOf(Usuario.TipoUsuario.class,resultSet.getString("tipoUsuario")));
+                usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
+                usuario.setContrasena(contrasena);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return usuario;
+        }
+
+    }
+
+    public static String ultimaFacturaVenta(){
+        String id = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT LAST_INSERT_ID()";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = ""+resultSet.getInt(2);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
 
     public static Cliente obtenerClientePorTelefono(String telefono) {
         Cliente cliente  = new Cliente();
@@ -517,13 +590,15 @@ public class Consulta {
     }
 
 
-
-
-
     public static void main(String[] args) {
+        Insercion.facturasDeVenta("3","10-10-10","1","1","1");
+        System.out.println(Consulta.ultimaFacturaVenta());
+    }
+
+/*    public static void main(String[] args) {
         Cliente cliente = Consulta.obtenerClientePorTelefono("3016995315");
         System.out.println(cliente.getNombres()+" "+cliente.getResponsableDeIva()+" "+cliente.getTipoDocumento()+cliente.getTipoPersona());
-    }
+    }*/
 
 /*    public static void main(String[] args) {
         String nombreDeUsuario = "Juan";

@@ -1,5 +1,6 @@
 package com.example.ventashierritos;
 
+import clases.Usuario;
 import client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -22,10 +23,11 @@ public class InicioDeSesionController {
     @FXML
     private TextField textfieldContrasena;
 
+    static Usuario vendedorActual;
     @FXML
     protected void clickBotonInicio() {
         try {
-            Main.mainStage.setScene(BuscarClienteController.scene);
+            //Main.mainStage.setScene(BuscarClienteController.scene);
             if(true) {
 
                 if (!Client.client.isConnected()) {
@@ -36,7 +38,8 @@ public class InicioDeSesionController {
                     String pass = textfieldContrasena.getText();
                     if(nUser!=""&&pass!=""){
                         if (Client.client.iniciarSesion(nUser, pass)) {
-                         Main.mainStage.setScene(BuscarClienteController.scene);
+                            vendedorActual=Client.client.obtenerVendedor(nUser,pass);
+                            Main.mainStage.setScene(BuscarClienteController.scene);
                         }else {
                             labelError.setText("Usuario o contraseña incorrectos.");
                             labelError.setStyle("-fx-background-color: #ff6666;");

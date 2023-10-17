@@ -2,6 +2,7 @@ package interfaces;
 
 import clases.Cliente;
 import clases.Producto;
+import clases.Usuario;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -15,4 +16,6 @@ public interface RMIVentas extends Remote {
     public Producto buscarProducto (String codigo) throws RemoteException;
 
     public int agregarCliente(Cliente cliente) throws RemoteException;
+
+    public Usuario obtenerVendedor(String usuario, String contrasena) throws RemoteException;
 }

@@ -163,15 +163,20 @@ public class Insercion {
     {
         conectar();
 
-        String sql = "INSERT INTO facturas_de_venta (idfacturaDeVenta,fechaYHora,consecutivoDian,formasDePago,total"+
-                ")VALUES ( ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO facturas_de_venta (idfacturaDeVenta,fechaYHora,consecutivoDian,formaDePago,FERRETERIA_idferreteria," +
+                "USUARIOS_idusuario," +
+                "CLIENTES_idcliente,total"+
+                ")VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, idfacturaDeVenta);
             statement.setString(2, fechaYHora);
             statement.setString(3, consecutivoDian);
             statement.setString(4, formasDePago);
-            statement.setString(5, total);
+            statement.setString(5, "1");
+            statement.setString(6, "1");
+            statement.setString(7, "1");
+            statement.setString(8, total);
 
             int filasAfectadas = statement.executeUpdate();
 

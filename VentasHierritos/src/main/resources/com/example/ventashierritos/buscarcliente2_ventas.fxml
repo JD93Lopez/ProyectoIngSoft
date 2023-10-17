@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -94,23 +95,32 @@
                   </ScrollPane>
                   <HBox prefHeight="38.0" prefWidth="324.0" style="-fx-background-color: white; -fx-spacing: 15;">
                      <children>
-                        <Button fx:id="botonAceptar" mnemonicParsing="false" onAction="#clickBotonAceptar" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Aceptar" textFill="#f7f7f7">
+                        <Button fx:id="botonHacerCot" mnemonicParsing="false" onAction="#clickBotonHacerCot" prefHeight="28.0" prefWidth="166.0" style="-fx-background-color: #0e103c;" text="Hacer Cotización" textFill="#f7f7f7">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="botonCancelar" mnemonicParsing="false" onAction="#clickBotonCancelar" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: C5D0F6;" text="Cancelar" textFill="#0e103c">
+                        <Label fx:id="labelTotal" prefHeight="28.0" prefWidth="144.0" text="Total:                   ">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="52.0" prefWidth="324.0">
+                     <children>
+                        <Button fx:id="botonAceptar" mnemonicParsing="false" onAction="#clickBotonAceptar" prefHeight="40.0" prefWidth="166.0" style="-fx-background-color: #0e103c;" text="Aceptar" textFill="#f7f7f7">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="botonCancelar" mnemonicParsing="false" onAction="#clickBotonCancelar" prefHeight="38.0" prefWidth="153.0" style="-fx-background-color: C5D0F6;" text="Cancelar" textAlignment="CENTER" textFill="#0e103c">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
-                  <Button fx:id="botonHacerCot" mnemonicParsing="false" onAction="#clickBotonHacerCot" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Hacer Cotización" textFill="#f7f7f7">
-                     <font>
-                        <Font name="Segoe UI Bold" size="14.0" />
-                     </font>
-                  </Button>
                </children>
             </VBox>
          </children>
