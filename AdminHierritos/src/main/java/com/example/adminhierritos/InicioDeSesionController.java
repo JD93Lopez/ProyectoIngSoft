@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class InicioDeSesionController {
 
     static Scene scene;
-    static Stage stage;
+
     @FXML
     private TextField textfieldUsuario;
 
@@ -23,8 +23,8 @@ public class InicioDeSesionController {
 
     @FXML
     protected void clickBotonInicio() {
-        stage.setScene(MenuController.scene);
-        textfieldContrasena.setText("1234");
+        Main.mainStage.setScene(MenuController.scene);
+        textfieldContrasena.setText("12345");
     }
 /*
     @FXML

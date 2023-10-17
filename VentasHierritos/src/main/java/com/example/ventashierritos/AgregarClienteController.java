@@ -14,7 +14,6 @@ import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
 public class AgregarClienteController {
-
     static Scene scene;
     static AgregarClienteController controller;
     @FXML

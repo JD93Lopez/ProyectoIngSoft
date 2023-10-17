@@ -16,12 +16,5 @@
         <module name="ServerHierritos" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="AdminHierritos" target="18" />
-      <module name="AlmacenHierritos" target="18" />
-      <module name="DB_Hierritos" target="18" />
-      <module name="ServerHierritos" target="18" />
-      <module name="VentasHierritos" target="18" />
-    </bytecodeTargetLevel>
   </component>
 </project>

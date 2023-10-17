@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 0px; -fx-spacing: 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prueba.HelloController">
+<VBox prefHeight="600.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 0px; -fx-spacing: 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.adminhierritos.InformesController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -19,7 +19,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="298.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: 10;">
                <image>
-                  <Image url="@../../../../Images/logo.png" />
+                  <Image url="@Images/logo.png" />
                </image>
             </ImageView>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="546.0" style="-fx-background-color: #0e103c; -fx-background-radius: 20; -fx-max-height: 30; -fx-translate-y: 33; -fx-padding: 4; -fx-spacing: 10;">
@@ -51,7 +51,7 @@
       <VBox fx:id="VboxDisplay" alignment="TOP_CENTER" maxWidth="911.0" prefHeight="508.0" prefWidth="900.0" style="-fx-padding: 30; -fx-spacing: 20;">
          <children>
             <Pane prefHeight="382.0" prefWidth="840.0" />
-            <Button fx:id="botonAgCliente" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="31.0" prefWidth="124.0" style="-fx-background-color: #0e103c;" text="Volver" textFill="#f7f7f7">
+            <Button fx:id="botonVolver" mnemonicParsing="false" onAction="#ClickBotonVolver" prefHeight="31.0" prefWidth="124.0" style="-fx-background-color: #0e103c;" text="Volver" textFill="#f7f7f7">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
