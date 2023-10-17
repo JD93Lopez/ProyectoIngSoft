@@ -21,7 +21,6 @@ import java.util.List;
 public class InventarioController {
 
     static Scene scene;
-    static VBox tarjeta;
 
     static InventarioController controller;
     @FXML
@@ -47,10 +46,12 @@ public class InventarioController {
             insertarTarjeta(producto);
         }
     }
+
     static List<VBox> tarjetas = new LinkedList();
     private int col=0;
     private int fil=1;
     public void insertarTarjeta(Producto producto){
+        VBox tarjeta;
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto.fxml"));
         try {
@@ -59,9 +60,11 @@ public class InventarioController {
             throw new RuntimeException(e);
         }
         TarjetaController tarjetaController = fxmlLoader.getController();
+        tarjetaController.setProducto(producto);
         tarjetaController.setLabelNombreProducto(producto.getNombre());
         tarjetaController.setLabelDescProducto(producto.getDescripcion());
         tarjetaController.setTextFieldCantidad(""+producto.getExistencias());
+        tarjetaController.setLabelPrecio("$"+producto.getPrecioVenta());
         try {
             if(producto.getExistencias()<producto.getCantidadMinima()){
                 tarjetaController.imageWarning.setImage(new Image(Main.class.getResource("Images/advertencia.png").openStream()));

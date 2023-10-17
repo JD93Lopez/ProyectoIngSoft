@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface RMIVentas extends Remote {
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException;
-    public List ListaProductosInventario () throws RemoteException;
+    public List listaProductosInventario() throws RemoteException;
     public Cliente buscarCliente (String telefono) throws RemoteException;
 
     public Producto buscarProducto (String codigo) throws RemoteException;
 
+    public int agregarCliente(Cliente cliente) throws RemoteException;
 }

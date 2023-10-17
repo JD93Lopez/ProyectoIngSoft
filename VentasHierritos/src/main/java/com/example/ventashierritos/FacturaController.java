@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 public class FacturaController {
     static Scene scene;
     public void clickBotonSalir(){
-        BuscarClienteController.limpiarCampos();
+        BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
 }

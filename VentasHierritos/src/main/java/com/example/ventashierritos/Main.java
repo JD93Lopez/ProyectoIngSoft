@@ -22,14 +22,18 @@ public class Main extends Application{
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarcliente_ventas.fxml"));
         scene = new Scene(fxmlLoader.load());
         BuscarClienteController.scene = scene;
+        BuscarClienteController.controller = fxmlLoader.getController();
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("agregarcliente_ventas.fxml"));
         scene = new Scene(fxmlLoader.load());
         AgregarClienteController.scene = scene;
+        AgregarClienteController.controller = fxmlLoader.getController();
+        AgregarClienteController.controller.desplegables();
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarcliente2_ventas.fxml"));
         scene = new Scene(fxmlLoader.load());
         BuscarCliente2Controller.scene = scene;
+        BuscarCliente2Controller.controller = fxmlLoader.getController();
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("cotizacion.fxml"));
         scene = new Scene(fxmlLoader.load());

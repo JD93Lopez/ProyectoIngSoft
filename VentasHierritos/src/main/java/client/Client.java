@@ -48,10 +48,10 @@ public class Client implements RMIVentas {
     }
 
     @Override
-    public List ListaProductosInventario() throws RemoteException {
+    public List listaProductosInventario() throws RemoteException {
         try {
             service = (RMIVentas) Naming.lookup(url);
-            return service.ListaProductosInventario();
+            return service.listaProductosInventario();
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
@@ -80,5 +80,15 @@ public class Client implements RMIVentas {
         }
     }
 
+    @Override
+    public int agregarCliente(Cliente cliente) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.agregarCliente(cliente);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
 }

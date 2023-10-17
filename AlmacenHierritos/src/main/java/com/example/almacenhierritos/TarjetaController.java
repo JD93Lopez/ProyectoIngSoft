@@ -1,5 +1,6 @@
 package com.example.almacenhierritos;
 
+import clases.Producto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,24 +21,40 @@ public class TarjetaController {
 
     @FXML
     private TextField textFieldCantidad;
+    @FXML
+    private Label labelPrecio;
 
     public TarjetaController() {
+    }
+
+    private Producto producto;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public VBox getTarjeta(){
         return vBoxTarjeta;
     }
 
-    public void setLabelNombreProducto(String NombreProducto) {
-        this.labelNombreProducto.setText(NombreProducto);
+    public void setLabelNombreProducto(String nombreProducto) {
+        this.labelNombreProducto.setText(nombreProducto);
     }
 
-    public void setLabelDescProducto(String DescProducto) {
-        this.labelDescProducto.setText(DescProducto);
+    public void setLabelDescProducto(String descProducto) {
+        this.labelDescProducto.setText(descProducto);
     }
 
-    public void setTextFieldCantidad(String Cantidad) {
-        this.textFieldCantidad.setText(Cantidad);
+    public void setTextFieldCantidad(String cantidad) {
+        this.textFieldCantidad.setText(cantidad);
+    }
+
+    public void setLabelPrecio(String precio) {
+        this.labelPrecio.setText(precio);
     }
 
     public String getTextFieldCantidad() {
