@@ -34,7 +34,6 @@ public class ConfiguracionController {
 
     public void initialize(){
         botonCerrar.setOnMouseClicked(event -> {
-            System.out.println("Adios");
             stage.close();
         });
     }

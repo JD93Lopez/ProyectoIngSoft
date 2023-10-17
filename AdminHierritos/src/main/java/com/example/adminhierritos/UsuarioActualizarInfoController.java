@@ -31,14 +31,10 @@ public class UsuarioActualizarInfoController {
     @FXML
     ComboBox comboBoxTipoUsuario;
 
-
-
     public void ClickBotonBuscar() {
     }
-
     public void clickBotonGuardarCambios( ) {
     }
-
     public void clickBotonCrear( ) {
 
     }

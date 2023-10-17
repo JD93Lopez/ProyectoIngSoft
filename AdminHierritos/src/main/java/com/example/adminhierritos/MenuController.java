@@ -24,7 +24,6 @@ public class MenuController {
 
     public void  initialize(){
         botonConfig.setOnMouseClicked(event -> {
-            System.out.println("Hola");
             ConfiguracionController.stage = new Stage();
             ConfiguracionController.stage.setScene(ConfiguracionController.scene);
             ConfiguracionController.stage.show();
