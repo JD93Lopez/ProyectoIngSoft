@@ -31,6 +31,7 @@ public class Main extends Application{
         scene = new Scene(fxmlLoader.load());
         AgregarClienteController.scene = scene;
         AgregarClienteController.controller = fxmlLoader.getController();
+        AgregarClienteController.controller.desplegables();
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("buscarcliente2_ventas.fxml"));
         scene = new Scene(fxmlLoader.load());

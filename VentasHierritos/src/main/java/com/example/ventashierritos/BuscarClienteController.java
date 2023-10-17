@@ -72,7 +72,6 @@ public class BuscarClienteController {
     }
 
     public void clickBotonAgCliente( ) {
-        AgregarClienteController.controller.desplegables();
         Main.mainStage.setScene(AgregarClienteController.scene);
     }
 
