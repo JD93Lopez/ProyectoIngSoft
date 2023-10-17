@@ -105,6 +105,47 @@ public class Consulta {
 
     }
 
+    public static Cliente obtenerClientePorCedula(String cedula) {
+        Cliente cliente  = new Cliente();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM clientes WHERE numDocumento = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,cedula);
+            resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                cliente.setId(resultSet.getString("idcliente"));
+                cliente.setNombres(resultSet.getString("nombres"));
+                cliente.setDireccion(resultSet.getString("direccion"));
+                cliente.setCorreo(resultSet.getString("correo"));
+                cliente.setTelefono(resultSet.getString("telefono"));
+                cliente.setNumDocumento(resultSet.getString("numDocumento"));
+                cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
+                cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
+                cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return cliente;
+        }
+
+    }
+
     public static Cliente obtenerClientePorId(String idcliente) {
         Cliente cliente  = new Cliente();
         PreparedStatement preparedStatement = null;

@@ -28,7 +28,7 @@ public class Update {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,cantidadVendida);
             preparedStatement.setString(2,idproducto);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,5 +43,37 @@ public class Update {
             return bool;
         }
 
+    }
+
+    public static boolean sumarExistencias(int cantidadComprada, String idproducto) {
+        boolean bool = false;
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE productos SET existencia = existencia + ? WHERE idproducto = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,cantidadComprada);
+            preparedStatement.setString(2,idproducto);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return bool;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Update.restarExistencias(20,"1");
+        Update.sumarExistencias(20,"1");
     }
 }

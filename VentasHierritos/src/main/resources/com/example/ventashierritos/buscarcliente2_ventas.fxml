@@ -55,7 +55,7 @@
                      <children>
                         <ScrollPane maxWidth="1256.0" prefHeight="488.0" prefWidth="900.0" style="-fx-background-color: E0E7FE; -fx-max-width: 840;">
                            <content>
-                              <GridPane prefHeight="571.0" prefWidth="501.0" style="-fx-padding: 10; -fx-hgap: 10; -fx-vgap: 10;">
+                              <GridPane fx:id="gridPane" prefHeight="571.0" prefWidth="501.0" style="-fx-padding: 10; -fx-hgap: 10; -fx-vgap: 10;">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

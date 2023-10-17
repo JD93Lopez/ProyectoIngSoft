@@ -31,8 +31,10 @@ public class BuscarClienteController {
             dibujarCliente();
         }else if(textfieldBuscar.getText().equals("")){
             textArea.setText("\n    Rellene la barra de búsqueda con el teléfono o cédula\n    del cliente por favor. ");
+            clienteActual=null;
         }else{
             textArea.setText("\n    Cliente no encontrado. Por favor agréguelo pulsando el botón\n    \"Agregar Cliente\"");
+            clienteActual=null;
         }
 
     }
@@ -58,11 +60,12 @@ public class BuscarClienteController {
     }
 
     public void clickBotonSiguiente() {
+        BuscarCliente2Controller.controller.dibujarTarjetasProductos();
         Main.mainStage.setScene(BuscarCliente2Controller.scene);
     }
 
     public void clickBotonAgCliente( ) {
-        if(!textfieldBuscar.getText().equals("")){
+        if((!textfieldBuscar.getText().equals(""))&&(clienteActual==null)){
             AgregarClienteController.controller.textfieldNumTel.setText(textfieldBuscar.getText());
         }
         Main.mainStage.setScene(AgregarClienteController.scene);

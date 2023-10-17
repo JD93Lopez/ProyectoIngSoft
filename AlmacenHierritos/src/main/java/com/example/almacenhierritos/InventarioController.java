@@ -21,7 +21,6 @@ import java.util.List;
 public class InventarioController {
 
     static Scene scene;
-    static VBox tarjeta;
 
     static InventarioController controller;
     @FXML
@@ -51,6 +50,7 @@ public class InventarioController {
     private int col=0;
     private int fil=1;
     public void insertarTarjeta(Producto producto){
+        VBox tarjeta;
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto.fxml"));
         try {

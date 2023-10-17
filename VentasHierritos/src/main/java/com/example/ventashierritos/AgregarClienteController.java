@@ -39,33 +39,39 @@ public class AgregarClienteController {
     public void clickBotonBuscar() {
     }
     public void clickBotonAceptar() {
-        //TODO guardar cliente
-        Cliente cliente = new Cliente();
-        cliente.setNombres(textfieldNombres.getText());
-        cliente.setTelefono(textfieldNumTel.getText());
-        cliente.setTipoDocumento(Persona.TipoDocumento.valueOf(menuTipoDocumento.getSelectionModel().getSelectedItem().toString()));
-        cliente.setNumDocumento(textfieldNumDoc.getText());
-        cliente.setDireccion(textfieldDireccion.getText());
-        cliente.setCorreo(textfieldCorreo.getText());
-        cliente.setTipoPersona(Cliente.TipoPersona.valueOf(menuTipoPersona.getSelectionModel().getSelectedItem().toString()));
-        cliente.setResponsableDeIva((menuIVA.getSelectionModel().getSelectedItem().toString().equals("Sí"))?true:false);
-        cliente.setClienteFrecuente(false);
 
-        int entero = -4;
-        try {
-            entero = Client.client.agregarCliente(cliente);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        Cliente cliente = new Cliente();
+        try{
+            cliente.setNombres(textfieldNombres.getText());
+            cliente.setTelefono(textfieldNumTel.getText());
+            cliente.setTipoDocumento(Persona.TipoDocumento.valueOf(menuTipoDocumento.getSelectionModel().getSelectedItem().toString()));
+            cliente.setNumDocumento(textfieldNumDoc.getText());
+            cliente.setDireccion(textfieldDireccion.getText());
+            cliente.setCorreo(textfieldCorreo.getText());
+            cliente.setTipoPersona(Cliente.TipoPersona.valueOf(menuTipoPersona.getSelectionModel().getSelectedItem().toString()));
+            cliente.setResponsableDeIva((menuIVA.getSelectionModel().getSelectedItem().toString().equals("Sí"))?true:false);
+            cliente.setClienteFrecuente(false);
+
+            int entero = -4;
+            try {
+                entero = Client.client.agregarCliente(cliente);
+            } catch (RemoteException e) {
+                System.out.println("CODIGO DE ERROR: "+entero);
+                throw new RuntimeException(e);
+            }
+            if(entero>0){
+                cliente.setId(""+entero);
+                BuscarClienteController.clienteActual = cliente;
+                BuscarClienteController.controller.dibujarCliente();
+                Main.mainStage.setScene(BuscarClienteController.scene);
+                limpiarCampos();
+            }else{
+                cuadroClienteYaExiste();
+            }
+        }catch (Exception e){
+            cuadroRellenarCampos();
         }
-        if(entero>0){
-            cliente.setId(""+entero);
-            BuscarClienteController.clienteActual = cliente;
-            BuscarClienteController.controller.dibujarCliente();
-            Main.mainStage.setScene(BuscarClienteController.scene);
-            limpiarCampos();
-        }else{
-            cuadroClienteYaExiste();
-        }
+
     }
 
     private void cuadroClienteYaExiste() {
@@ -74,6 +80,20 @@ public class AgregarClienteController {
         alert.setTitle("Cliente Existente");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
         alert.setContentText("El cliente ya se encuentra registrado.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void cuadroRellenarCampos() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Rellenar Campos");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("Por favor rellene todos los campos.");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");

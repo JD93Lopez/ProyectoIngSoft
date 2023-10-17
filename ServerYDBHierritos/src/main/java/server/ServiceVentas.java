@@ -32,13 +32,22 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     }
 
     @Override
-    public List ListaProductosInventario() throws RemoteException {
+    public List listaProductosInventario() throws RemoteException {
         return Consulta.listaProductosStock();
     }
 
     @Override
     public Cliente buscarCliente(String telefono) throws RemoteException {
-        return Consulta.obtenerClientePorTelefono(telefono);
+        Cliente cliente = null;
+        try {
+            cliente = Consulta.obtenerClientePorCedula(telefono);
+            if (cliente.getId() == null) {
+                cliente = Consulta.obtenerClientePorTelefono(telefono);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return cliente;
     }
 
     @Override
