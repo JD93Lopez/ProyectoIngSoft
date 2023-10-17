@@ -40,7 +40,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="31.0" prefWidth="168.0">
                      <children>
-                        <Label text="\$500" textFill="#0e103c">
+                        <Label fx:id="labelPrecio" text="\$500" textFill="#0e103c">
                            <font>
                               <Font name="Segoe UI" size="18.0" />
                            </font>

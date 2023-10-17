@@ -5,6 +5,8 @@ import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -60,8 +62,12 @@ public class BuscarClienteController {
     }
 
     public void clickBotonSiguiente() {
-        BuscarCliente2Controller.controller.dibujarTarjetasProductos();
-        Main.mainStage.setScene(BuscarCliente2Controller.scene);
+        if(clienteActual==null){
+            cuadroClienteNulo();
+        }else{
+            BuscarCliente2Controller.controller.dibujarTarjetasProductos();
+            Main.mainStage.setScene(BuscarCliente2Controller.scene);
+        }
     }
 
     public void clickBotonAgCliente( ) {
@@ -73,5 +79,20 @@ public class BuscarClienteController {
 
     public void clickBotonPagarCot() {
         Main.mainStage.setScene(CotizacionController.scene);
+    }
+
+    private void cuadroClienteNulo() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Cliente No Seleccionado");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("No tiene un cliente seleccionado, por favor búsquelo por su teléfono o número de identificación, o agréguelo.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
     }
 }

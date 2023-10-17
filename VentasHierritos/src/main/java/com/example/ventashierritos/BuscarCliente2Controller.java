@@ -4,11 +4,10 @@ import clases.Producto;
 import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -22,7 +21,9 @@ public class BuscarCliente2Controller {
     @FXML
     TextField textfieldBuscar;
     @FXML
-    GridPane gridPane;
+    GridPane gridPane1;
+    @FXML
+    GridPane gridPane2;
     public void clickBotonBuscar() {
     }
     public void clickRegresar() {
@@ -39,13 +40,11 @@ public class BuscarCliente2Controller {
         Main.mainStage.setScene(CotizacionController.scene);
     }
 
-    static VBox tarjeta;
-    static List<VBox> tarjetas = new LinkedList();
-    private int col=0;
-    private int fil=1;
+    public static List<TarjetaController> tarjetasInventario = new LinkedList();
+    private static int col=0;
+    private static int fil=4;
     public void insertarTarjeta(Producto producto){
         VBox tarjeta;
-        //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto.fxml"));
         try {
             tarjeta = fxmlLoader.load();
@@ -53,17 +52,40 @@ public class BuscarCliente2Controller {
             throw new RuntimeException(e);
         }
         TarjetaController tarjetaController = fxmlLoader.getController();
+        tarjetaController.setProducto(producto);
+        tarjetaController.controller=tarjetaController;
         tarjetaController.setLabelNombreProducto(producto.getNombre());
         tarjetaController.setLabelDescProducto(producto.getDescripcion());
+        tarjetaController.setLabelPrecio(""+producto.getPrecioVenta());
         tarjetaController.setTextFieldCantidad("0");
 
-        gridPane.add(tarjeta, col++, fil);
-        GridPane.setMargin(tarjeta,new Insets(10));
+        gridPane1.add(tarjeta, col++, fil);
         if (col == 2) {
             col = 0;
             fil++;
         }
-        tarjetas.add(tarjeta);
+        tarjetasInventario.add(tarjetaController);
+    }
+
+    public static List<TarjetaProducto2Controller> tarjetasProductosSeleccionados = new LinkedList();
+    private static int fil2=4;
+    public void insertarTarjetaPequena(Producto producto){
+        HBox tarjeta;
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto2.fxml"));
+        try {
+            tarjeta = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        TarjetaProducto2Controller tarjetaController2 = fxmlLoader.getController();
+        tarjetaController2.setProducto(producto);
+        tarjetaController2.controller = tarjetaController2;
+        tarjetaController2.setLabelNomProducto(producto.getNombre());
+        tarjetaController2.setLabelIDProducto("ID: "+producto.getIdProducto());
+        tarjetaController2.setLabelCantidad("Cantidad: "+producto.getExistencias());
+
+        gridPane2.add(tarjeta, 0, fil2++);
+        tarjetasProductosSeleccionados.add(tarjetaController2);
     }
 
     public void dibujarTarjetasProductos(){

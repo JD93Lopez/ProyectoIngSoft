@@ -46,6 +46,7 @@ public class InventarioController {
             insertarTarjeta(producto);
         }
     }
+
     static List<VBox> tarjetas = new LinkedList();
     private int col=0;
     private int fil=1;
@@ -59,9 +60,11 @@ public class InventarioController {
             throw new RuntimeException(e);
         }
         TarjetaController tarjetaController = fxmlLoader.getController();
+        tarjetaController.setProducto(producto);
         tarjetaController.setLabelNombreProducto(producto.getNombre());
         tarjetaController.setLabelDescProducto(producto.getDescripcion());
         tarjetaController.setTextFieldCantidad(""+producto.getExistencias());
+        tarjetaController.setLabelPrecio("$"+producto.getPrecioVenta());
         try {
             if(producto.getExistencias()<producto.getCantidadMinima()){
                 tarjetaController.imageWarning.setImage(new Image(Main.class.getResource("Images/advertencia.png").openStream()));
