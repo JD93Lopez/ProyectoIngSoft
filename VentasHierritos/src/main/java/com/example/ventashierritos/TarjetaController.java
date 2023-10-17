@@ -47,9 +47,9 @@ public class TarjetaController {
             //TODO verificar cantidad vendida menor que existencias
             producto.setExistencias(Double.valueOf(textFieldCantidad.getText()));
             BuscarCliente2Controller.controller.insertarTarjetaPequena(producto);
-            BuscarCliente2Controller.controller.total+=(
+            BuscarCliente2Controller.controller.total+=((
                     producto.getPrecioVenta()-(producto.getPrecioVenta()*producto.getpDescuento())
-            )*producto.getExistencias();
+            )*producto.getExistencias());
             BuscarCliente2Controller.controller.setLabelTotal("Total: "+BuscarCliente2Controller.controller.total);
         }catch (Exception e){
             cuadroValorNoNumerico();

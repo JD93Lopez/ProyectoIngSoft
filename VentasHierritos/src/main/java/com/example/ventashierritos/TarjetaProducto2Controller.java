@@ -21,9 +21,9 @@ public class TarjetaProducto2Controller {
     protected void clickBotonX(){
         BuscarCliente2Controller.tarjetasProductosSeleccionados.remove(controller);
         BuscarCliente2Controller.controller.gridPane2.getChildren().remove(controller.tarjeta);
-        BuscarCliente2Controller.controller.total-=(
+        BuscarCliente2Controller.controller.total-=((
                 producto.getPrecioVenta()-(producto.getPrecioVenta()*producto.getpDescuento())
-        )*producto.getExistencias();
+        )*producto.getExistencias());
         BuscarCliente2Controller.controller.setLabelTotal("Total: "+BuscarCliente2Controller.controller.total);
     }
 

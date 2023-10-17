@@ -21,33 +21,26 @@ public class Insercion {
     }
 
 
-    public static boolean nuevoUsuario(
-            String idusuario,String nombres,String telefono,
-            String tipoDocumento,String numDocumento,String direccion,
-            String correo,String tipoUsuario,String nombreUsuario,
-            String contrasena
+    public static boolean nuevoUsuario(String nombres,String telefono,
+                                       String tipoDocumento,String numDocumento,String direccion,
+                                       String correo,String tipoUsuario,String nombreUsuario,
+                                       String contrasena
     ) {
         conectar();
-        // TODO Verificar que los argumentos no sean nulos o vacíos
-       /* if (nombre == null || email == null || contrasena == null) {
-            return false;
-        }*/
 
-        // Consulta SQL para insertar un nuevo usuario
-        String sql = "INSERT INTO usuarios (idusuario,nombres,telefono,tipoDocumento,numDocumento," +
-                "direccion,correo,tipoUsuario,nombreUsuario,contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombres,telefono,tipoDocumento,numDocumento," +
+                "direccion,correo,tipoUsuario,nombreUsuario,contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, idusuario);
-            statement.setString(2, nombres);
-            statement.setString(3, telefono);
-            statement.setString(4, tipoDocumento);
-            statement.setString(5, numDocumento);
-            statement.setString(6, direccion);
-            statement.setString(7, correo);
-            statement.setString(8, tipoUsuario);
-            statement.setString(9, nombreUsuario);
-            statement.setString(10, contrasena);
+            statement.setString(1, nombres);
+            statement.setString(2, telefono);
+            statement.setString(3, tipoDocumento);
+            statement.setString(4, numDocumento);
+            statement.setString(5, direccion);
+            statement.setString(6, correo);
+            statement.setString(7, tipoUsuario);
+            statement.setString(8, nombreUsuario);
+            statement.setString(9, contrasena);
 
             // Ejecutar la consulta de inserción
             int filasAfectadas = statement.executeUpdate();
@@ -62,8 +55,8 @@ public class Insercion {
     }
 
     public static boolean nuevoCliente(String nombres,String telefono,
-            String tipoDocumento,String numDocumento,String direccion,
-            String correo,String tipoPersona,String responsableDeIva, String clienteFrecuente)
+                                       String tipoDocumento,String numDocumento,String direccion,
+                                       String correo,String tipoPersona,String responsableDeIva, String clienteFrecuente)
 
     {
         conectar();
@@ -98,7 +91,7 @@ public class Insercion {
     }
 
     public static boolean empresas_proveedoras(
-            String idempresaProveedora,String nombre,String nit,
+            String nombre,String nit,
             String banco,String cuentaBancaria,String formasDePago)
 
     {
@@ -107,16 +100,16 @@ public class Insercion {
 
 
         // Consulta SQL para insertar un nuevo cliente
-        String sql = "INSERT INTO empresas_proveedoras (idempresaProveedora,nombre,nit,banco,cuentaBancaria,formasDePago" +
-                ")VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria,formasDePago" +
+                ")VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, idempresaProveedora);
-            statement.setString(2, nombre);
-            statement.setString(3, nit);
-            statement.setString(4, banco);
-            statement.setString(5, cuentaBancaria);
-            statement.setString(6, formasDePago);
+            statement.setString(1, nombre);
+            statement.setString(2, nit);
+            statement.setString(3, banco);
+            statement.setString(4, cuentaBancaria);
+            statement.setString(5, formasDePago);
+
 
             // Ejecutar la consulta de inserción
             int filasAfectadas = statement.executeUpdate();
@@ -130,20 +123,47 @@ public class Insercion {
         }
     }
 
-    public static boolean facturasDeCompra(String idfacturaDeCompra,String nombreVendedor,
-                                    String formasDePago,String fechaYHora,String total)
+    public static boolean facturasDeCompra(String nombreVendedor,
+                                           String formasDePago,String fechaYHora,String total)
     {
         conectar();
 
-        String sql = "INSERT INTO facturas_de_compra (idfacturaDeCompra,nombreVendedor,formasDePago,fechaYHora,total"+
-                ")VALUES ( ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO facturas_de_compra (nombreVendedor,formasDePago,fechaYHora,total"+
+                ")VALUES ( ?, ?, ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, idfacturaDeCompra);
-            statement.setString(2, nombreVendedor);
+            statement.setString(1, nombreVendedor);
+            statement.setString(2, formasDePago);
+            statement.setString(3, fechaYHora);
+            statement.setString(4, total);
+
+            int filasAfectadas = statement.executeUpdate();
+
+            connection.close();
+
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean facturasDeVenta(String fechaYHora,
+                                          String consecutivoDian,String formasDePago,String total)
+    {
+        conectar();
+
+        String sql = "INSERT INTO facturas_de_venta (fechaYHora,consecutivoDian,formasDePago,total"+
+                ")VALUES ( ?, ?, ?, ?)";
+
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, fechaYHora);
+            statement.setString(2, consecutivoDian);
             statement.setString(3, formasDePago);
-            statement.setString(4, fechaYHora);
-            statement.setString(5, total);
+            statement.setString(4, total);
+
 
             int filasAfectadas = statement.executeUpdate();
 
@@ -158,25 +178,20 @@ public class Insercion {
 
     }
 
-    public static boolean facturasDeVenta(String idfacturaDeVenta,String fechaYHora,
-                                   String consecutivoDian,String formasDePago,String total)
+    public static boolean ferreterias(String nombre, String telefono,String nit,String direccion,String correo)
     {
         conectar();
 
-        String sql = "INSERT INTO facturas_de_venta (idfacturaDeVenta,fechaYHora,consecutivoDian,formaDePago,FERRETERIA_idferreteria," +
-                "USUARIOS_idusuario," +
-                "CLIENTES_idcliente,total"+
-                ")VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ferreterias (nombre,telefono,nit,direccion,"+
+                "correo)VALUES (?, ?, ?, ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, idfacturaDeVenta);
-            statement.setString(2, fechaYHora);
-            statement.setString(3, consecutivoDian);
-            statement.setString(4, formasDePago);
-            statement.setString(5, "1");
-            statement.setString(6, "1");
-            statement.setString(7, "1");
-            statement.setString(8, total);
+            statement.setString(1, nombre);
+            statement.setString(2, telefono);
+            statement.setString(3, nit);
+            statement.setString(4, direccion);
+            statement.setString(5, correo);
+
 
             int filasAfectadas = statement.executeUpdate();
 
@@ -191,21 +206,15 @@ public class Insercion {
 
     }
 
-    public static boolean ferreterias(String idferreteria,String nombre,
-                               String telefono,String nit,String direccion,String correo)
+    public static boolean inventarios(String valorVentas, String fecha)
     {
         conectar();
 
-        String sql = "INSERT INTO ferreterias (idfacturaDeVenta,fechaYHora,consecutivoDian,formasDePago,total"+
-                "correo)VALUES ( ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO inventarios (valorVentas,fecha"+")VALUES ( ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, idferreteria);
-            statement.setString(2, nombre);
-            statement.setString(3, telefono);
-            statement.setString(4, nit);
-            statement.setString(5, direccion);
-            statement.setString(1,correo);
+            statement.setString(1, valorVentas);
+            statement.setString(2, fecha);
 
             int filasAfectadas = statement.executeUpdate();
 
@@ -220,53 +229,28 @@ public class Insercion {
 
     }
 
-    public static boolean inventarios(String idinventario,String valorVentas,
-                               String fecha)
+    public static boolean productos(String codigo,String nombre,
+                                    String descripcion,String existencia,String pDescuento,
+                                    String pIva,String precioCompra,String precioVenta,
+                                    String cantidadMinima,String cantidadMaxima)
     {
         conectar();
 
-        String sql = "INSERT INTO inventarios (idinventario,valorVentas,fecha"+")VALUES ( ?, ?, ?)";
-
-        try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, idinventario);
-            statement.setString(2, valorVentas);
-            statement.setString(3, fecha);
-
-            int filasAfectadas = statement.executeUpdate();
-
-            connection.close();
-
-            return filasAfectadas > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
-    public static boolean productos(String idproducto,String codigo,String nombre,
-                             String descripcion,String existencia,String pDescuento,
-                             String pIva,String precioCompra,String precioVenta,
-                             String cantidadMinima,String cantidadMaxima)
-    {
-        conectar();
-
-        String sql = "INSERT INTO productos (idproducto,codigo,nombre,descripcion,existencia," +
-                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO productos (codigo,nombre,descripcion,existencia," +
+                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, idproducto);
-            statement.setString(2, codigo);
-            statement.setString(3, nombre);
-            statement.setString(4, descripcion);
-            statement.setString(5, existencia);
-            statement.setString(6, pDescuento);
-            statement.setString(7, pIva);
-            statement.setString(8, precioCompra);
-            statement.setString(9, precioVenta);
-            statement.setString(10, cantidadMinima);
-            statement.setString(11, cantidadMaxima);
+            statement.setString(1, codigo);
+            statement.setString(2, nombre);
+            statement.setString(3, descripcion);
+            statement.setString(4, existencia);
+            statement.setString(5, pDescuento);
+            statement.setString(6, pIva);
+            statement.setString(7, precioCompra);
+            statement.setString(8, precioVenta);
+            statement.setString(9, cantidadMinima);
+            statement.setString(10, cantidadMaxima);
 
 
             int filasAfectadas = statement.executeUpdate();
@@ -279,10 +263,98 @@ public class Insercion {
             return false;
         }
     }
+    public static boolean empresas_proveedoras_has(){
+
+        int idEmpresaProveedora = 1;
+        int idFormaDePago = 2;
+
+        conectar();
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO empresas_proveedoras_has_formas_de_pago(EMPRESAS_PROVEEDORAS_idempresaProveedora," +
+                " FORMAS_DE_PAGO_idforma_de_pago) VALUES (?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idEmpresaProveedora);
+            preparedStatement.setInt(2, idFormaDePago);
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
+    }
+
+    public static boolean facturas_de_compra_has(String cantidadProducto){
+
+        int idFacturaDeCompra = 1;
+        int idProducto = 2;
+
+        conectar();
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO facturas_de_compra_has_productos(FACTURAS_DE_COMPRA_idfacturaDeCompra," +
+                " PRODUCTOS_idproducto,cantidadProducto) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idFacturaDeCompra);
+            preparedStatement.setInt(2, idProducto);
+            preparedStatement.setDouble(3, Double.parseDouble(cantidadProducto));
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
+    }
+
+/*    public static boolean facturas_de_compra_has(String cantidadProductos
+    ){
+
+        int idInventario = 1;
+        int idProducto = 2;
+
+        conectar();
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO facturas_de_compra_has_productos(INVENTARIO_idinventario," +
+                " PRODUCTOS_idproducto,cantidadProductos) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idInventario);
+            preparedStatement.setInt(2, idProducto);
+            preparedStatement.setDouble(3, Double.parseDouble(cantidadProducto));
+
+            int filasAfectadas = preparedStatement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
+    }*/
+
+
 
     public static void main(String[] args) {
-         Insercion.nuevoUsuario("7","nombres","telefono","tipoDocumento","numDocumento",
-        "direccion","correo","tipoUsuario","nombreUsuario","contrasena");
+        Insercion.nuevoUsuario("nombres","telefono","tipoDocumento","numDocumento",
+                "direccion","correo","tipoUsuario","nombreUsuario","contrasena");
     }
 
 }
