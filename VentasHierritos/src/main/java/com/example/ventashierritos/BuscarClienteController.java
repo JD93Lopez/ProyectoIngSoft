@@ -28,17 +28,7 @@ public class BuscarClienteController {
 
         if(cliente.getId()!=null) {
             clienteActual = cliente;
-            textArea.setText("\n    Nombres: " + cliente.getNombres() + "\n    "
-                    + cliente.getTipoDocumento().toString().toLowerCase() + ": " + cliente.getNumDocumento() + "\n    "
-                    + "\n    Teléfono: " + cliente.getTelefono() + "\n    "
-                    + "\n    Dirección: " + cliente.getDireccion() + "\n    "
-                    + "Correo Electrónico: " + cliente.getCorreo() + "\n    "
-                    + "\n    Tipo de persona: " + cliente.getTipoPersona().toString().toLowerCase() + "\n    "
-                    + "Responsable de Iva: " + (cliente.getResponsableDeIva() ? "Sí" : "No") + "\n    "
-                    + "\n    \n    \n    "
-                    + "Cliente Frecuente: " + (cliente.getClienteFrecuente() ? "Sí" : "No") + "\n    "
-                    + "ID interno: " + cliente.getId() + "\n    "
-            );
+            dibujarCliente();
         }else if(textfieldBuscar.getText().equals("")){
             textArea.setText("\n    Rellene la barra de búsqueda con el teléfono o cédula\n    del cliente por favor. ");
         }else{
@@ -72,6 +62,9 @@ public class BuscarClienteController {
     }
 
     public void clickBotonAgCliente( ) {
+        if(!textfieldBuscar.getText().equals("")){
+            AgregarClienteController.controller.textfieldNumTel.setText(textfieldBuscar.getText());
+        }
         Main.mainStage.setScene(AgregarClienteController.scene);
     }
 
