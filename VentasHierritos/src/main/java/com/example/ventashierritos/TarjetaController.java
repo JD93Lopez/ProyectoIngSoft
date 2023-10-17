@@ -14,6 +14,8 @@ public class TarjetaController {
     TarjetaController controller;
 
     @FXML
+    private Label labelDto;
+    @FXML
     ImageView imageWarning;
     @FXML
     private VBox vBoxTarjeta;
@@ -47,10 +49,12 @@ public class TarjetaController {
             //TODO verificar cantidad vendida menor que existencias
             producto.setExistencias(Double.valueOf(textFieldCantidad.getText()));
             BuscarCliente2Controller.controller.insertarTarjetaPequena(producto);
-            BuscarCliente2Controller.controller.total+=((
-                    producto.getPrecioVenta()-(producto.getPrecioVenta()*producto.getpDescuento())
-            )*producto.getExistencias());
-            BuscarCliente2Controller.controller.setLabelTotal("Total: "+BuscarCliente2Controller.controller.total);
+            double total = BuscarCliente2Controller.controller.total;
+            double totalPorCantidad = producto.getPrecioVenta()*producto.getExistencias();
+            double descuento = totalPorCantidad*producto.getpDescuento();
+            double granTotal = totalPorCantidad - descuento;
+            BuscarCliente2Controller.controller.total+=granTotal;
+            BuscarCliente2Controller.controller.setLabelTotal("Total: "+(total+granTotal));
         }catch (Exception e){
             cuadroValorNoNumerico();
         }
@@ -73,6 +77,14 @@ public class TarjetaController {
     }
     public void setLabelPrecio(String precio) {
         this.labelPrecio.setText("$"+precio);
+    }
+    public void setLabelDto(double dto) {
+        if(dto!=0){
+            labelDto.setText("Dto: "+(dto*100)+"%");
+        }else {
+            labelDto.setText("SinDto");
+        }
+
     }
 
     public String getTextFieldCantidad() {

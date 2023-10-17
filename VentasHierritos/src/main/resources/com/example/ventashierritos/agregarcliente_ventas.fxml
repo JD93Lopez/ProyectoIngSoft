@@ -23,20 +23,6 @@
                   <Image url="@Images/logo.png" />
                </image>
             </ImageView>
-            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="546.0" style="-fx-background-color: C5D0F6; -fx-background-radius: 20; -fx-max-height: 30; -fx-translate-y: 33; -fx-padding: 4; -fx-spacing: 10;">
-               <children>
-                  <TextField fx:id="textfieldBuscar" prefHeight="0.0" prefWidth="429.0" promptText="Decoración" style="-fx-background-radius: 20;">
-                     <font>
-                        <Font name="Segoe UI" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Button fx:id="botonBuscar" mnemonicParsing="false" onAction="#clickBotonBuscar" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: F6F7FF; -fx-background-radius: 20; -fx-pref-height: 17; -fx-max-height: 17;" text="Buscar" textFill="#0e103c">
-                     <font>
-                        <Font name="Segoe UI Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
          </children>
       </HBox>
       <VBox alignment="TOP_CENTER" maxWidth="911.0" prefHeight="346.0" prefWidth="900.0" style="-fx-spacing: 20;">

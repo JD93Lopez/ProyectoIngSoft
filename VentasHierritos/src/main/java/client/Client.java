@@ -1,6 +1,7 @@
 package client;
 
 import clases.Cliente;
+import clases.FacturaVenta;
 import clases.Producto;
 import clases.Usuario;
 import interfaces.RMIVentas;
@@ -100,6 +101,17 @@ public class Client implements RMIVentas {
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.enviarFactura(facturaVenta);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return -3;
         }
     }
 

@@ -5,6 +5,7 @@ import client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -21,7 +22,7 @@ public class InicioDeSesionController {
     private TextField textfieldUsuario;
 
     @FXML
-    private TextField textfieldContrasena;
+    private PasswordField textfieldContrasena;
 
     static Usuario vendedorActual;
     @FXML

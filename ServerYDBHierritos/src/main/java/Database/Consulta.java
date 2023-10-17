@@ -80,6 +80,7 @@ public class Consulta {
 
 
             if (resultSet.next()) {
+                usuario.setId(resultSet.getString("idusuario"));
                 usuario.setNombres(resultSet.getString("nombres"));
                 usuario.setTelefono(resultSet.getString("telefono"));
                 usuario.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));

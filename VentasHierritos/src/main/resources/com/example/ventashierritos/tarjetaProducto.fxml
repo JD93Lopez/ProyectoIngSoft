@@ -19,7 +19,7 @@
          <children>
             <VBox prefHeight="138.0" prefWidth="174.0" style="-fx-spacing: 5;">
                <children>
-                  <Label fx:id="labelDescProducto" prefHeight="68.0" prefWidth="174.0" text="Increíble y maravillosa descipción del increíble y maravilloso producto que vendemos en esta hermosa ferretería." textOverrun="CLIP" wrapText="true">
+                  <Label fx:id="labelDescProducto" alignment="TOP_LEFT" prefHeight="68.0" prefWidth="174.0" text="Increíble y maravillosa descipción del increíble y maravilloso producto que vendemos en esta hermosa ferretería." textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Segoe UI" size="11.0" />
                      </font>
@@ -31,7 +31,7 @@
                               <Font name="Segoe UI" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textFieldCantidad" alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="142.0" style="-fx-background-radius: 5; -fx-background-color: white;" text="1">
+                        <TextField fx:id="textFieldCantidad" alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="136.0" style="-fx-background-radius: 5; -fx-background-color: white;" text="1">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
@@ -40,9 +40,14 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="31.0" prefWidth="168.0">
                      <children>
-                        <Label fx:id="labelPrecio" text="\$500" textFill="#0e103c">
+                        <Label fx:id="labelPrecio" prefHeight="23.0" prefWidth="84.0" text="\$500" textFill="#0e103c">
                            <font>
-                              <Font name="Segoe UI" size="18.0" />
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelDto" alignment="CENTER" prefHeight="23.0" prefWidth="82.0" style="-fx-background-color: f7725d; -fx-background-radius: 5;" text="Dto: 100%" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -51,7 +56,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="72.0" style="-fx-padding: 5; -fx-spacing: 5;">
                <children>
-                  <ImageView fx:id="imageOk" onMouseClicked="#clickBotonChulito" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageOk" fitHeight="52.0" fitWidth="52.0" onMouseClicked="#clickBotonChulito" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/okey.png" />
                      </image></ImageView>

@@ -42,6 +42,7 @@ public class Main extends Application{
         fxmlLoader = new FXMLLoader(Main.class.getResource("factura.fxml"));
         scene = new Scene(fxmlLoader.load());
         FacturaController.scene = scene;
+        FacturaController.controller = fxmlLoader.getController();
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaproducto2.fxml"));
         scene = new Scene(fxmlLoader.load());

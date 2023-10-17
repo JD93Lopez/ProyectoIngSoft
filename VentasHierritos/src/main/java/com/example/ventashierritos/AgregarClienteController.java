@@ -17,8 +17,6 @@ public class AgregarClienteController {
     static Scene scene;
     static AgregarClienteController controller;
     @FXML
-    TextField textfieldBuscar;
-    @FXML
     TextField textfieldNombres;
     @FXML
     TextField textfieldNumTel;
@@ -107,7 +105,6 @@ public class AgregarClienteController {
     }
 
     void limpiarCampos() {
-        textfieldBuscar.setText("");
         textfieldNombres.setText("");
         textfieldNumTel.setText("");
         textfieldNumDoc.setText("");

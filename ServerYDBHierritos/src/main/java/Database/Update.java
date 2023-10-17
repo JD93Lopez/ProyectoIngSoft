@@ -71,6 +71,33 @@ public class Update {
         }
 
     }
+    public static boolean consecutivoDian(String id) {
+        boolean bool = false;
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE `db_hierritos`.`facturas_de_venta` SET `consecutivoDian` = ? WHERE (`idfacturaDeVenta` = ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            preparedStatement.setString(2,id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return bool;
+        }
+
+    }
+    /*UPDATE `db_hierritos`.`facturas_de_venta` SET `consecutivoDian` = '2' WHERE (`idfacturaDeVenta` = '1');*/
 
     public static void main(String[] args) {
         Update.restarExistencias(20,"1");

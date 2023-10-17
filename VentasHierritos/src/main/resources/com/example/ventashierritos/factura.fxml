@@ -57,6 +57,12 @@
             </Pane>
             <VBox alignment="BOTTOM_CENTER" prefHeight="508.0" prefWidth="237.0" style="-fx-spacing: 10; -fx-padding: 30;">
                <children>
+                  <Label fx:id="labelIdFactura" prefHeight="30.0" prefWidth="548.0" style="-fx-translate-y: 33; -fx-max-height: 30;" text="ID: ">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
                   <Button fx:id="botonSalir" mnemonicParsing="false" onAction="#clickBotonSalir" prefHeight="37.0" prefWidth="184.0" style="-fx-background-color: #0e103c;" text="Salir" textFill="#f7f7f7">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />

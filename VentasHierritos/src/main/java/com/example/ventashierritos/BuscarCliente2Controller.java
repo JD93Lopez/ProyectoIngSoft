@@ -7,6 +7,8 @@ import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -35,7 +37,15 @@ public class BuscarCliente2Controller {
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonAceptar() {
-        armarFactura();
+        FacturaVenta facturaVenta = armarFactura();
+        int id;
+        try {
+            id = Client.client.enviarFactura(facturaVenta);
+        } catch (RemoteException e) {
+            id = -4;
+            throw new RuntimeException(e);
+        }
+        FacturaController.controller.setLabelIdFactura(""+id);
         Main.mainStage.setScene(FacturaController.scene);
     }
 
@@ -55,8 +65,28 @@ public class BuscarCliente2Controller {
     }
 
     private EmpresaProveedora.FormaDePago cuadroFormaDePago() {
-        //TODO
-        return EmpresaProveedora.FormaDePago.EFECTIVO;
+        // Crear un cuadro de diálogo emergente (Alert) de tipo Confirmación
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Método de Pago");
+        alert.setHeaderText("Selecciona un método de pago:");
+
+        // Crear un ChoiceBox para seleccionar el método de pago
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.getItems().addAll("Efectivo", "Tarjeta", "Transferencia");
+        choiceBox.setValue("Efectivo"); // Opción predeterminada
+
+        // Agregar el ChoiceBox al contenido del cuadro de diálogo
+        VBox vbox = new VBox(choiceBox);
+        alert.getDialogPane().setContent(vbox);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario seleccione una opción
+        alert.showAndWait();
+
+        // Obtener la opción seleccionada y retornarla como un String
+        String metodoSeleccionado = choiceBox.getValue();
+
+        // Llamar al método que procesa la opción seleccionada (puedes hacer lo que necesites aquí)
+        return  Enum.valueOf(EmpresaProveedora.FormaDePago.class,metodoSeleccionado.toUpperCase());
     }
 
     public void clickBotonCancelar() {
@@ -85,6 +115,7 @@ public class BuscarCliente2Controller {
         tarjetaController.setLabelDescProducto(producto.getDescripcion());
         tarjetaController.setLabelPrecio(""+producto.getPrecioVenta());
         tarjetaController.setTextFieldCantidad("1");
+        tarjetaController.setLabelDto(producto.getpDescuento());
 
         gridPane1.add(tarjeta, col++, fil);
         if (col == 2) {

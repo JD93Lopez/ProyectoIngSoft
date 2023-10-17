@@ -90,8 +90,8 @@ COMMENT = 'En esta tabla se almacenan los datos de la ferreterría.';
 -- Table `DB_Hierritos`.`FACTURAS_DE_VENTA`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_VENTA` (
-  `idfacturaDeVenta` INT NOT NULL COMMENT 'Este es el identificador de la Factura de Venta.',
-  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y hora del dia en que se realice la venta de los productos.',
+  `idfacturaDeVenta` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la Factura de Venta.',
+  `fechaYHora` TIMESTAMP(6) NOT NULL COMMENT 'Aqui se almacena la fecha y hora del dia en que se realice la venta de los productos.',
   `consecutivoDian` INT NOT NULL COMMENT 'Este es un identificador que da la Dian para cada factura.',
   `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacenan la forma de pago con la que se realizo la compra.',
   `FERRETERIA_idferreteria` INT NOT NULL COMMENT 'Llave foranea de la tabla Ferreteria.',
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_COMPRA` (
   `nombreVendedor` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del vendedor que realiza la compra de los productos.',
   `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la forma de pago con la cual se realiza la compra de productos.',
   `EMPRESAS_PROVEEDORAS_idempresaProveedora` INT NOT NULL COMMENT 'Llave foranea de Empresas proveedoras.',
-  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y la hora en que se realizo la compra de los productos.',
+  `fechaYHora` TIMESTAMP(6) NOT NULL COMMENT 'Aqui se almacena la fecha y la hora en que se realizo la compra de los productos.',
   `total` DOUBLE NOT NULL COMMENT 'Aqui se almacena el total de la compra de todos los productos.',
   PRIMARY KEY (`idfacturaDeCompra`),
   INDEX `fk_FACTURAS_DE_COMPRA_EMPRESAS_PROVEEDORAS1_idx` (`EMPRESAS_PROVEEDORAS_idempresaProveedora` ASC) VISIBLE,

@@ -2,7 +2,9 @@ package server;
 
 import Database.Consulta;
 import Database.Insercion;
+import Database.Update;
 import clases.Cliente;
+import clases.FacturaVenta;
 import clases.Producto;
 import clases.Usuario;
 import interfaces.RMIVentas;
@@ -89,6 +91,27 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     @Override
     public Usuario obtenerVendedor(String usuario, String contrasena) throws RemoteException {
         return Consulta.obtenerUsuarioPorNombre(usuario,contrasena);
+    }
+
+    @Override
+    public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException {
+        int entero=-1;
+        try{
+            Insercion.facturasDeVenta(
+                    "10-10-10",
+                    "1",
+                    facturaVenta.getFormaDePago().toString(),
+                    "1",
+                    facturaVenta.getVendedor().getId(),
+                    facturaVenta.getCliente().getId(),
+                    ""+facturaVenta.getTotal()
+            );
+            entero = Integer.valueOf(Consulta.ultimaFacturaVenta());
+            Update.consecutivoDian(""+entero);
+        }catch (Exception e){
+            entero = -2;
+        }
+        return entero;
     }
 
 }
