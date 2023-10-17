@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AdminHierritos/AdminHierritos.iml" filepath="$PROJECT_DIR$/AdminHierritos/AdminHierritos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AlmacenHierritos/AlmacenHierritos.iml" filepath="$PROJECT_DIR$/AlmacenHierritos/AlmacenHierritos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ServerYDBHierritos/DB_Hierritos.iml" filepath="$PROJECT_DIR$/ServerYDBHierritos/DB_Hierritos.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ProyectoIngSoft.iml" filepath="$PROJECT_DIR$/.idea/ProyectoIngSoft.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ServerHierritos/ServerHierritos.iml" filepath="$PROJECT_DIR$/ServerHierritos/ServerHierritos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/VentasHierritos/VentasHierritos.iml" filepath="$PROJECT_DIR$/VentasHierritos/VentasHierritos.iml" />
     </modules>
   </component>
 </project>

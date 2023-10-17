@@ -23,7 +23,7 @@ public class InicioDeSesionController {
 
     @FXML
     protected void clickBotonInicio() {
-        stage.setScene(MenuController.scene);
+        Main.mainStage.setScene(MenuController.scene);
         textfieldContrasena.setText("1234");
     }
 /*

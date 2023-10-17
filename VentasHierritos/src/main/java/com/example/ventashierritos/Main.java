@@ -7,10 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application{
-
     public static Stage mainStage;
-
-
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("inicio_sesion1.fxml"));
@@ -34,11 +31,9 @@ public class Main extends Application{
         scene = new Scene(fxmlLoader.load());
         BuscarCliente2Controller.scene = scene;
 
-
         fxmlLoader = new FXMLLoader(Main.class.getResource("cotizacion.fxml"));
         scene = new Scene(fxmlLoader.load());
         CotizacionController.scene = scene;
-
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("factura.fxml"));
         scene = new Scene(fxmlLoader.load());

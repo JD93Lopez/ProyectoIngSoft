@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import java.time.temporal.Temporal;
 
 public class AgregarClienteController {
-
     static Scene scene;
     @FXML
     TextField textfieldBuscar;
