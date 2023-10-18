@@ -437,9 +437,7 @@ public class Consulta {
                 producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
                 producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
                 producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
-                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));producto.setPrecioTotal(Double.parseDouble(resultSet.getString("precioTotal")));
-
-
+                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -659,7 +657,7 @@ public class Consulta {
         }
     }
 
-    public static LinkedList<Producto> listaIdInventarioHasProcutos(String idinventario) {
+    public static LinkedList<Producto> listaIdInventarioHasProductos(String idinventario) {
         LinkedList<Producto> productos = new LinkedList<>();
         ResultSet resultSet = null;
 

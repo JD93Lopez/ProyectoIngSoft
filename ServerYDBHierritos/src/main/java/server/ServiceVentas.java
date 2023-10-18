@@ -95,7 +95,6 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException {
         int entero=-1;
         try{
-            //TODO fechaYHora
             Insercion.facturasDeVenta(
                     ""+facturaVenta.getConsecutivoDian(),
                     facturaVenta.getFormaDePago().toString(),
@@ -110,8 +109,11 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
                 Update.consecutivoDian(""+entero);
                 restarProductosDeInventario(facturaVenta.getProductos());
             }
-            //TODO hacer pdf
-            //AbrirPdf.abrirPdf(""+entero);
+            facturaVenta.setIdFacturaVenta(entero);
+            facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
+            CreatePDF createPDF = new CreatePDF(facturaVenta);
+            createPDF.getPDF();
+            AbrirPdf.abrirPdf(""+entero);
         }catch (Exception e){
             entero = -2;
             e.printStackTrace();
@@ -135,8 +137,8 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         if(bool){
             restarProductosDeInventario(productosId);
             facturaVenta = obtenerFacturaVenta(id);
-            //TODO hacer pdf
-            //AbrirPdf.abrirPdf(""+id);
+            CreatePDF createPDF = new CreatePDF(facturaVenta);
+            AbrirPdf.abrirPdf(""+id);
         }
         return facturaVenta;
     }

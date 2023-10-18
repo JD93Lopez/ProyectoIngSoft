@@ -150,7 +150,7 @@ public class Insercion {
 
     }
 
-    public static boolean facturasDeVenta(String fechaYHora,
+    public static boolean facturasDeVenta(
                                           String consecutivoDian,String formaDePago,String idFerretería,String idUsuario,String idCliente,String total)
     {
         conectar();
@@ -158,16 +158,15 @@ public class Insercion {
         String sql = "INSERT INTO facturas_de_venta (fechaYHora,consecutivoDian,formaDePago,FERRETERIA_idferreteria," +
                 "USUARIOS_idusuario," +
                 "CLIENTES_idcliente,total"+
-                ")VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+                ")VALUES ( NOW(), ?, ?, ?, ?, ?, ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, fechaYHora);
-            statement.setString(2, consecutivoDian);
-            statement.setString(3, formaDePago);
-            statement.setString(4, "1");
-            statement.setString(5, idUsuario);
-            statement.setString(6, idCliente);
-            statement.setString(7, total);
+            statement.setString(1, consecutivoDian);
+            statement.setString(2, formaDePago);
+            statement.setString(3, "1");
+            statement.setString(4, idUsuario);
+            statement.setString(5, idCliente);
+            statement.setString(6, total);
 
 
             int filasAfectadas = statement.executeUpdate();
@@ -290,6 +289,31 @@ public class Insercion {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static boolean productos_has_facturas_de_venta(String idFactura,String idProducto,String cantidadProducto){
+
+        conectar();
+        String sql = "INSERT INTO productos_has_facturas_de_venta (PRODUCTOS_idproducto," +
+                " FACTURAS_DE_VENTA_idfacturaDeVenta,cantidadProducto) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, idProducto);
+            statement.setString(2, idFactura);
+            statement.setDouble(3, Double.parseDouble(cantidadProducto));
+
+            int filasAfectadas = statement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
     }
 
     public static void main(String[] args) {
