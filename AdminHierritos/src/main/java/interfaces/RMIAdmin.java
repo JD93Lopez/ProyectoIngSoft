@@ -23,5 +23,4 @@ public interface RMIAdmin extends Remote {
     public Usuario buscarUsuario (String telefono) throws RemoteException;
     public  Cliente actualizarCliente (Cliente cliente) throws RemoteException;
 
-    public Cliente actualizarCliente (Cliente cliente) throws RemoteException;
 }
