@@ -191,6 +191,7 @@ public class BuscarCliente2Controller {
             gridPane2.getChildren().remove(tarjeta2.getTarjeta());
         }
         BuscarCliente2Controller.controller.total=0;
+        BuscarCliente2Controller.controller.setLabelTotal(""+0);
         BuscarCliente2Controller.tarjetasInventario.clear();
         BuscarCliente2Controller.tarjetasProductosSeleccionados.clear();
         dibujarTarjetasProductos();
