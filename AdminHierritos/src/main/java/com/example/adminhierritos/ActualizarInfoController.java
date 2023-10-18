@@ -3,6 +3,7 @@ package com.example.adminhierritos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -19,29 +20,43 @@ public class ActualizarInfoController {
     VBox VboxDisplay;
 
     public void ClickBotonCliente( ) {
-
-        cargarFxml("cliente_actualizarinfo_admin.fxml");
-
-
+        cargarFxmlCliente("cliente_actualizarinfo_admin.fxml");
     }
 
     public void ClickBotonUsuario() {
-        cargarFxml("usuario_actualizarinfo_admin.fxml");
+        cargarFxmlUsuario("usuario_actualizarinfo_admin.fxml");
     }
 
     public void ClickBotonVolver( ) {
         Main.mainStage.setScene(MenuController.scene);
     }
 
-    private void cargarFxml(String archivoFxml) {
+    private void cargarFxmlUsuario(String archivoFxml) {
         VboxDisplay.getChildren().clear();  // Limpiar el contenido actual
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
         try {
-            newVbox = fxmlLoader.load();
-            VboxDisplay.getChildren().add(newVbox);
+            fxmlLoader.load();
+            UsuarioActualizarInfoController.controller = fxmlLoader.getController();
+            UsuarioActualizarInfoController.controller.desplegables();
+            VboxDisplay.getChildren().add(UsuarioActualizarInfoController.controller.vBox);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void cargarFxmlCliente(String archivoFxml) {
+        VboxDisplay.getChildren().clear();  // Limpiar el contenido actual
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ClienteActualizarInfoController.controller = fxmlLoader.getController();
+        ClienteActualizarInfoController.controller.desplegables();
+
+        //   newVbox = fxmlLoader.load();
+        VboxDisplay.getChildren().add(ClienteActualizarInfoController.controller.VBoxgrande);
+
+    }
 }

@@ -1,6 +1,7 @@
 package Client;
 
 import clases.Cliente;
+import clases.Persona;
 import clases.Usuario;
 import clases.Vendedor;
 import interfaces.RMIAdmin;
@@ -106,6 +107,17 @@ public class Client implements RMIAdmin {
         try {
             service = (RMIAdmin) Naming.lookup(url);
             return service.buscarUsuario(telefono);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.actualizarCliente(cliente);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
