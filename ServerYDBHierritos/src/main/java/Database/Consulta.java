@@ -630,6 +630,47 @@ public class Consulta {
         }
     }
 
+    public static LinkedList<EmpresaProveedora> listaProveedores() {
+        LinkedList<EmpresaProveedora> proveeedor = new LinkedList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM empresas_proveedoras";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+
+                EmpresaProveedora proveedor= new EmpresaProveedora();
+                proveedor.setId(resultSet.getInt("idempresaProveedora"));
+                proveedor.setNombre(resultSet.getString("nombre"));
+                proveedor.setNit(resultSet.getString("nit"));
+                proveedor.setBanco(resultSet.getString("banco"));
+                proveedor.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return proveeedor;
+
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
     }

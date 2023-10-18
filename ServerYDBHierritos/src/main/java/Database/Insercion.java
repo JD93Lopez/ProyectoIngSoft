@@ -342,7 +342,6 @@ public class Insercion {
             }
         } catch (SQLException e) {
             System.err.println("Error de base de datos: " + e.getMessage());
-
         }
         return false;
     }
