@@ -121,12 +121,12 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     }
 
     @Override
-    public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
-        boolean bool = false;
+    public FacturaVenta pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
+        FacturaVenta facturaVenta = null;
         LinkedList<Producto> productosId = new LinkedList<>();
+        boolean bool = false;
         try{
             productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
-            System.out.println(id);
             Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
             Update.consecutivoDian(id);
             bool = true;
@@ -135,11 +135,11 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         }
         if(bool){
             restarProductosDeInventario(productosId);
-            //FacturaVenta facturaVenta = obtenerFacturaVenta(id);
+            facturaVenta = obtenerFacturaVenta(id);
             //TODO hacer pdf
             //AbrirPdf.abrirPdf(""+id);
         }
-        return bool;
+        return facturaVenta;
     }
 
     private FacturaVenta obtenerFacturaVenta(String id) {
@@ -158,6 +158,11 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     public boolean cantidadSuficiente(double cantidadPedida, int idProducto) throws RemoteException {
         Producto producto = Consulta.obtenerProductoPorId(""+idProducto);
         return (cantidadPedida<=producto.getExistencias());
+    }
+
+    @Override
+    public FacturaVenta buscarCotizacion(String id) throws RemoteException {
+        return obtenerFacturaVenta(id);
     }
 
     private void restarProductosDeInventario(LinkedList<Producto> productos) {

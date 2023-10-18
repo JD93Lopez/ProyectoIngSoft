@@ -1,6 +1,7 @@
 package com.example.ventashierritos;
 
 import clases.EmpresaProveedora;
+import clases.FacturaVenta;
 import client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -17,27 +18,49 @@ public class CotizacionController {
     @FXML
     TextArea textArea;
     public void clickBotonBuscar() {
-        //TODO
+        FacturaVenta facturaVenta = null;
+        try {
+            facturaVenta = Client.client.buscarCotizacion(textFieldId.getText());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        if (facturaVenta!=null){
+            CotizacionController.controller.setTextArea(
+                    "\n    Id Factura: "+facturaVenta.getIdFacturaVenta()+
+                    "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
+                    "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
+                    "\n    Productos: "+facturaVenta.getProductos().size()
+            );
+        }else{
+            cuadroErrorBuscandoCotizacion();
+        }
     }
     public void clickBotonCancelar() {
         BuscarClienteController.controller.limpiarCampos();
         textFieldId.setText("");
+        textArea.setText("");
         BuscarCliente2Controller.controller.reiniciarListasYGrids();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonPagarCot() {
-        boolean bool = false;
+        FacturaVenta facturaVenta = null;
         try {
-            bool = Client.client.pagarCotizacion(textFieldId.getText(),cuadroFormaDePago());
+            facturaVenta = Client.client.pagarCotizacion(textFieldId.getText(),cuadroFormaDePago());
         } catch (RemoteException e) {
-            bool = false;
+            facturaVenta = null;
             throw new RuntimeException(e);
         }
-        if (bool){
+        if (facturaVenta!=null){
             BuscarClienteController.controller.limpiarCampos();
-            FacturaController.controller.setLabelIdFactura(textFieldId.getText());
+            FacturaController.controller.setTextArea(
+                    "\n    Id Factura: "+facturaVenta.getIdFacturaVenta()+
+                    "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
+                    "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
+                    "\n    Productos: "+facturaVenta.getProductos().size()
+            );
             textFieldId.setText("");
             BuscarCliente2Controller.controller.reiniciarListasYGrids();
+            FacturaController.controller.setLabelIdFactura(""+facturaVenta.getIdFacturaVenta());
             Main.mainStage.setScene(FacturaController.scene);
         }else{
             cuadroErrorCotizacion();
@@ -80,6 +103,20 @@ public class CotizacionController {
         alert.setTitle("Error Pagando la Cotización");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
         alert.setContentText("Hubo un error pagando la cotización, verifique el id e inténtelo de nuevo.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void cuadroErrorBuscandoCotizacion() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error Buscando la Cotización");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("Hubo un error buscando la cotización, verifique el id e inténtelo de nuevo.");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");

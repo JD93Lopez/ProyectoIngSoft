@@ -44,9 +44,10 @@ public class BuscarCliente2Controller {
         }
         FacturaController.controller.setLabelIdFactura(""+id);
         FacturaController.controller.setTextArea(
-                "\n    Id factura: "+facturaVenta.getIdFacturaVenta()+
-                "\n    Id cliente: "+facturaVenta.getCliente().getId()+
-                "\n    Id vendedor: "+facturaVenta.getVendedor().getId()
+                "\n    Id Factura: "+id+
+                "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
+                "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
+                "\n    Productos: "+facturaVenta.getProductos().size()
         );
         Main.mainStage.setScene(FacturaController.scene);
     }
@@ -108,6 +109,12 @@ public class BuscarCliente2Controller {
             throw new RuntimeException(e);
         }
         CotizacionController.controller.setTextFieldId(""+id);
+        CotizacionController.controller.setTextArea(
+                "\n    Id Factura: "+id+
+                "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
+                "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
+                "\n    Productos: "+facturaVenta.getProductos().size()
+        );
         Main.mainStage.setScene(CotizacionController.scene);
     }
 

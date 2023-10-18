@@ -113,13 +113,13 @@ public class Client implements RMIVentas {
     }
 
     @Override
-    public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
+    public FacturaVenta pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
         try {
             service = (RMIVentas) Naming.lookup(url);
             return service.pagarCotizacion(id,formaDePago);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -131,6 +131,17 @@ public class Client implements RMIVentas {
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public FacturaVenta buscarCotizacion(String id) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.buscarCotizacion(id);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
         }
     }
 

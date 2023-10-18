@@ -228,9 +228,9 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM clientes WHERE id = ?";
+            String sql = "SELECT * FROM clientes WHERE idcliente = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idcliente);
+            preparedStatement.setInt(1,Integer.valueOf(idcliente));
             resultSet = preparedStatement.executeQuery();
 
 
@@ -385,17 +385,18 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM ferreterias WHERE id = ?";
+            String sql = "SELECT * FROM ferreterias WHERE idferreteria = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idferreteria);
             resultSet = preparedStatement.executeQuery();
 
 
             if (resultSet.next()) {
+                ferreteria.setIdFerreteria(resultSet.getInt("idferreteria"));
                 ferreteria.setNombre(resultSet.getString("nombre"));
                 ferreteria.setTelefono(resultSet.getString("telefono"));
                 ferreteria.setNit(resultSet.getString("nit"));
-                ferreteria.setDireccion(resultSet.getString("cuentaBancaria"));
+                ferreteria.setDireccion(resultSet.getString("direccion"));
                 ferreteria.setCorreo(resultSet.getString("correo"));
             }
         } catch (SQLException e) {
@@ -467,6 +468,7 @@ public class Consulta {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                producto.setIdProducto(resultSet.getInt("idproducto"));
                 producto.setCodigo(resultSet.getString("codigo"));
                 producto.setNombre(resultSet.getString("nombre"));
                 producto.setDescripcion(resultSet.getString("descripcion"));
@@ -505,13 +507,14 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM usuarios WHERE id = ?";
+            String sql = "SELECT * FROM usuarios WHERE idusuario = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idusuario);
+            preparedStatement.setInt(1,Integer.valueOf(idusuario));
             resultSet = preparedStatement.executeQuery();
 
 
             if (resultSet.next()) {
+                usuario.setId(resultSet.getString("idusuario"));
                 usuario.setNombres(resultSet.getString("nombres"));
                 usuario.setTelefono(resultSet.getString("telefono"));
                 usuario.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
