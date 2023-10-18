@@ -1,657 +1,246 @@
-package Database;
-import clases.*;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-
-public class Consulta {
-
-    public static Connection connection;
-    public static void conectar(){
-        try {
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
-                    "root",
-                    "root"
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String obtenerContraseñaPorNombre(String nombreDeUsuario) {
-        String contrasena = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-
-            conectar();
-
-            String sql = "SELECT contrasena FROM usuarios WHERE nombreUsuario = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,nombreDeUsuario);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                contrasena = resultSet.getString("contrasena");
-                //TODO recibir tipoUsuario
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return contrasena;
-        }
-
-    }
-
-
-    public static Usuario obtenerUsuarioPorNombre(String nombreUsuario, String contrasena) {
-        Usuario usuario = new Usuario();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM usuarios WHERE nombreUsuario = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,nombreUsuario);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                usuario.setId(resultSet.getString("idusuario"));
-                usuario.setNombres(resultSet.getString("nombres"));
-                usuario.setTelefono(resultSet.getString("telefono"));
-                usuario.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
-                usuario.setNumDocumento(resultSet.getString("numDocumento"));
-                usuario.setDireccion(resultSet.getString("direccion"));
-                usuario.setCorreo(resultSet.getString("correo"));
-                usuario.setTipoUsuario(Enum.valueOf(Usuario.TipoUsuario.class,resultSet.getString("tipoUsuario")));
-                usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
-                usuario.setContrasena(contrasena);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return usuario;
-        }
-
-    }
-
-    public static String ultimaFacturaVenta(){
-        String id = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT MAX(idfacturaDeVenta) AS idfacturaDeVenta FROM facturas_de_venta";
-            preparedStatement = connection.prepareStatement(sql);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                id = ""+resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return id;
-        }
-    }
-
-
-    public static Cliente obtenerClientePorTelefono(String telefono) {
-        Cliente cliente  = new Cliente();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM clientes WHERE telefono = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,telefono);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                cliente.setId(resultSet.getString("idcliente"));
-                cliente.setNombres(resultSet.getString("nombres"));
-                cliente.setDireccion(resultSet.getString("direccion"));
-                cliente.setCorreo(resultSet.getString("correo"));
-                cliente.setTelefono(resultSet.getString("telefono"));
-                cliente.setNumDocumento(resultSet.getString("numDocumento"));
-                cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
-                cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
-                cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return cliente;
-        }
-
-    }
-
-    public static Cliente obtenerClientePorCedula(String cedula) {
-        Cliente cliente  = new Cliente();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM clientes WHERE numDocumento = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,cedula);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                cliente.setId(resultSet.getString("idcliente"));
-                cliente.setNombres(resultSet.getString("nombres"));
-                cliente.setDireccion(resultSet.getString("direccion"));
-                cliente.setCorreo(resultSet.getString("correo"));
-                cliente.setTelefono(resultSet.getString("telefono"));
-                cliente.setNumDocumento(resultSet.getString("numDocumento"));
-                cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
-                cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
-                cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return cliente;
-        }
-
-    }
-
-    public static Cliente obtenerClientePorId(String idcliente) {
-        Cliente cliente  = new Cliente();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM clientes WHERE idcliente = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,Integer.valueOf(idcliente));
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                cliente.setId(resultSet.getString("idcliente"));
-                cliente.setNombres(resultSet.getString("nombres"));
-                cliente.setDireccion(resultSet.getString("direccion"));
-                cliente.setCorreo(resultSet.getString("correo"));
-                cliente.setTelefono(resultSet.getString("telefono"));
-                cliente.setNumDocumento(resultSet.getString("numDocumento"));
-                cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
-                cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
-                cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return cliente;
-        }
-
-    }
-
-    public static EmpresaProveedora obtenerEmpresaProveedoraPorId(String idempresaProveedora) {
-        EmpresaProveedora empresaProveedora  = new EmpresaProveedora();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM empresas_proveedoras WHERE idempresaProveedora = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idempresaProveedora);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                empresaProveedora.setId(Integer.parseInt(resultSet.getString("idempresaProveedora")));
-                empresaProveedora.setNombre(resultSet.getString("nombre"));
-                empresaProveedora.setNit(resultSet.getString("nit"));
-                empresaProveedora.setBanco(resultSet.getString("banco"));
-                empresaProveedora.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return empresaProveedora;
-        }
-
-    }
-
-    public static FacturaCompra obtenerFacturaCompraPorId(String idfacturaDeCompra) {
-        FacturaCompra facturaCompra  = new FacturaCompra();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM facturas_de_compra WHERE idfacturaDeCompra = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idfacturaDeCompra);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                facturaCompra.setIdFacturaCompra(Integer.parseInt(resultSet.getString("idfacturaDeCompra")));
-                facturaCompra.setNombreVendedor(resultSet.getString("nombreVendedor"));
-                facturaCompra.setFormaDePago(EmpresaProveedora.FormaDePago.valueOf(resultSet.getString("formaDePago")));
-                facturaCompra.setFechaYHora(resultSet.getString("fechaYHora"));
-                facturaCompra.setTotal(Double.parseDouble(resultSet.getString("total")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return facturaCompra;
-        }
-
-    }
-
-    public static FacturaVenta obtenerFacturaVentaPorId(String idfacturaDeVenta) {
-        FacturaVenta facturaVenta  = new FacturaVenta();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM facturas_de_venta WHERE idfacturaDeVenta = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idfacturaDeVenta);
-            resultSet = preparedStatement.executeQuery();
-
-            String idCliente=null;
-            String idVendedor=null;
-            if (resultSet.next()) {
-                facturaVenta.setIdFacturaVenta(resultSet.getInt("idfacturaDeVenta"));
-                facturaVenta.setFechaYHora(resultSet.getString("fechaYHora"));
-                facturaVenta.setConsecutivoDian(Integer.parseInt(resultSet.getString("consecutivoDian")));
-                facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,resultSet.getString("formaDePago")));
-                idCliente = resultSet.getString("CLIENTES_idcliente");
-                idVendedor = resultSet.getString("USUARIOS_idusuario");
-                facturaVenta.setTotal(Double.parseDouble(resultSet.getString("total")));
-
-            }
-            facturaVenta.setCliente(Consulta.obtenerClientePorId(idCliente));
-            facturaVenta.setVendedor(Consulta.obtenerUsuarioPorId(idVendedor));
-            facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return facturaVenta;
-        }
-
-    }
-
-    public static Ferreteria obtenerFerreteriaPorId(String idferreteria) {
-        Ferreteria ferreteria  = new Ferreteria();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM ferreterias WHERE idferreteria = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idferreteria);
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                ferreteria.setIdFerreteria(resultSet.getInt("idferreteria"));
-                ferreteria.setNombre(resultSet.getString("nombre"));
-                ferreteria.setTelefono(resultSet.getString("telefono"));
-                ferreteria.setNit(resultSet.getString("nit"));
-                ferreteria.setDireccion(resultSet.getString("direccion"));
-                ferreteria.setCorreo(resultSet.getString("correo"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return ferreteria;
-        }
-
-    }
-
-//    public static EmpresaProveedora.FormaDePago obtenerFerreteriaPorId(String id_forma_de_pago) {
-//        EmpresaProveedora.FormaDePago formaDePago;
-//        formaDePago = new EmpresaProveedora.FormaDePago();
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//
-//        try {
-//            conectar();
-//
-//            String sql = "SELECT * FROM formas_de_pago WHERE id = ?";
-//            preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1,id_forma_de_pago);
-//            resultSet = preparedStatement.executeQuery();
-//
-//
-//            if (resultSet.next()) {
-//                formaDePago.setforma(resultSet.getString("nombre"));
-//
-//
-//
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//
-//        } finally {
-//
-//
-//            try {
-//                if (resultSet != null) resultSet.close();
-//                if (preparedStatement != null) preparedStatement.close();
-//                if (connection != null) connection.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            return facturaVenta;
-//        }
-//
-//    }
-
-    public static Producto obtenerProductoPorId(String idproducto) {
-        Producto producto = new Producto();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM productos WHERE idproducto = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,Integer.valueOf(idproducto));
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                producto.setIdProducto(resultSet.getInt("idproducto"));
-                producto.setCodigo(resultSet.getString("codigo"));
-                producto.setNombre(resultSet.getString("nombre"));
-                producto.setDescripcion(resultSet.getString("descripcion"));
-                producto.setExistencias(Double.parseDouble(resultSet.getString("existencia")));
-                producto.setpDescuento(Double.parseDouble(resultSet.getString("pDescuento")));
-                producto.setpIva(Double.parseDouble(resultSet.getString("pIva")));
-                producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
-                producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
-                producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
-                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));producto.setPrecioTotal(Double.parseDouble(resultSet.getString("precioTotal")));
-
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return producto;
-        }
-
-    }
-
-    public static Usuario obtenerUsuarioPorId(String idusuario) {
-        Usuario usuario = new Usuario();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM usuarios WHERE idusuario = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,Integer.valueOf(idusuario));
-            resultSet = preparedStatement.executeQuery();
-
-
-            if (resultSet.next()) {
-                usuario.setId(resultSet.getString("idusuario"));
-                usuario.setNombres(resultSet.getString("nombres"));
-                usuario.setTelefono(resultSet.getString("telefono"));
-                usuario.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
-                usuario.setNumDocumento(resultSet.getString("numDocumento"));
-                usuario.setDireccion(resultSet.getString("direccion"));
-                usuario.setCorreo(resultSet.getString("correo"));
-                usuario.setTipoUsuario(Enum.valueOf(Usuario.TipoUsuario.class,resultSet.getString("tipoUsuario")));
-                usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
-                usuario.setContrasena(resultSet.getString("contrasena"));
-
-
-
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return usuario;
-        }
-
-    }
-
-    public static LinkedList<Producto> listaProductosStock() {
-        LinkedList<Producto> productos = new LinkedList<>();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM productos";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-
-                Producto producto = new Producto();
-                producto.setIdProducto(resultSet.getInt("idproducto"));
-                producto.setCodigo(resultSet.getString("codigo"));
-                producto.setNombre(resultSet.getString("nombre"));
-                producto.setDescripcion(resultSet.getString("descripcion"));
-                producto.setExistencias(Double.parseDouble(resultSet.getString("existencia")));
-                producto.setpDescuento(Double.parseDouble(resultSet.getString("pDescuento")));
-                producto.setpIva(Double.parseDouble(resultSet.getString("pIva")));
-                producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
-                producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
-                producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
-                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
-                productos.add(producto);
-
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return productos;
-
-        }
-    }
-
-    public static LinkedList<Producto> listaIdProductosFacturaVentaHasProductos(String idFacturaVenta) {
-        LinkedList<Producto> productos = new LinkedList<>();
-        ResultSet resultSet = null;
-
-        PreparedStatement statement = null;
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM productos_has_facturas_de_venta WHERE FACTURAS_DE_VENTA_idfacturaDeVenta = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1,Integer.valueOf(idFacturaVenta));
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Producto producto = new Producto();
-                producto.setExistencias(resultSet.getInt("cantidadProducto"));
-                producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
-                productos.add(producto);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return productos;
-
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
-    }
-
-/*    public static void main(String[] args) {
-//        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");
-        System.out.println(Consulta.ultimaFacturaVenta());
-    }*/
-
-/*    public static void main(String[] args) {
-        Cliente cliente = Consulta.obtenerClientePorTelefono("3016995315");
-        System.out.println(cliente.getNombres()+" "+cliente.getResponsableDeIva()+" "+cliente.getTipoDocumento()+cliente.getTipoPersona());
-    }*/
-
-/*    public static void main(String[] args) {
-        String nombreDeUsuario = "Juan";
-
-        String contrasena = Consulta.obtenerContraseñaPorNombre(nombreDeUsuario);
-
-        if (contrasena != null) {
-            System.out.println("La contraseña para " + nombreDeUsuario + " es: " + contrasena);
-        } else {
-            System.out.println("El usuario no se encontró en la base de datos.");
-        }
-    }*/
-
-
-
-}
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema DB_Hierritos
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema DB_Hierritos
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `DB_Hierritos` DEFAULT CHARACTER SET utf8 ;
+USE `DB_Hierritos` ;
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`CLIENTES`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`CLIENTES` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT COMMENT 'Este el identificador de cada cliente.',
+  `nombres` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacenan los nombres y apellidos del cliente que compra.',
+  `telefono` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el numero del telefono e identificador si es necesario, de cada cliente que realiza una compra.',
+  `tipoDocumento` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo del documento del cliente que realiza la compra.',
+  `numDocumento` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el numero del documento del cliente que realiza la compra.',
+  `direccion` VARCHAR(200) NOT NULL COMMENT 'Aqui se almacena la direccion de residencia  del cliente que realiza la compra.',
+  `correo` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el correo electronico o email  del cliente que realiza la compra.',
+  `tipoPersona` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo de persona  del cliente que realiza la compra, ya sea \"NATURAL\" o \"JURIDICA\".',
+  `responsableDeIva` TINYINT NOT NULL COMMENT 'Aqui se almacena un TYNYINT que representa si el cliente es responsable de Iva o no. Uno(1) representa que si es reponsable de Iva y Dos(2) representa que no es Responsable del Iva.',
+  PRIMARY KEY (`idcliente`))
+ENGINE = InnoDB
+COMMENT = 'Esta es la tabla donde se registran los clientes que compran en la ferreteria Hierritos.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`USUARIOS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`USUARIOS` (
+  `idusuario` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de cada Usuario.',
+  `nombres` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacenan los nombres y apellidos de cada usuario.',
+  `telefono` VARCHAR(10) NOT NULL COMMENT 'Aqui se almacena el numero de telefono de cada usuario.',
+  `tipoDocumento` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el tipo de documento de cada usuario.',
+  `numDocumento` VARCHAR(15) NOT NULL COMMENT 'Aqui se almacena el numero de documento de cada usuario.',
+  `direccion` VARCHAR(200) NOT NULL COMMENT 'Aqui se almacena la direccion o lugar de residencia de cada usuario.',
+  `correo` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el correo o email de cada usuario.',
+  `tipoUsuario` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo de usuario.',
+  `nombreUsuario` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre con el que se identifica cada usuario.',
+  `contrasena` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la contrasena de cada usuario.',
+  PRIMARY KEY (`idusuario`))
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se almacenan los datos de cada usuario ya sea: Administrador, Ingeniero, Bodeguero o Vendedor.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`PRODUCTOS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`PRODUCTOS` (
+  `idproducto` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador del producto.',
+  `codigo` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el codigo para su respectivo producto.',
+  `nombre` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el nombre de cada producto.',
+  `descripcion` VARCHAR(500) NOT NULL COMMENT 'Aqui se almacena una corta descripcion  de cada producto.',
+  `existencia` DOUBLE NOT NULL COMMENT 'Aqui se almacena la existencia del producto.',
+  `pDescuento` DOUBLE NOT NULL COMMENT 'Aqui se almacena el porcentaje de descuento correspondiente de cada producto.',
+  `pIva` DOUBLE NOT NULL COMMENT 'Aqui se almacena el porcentaje del Iva correspondiente de cada producto.',
+  `precioCompra` DOUBLE NOT NULL COMMENT 'Aqui se almacena el precio de la compra de cada producto.',
+  `precioVenta` DOUBLE NOT NULL COMMENT 'Aqui se almacena el precio para la venta de cada producto.',
+  `cantidadMinima` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad minima de productos de la ferreteria.',
+  `cantidadMaxima` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad maxima de productos de la ferrreteria.',
+  PRIMARY KEY (`idproducto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`FERRETERIAS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FERRETERIAS` (
+  `idferreteria` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la ferreteria.',
+  `nombre` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el nombre de la ferreteria(Hierritos).',
+  `telefono` VARCHAR(10) NOT NULL COMMENT 'Aqui se almacena el telefono de la ferreteria.',
+  `nit` VARCHAR(10) NOT NULL COMMENT 'Aqui se almcena el numero de identificacion tributaria de la ferreteria.',
+  `direccion` VARCHAR(200) NOT NULL COMMENT 'Aqui se almacena la direccion o lugar de residencia de la ferreteria.',
+  `correo` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el correo o email de la ferreteria.',
+  PRIMARY KEY (`idferreteria`))
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se almacenan los datos de la ferreterría.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`FACTURAS_DE_VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_VENTA` (
+  `idfacturaDeVenta` INT NOT NULL COMMENT 'Este es el identificador de la Factura de Venta.',
+  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y hora del dia en que se realice la venta de los productos.',
+  `consecutivoDian` INT NOT NULL COMMENT 'Este es un identificador que da la Dian para cada factura.',
+  `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacenan la forma de pago con la que se realizo la compra.',
+  `FERRETERIA_idferreteria` INT NOT NULL COMMENT 'Llave foranea de la tabla Ferreteria.',
+  `USUARIOS_idusuario` INT NOT NULL COMMENT 'Llave foranea de la tabla Usuarios.',
+  `CLIENTES_idcliente` INT NOT NULL COMMENT 'Llave foranea de la tabla Clientes.',
+  `total` DOUBLE NOT NULL COMMENT 'Aqui se almacena el total de la factura de venta.',
+  PRIMARY KEY (`idfacturaDeVenta`),
+  INDEX `fk_FACTURAS_DE_VENTA_FERRETERIA_idx` (`FERRETERIA_idferreteria` ASC) VISIBLE,
+  INDEX `fk_FACTURAS_DE_VENTA_USUARIOS1_idx` (`USUARIOS_idusuario` ASC) VISIBLE,
+  INDEX `fk_FACTURAS_DE_VENTA_CLIENTES1_idx` (`CLIENTES_idcliente` ASC) VISIBLE,
+  CONSTRAINT `fk_FACTURAS_DE_VENTA_FERRETERIA`
+    FOREIGN KEY (`FERRETERIA_idferreteria`)
+    REFERENCES `DB_Hierritos`.`FERRETERIAS` (`idferreteria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_FACTURAS_DE_VENTA_USUARIOS1`
+    FOREIGN KEY (`USUARIOS_idusuario`)
+    REFERENCES `DB_Hierritos`.`USUARIOS` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_FACTURAS_DE_VENTA_CLIENTES1`
+    FOREIGN KEY (`CLIENTES_idcliente`)
+    REFERENCES `DB_Hierritos`.`CLIENTES` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'Esta tabla almacena los atributos de las facturas de los productos que se venden al cliente.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`EMPRESAS_PROVEEDORAS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (
+  `idempresaProveedora` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la empresa proveedora.',
+  `nombre` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre de la empresa proveedora',
+  `nit` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el numero de identificacion tributario de la empresa proveedora.',
+  `banco` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del banco.',
+  `cuentaBancaria` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la cuenta bancaria de la empresa proveedora para poder realizar sus ventas.',
+  `formasDePago` VARCHAR(10000) NOT NULL COMMENT 'Aqui se almacenan las formas de pago de la empresa proveedora.',
+  PRIMARY KEY (`idempresaProveedora`))
+ENGINE = InnoDB
+COMMENT = 'Esta tabla almacena los datos de las empresas proveedoras a las que se les realiza la compra.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`FACTURAS_DE_COMPRA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_COMPRA` (
+  `idfacturaDeCompra` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la factura de compra.',
+  `nombreVendedor` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del vendedor que realiza la compra de los productos.',
+  `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la forma de pago con la cual se realiza la compra de productos.',
+  `EMPRESAS_PROVEEDORAS_idempresaProveedora` INT NOT NULL COMMENT 'Llave foranea de Empresas proveedoras.',
+  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y la hora en que se realizo la compra de los productos.',
+  `total` DOUBLE NOT NULL COMMENT 'Aqui se almacena el total de la compra de todos los productos.',
+  PRIMARY KEY (`idfacturaDeCompra`),
+  INDEX `fk_FACTURAS_DE_COMPRA_EMPRESAS_PROVEEDORAS1_idx` (`EMPRESAS_PROVEEDORAS_idempresaProveedora` ASC) VISIBLE,
+  CONSTRAINT `fk_FACTURAS_DE_COMPRA_EMPRESAS_PROVEEDORAS1`
+    FOREIGN KEY (`EMPRESAS_PROVEEDORAS_idempresaProveedora`)
+    REFERENCES `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (`idempresaProveedora`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se almacenan los datos de cada factura de las compras que se realizan para suministrar productos al almacen.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`PRODUCTOS_has_FACTURAS_DE_VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`PRODUCTOS_has_FACTURAS_DE_VENTA` (
+  `PRODUCTOS_idproducto` INT NOT NULL COMMENT 'Llave foranea de la tabla Productos.',
+  `FACTURAS_DE_VENTA_idfacturaDeVenta` INT NOT NULL COMMENT 'Llave foranea de la tabla Facturas de Venta.',
+  `cantidadProducto` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad del producto que se relaciona con la factura de venta correspondiente.',
+  PRIMARY KEY (`PRODUCTOS_idproducto`, `FACTURAS_DE_VENTA_idfacturaDeVenta`),
+  INDEX `fk_PRODUCTOS_has_FACTURAS_DE_VENTA_FACTURAS_DE_VENTA1_idx` (`FACTURAS_DE_VENTA_idfacturaDeVenta` ASC) VISIBLE,
+  INDEX `fk_PRODUCTOS_has_FACTURAS_DE_VENTA_PRODUCTOS1_idx` (`PRODUCTOS_idproducto` ASC) VISIBLE,
+  CONSTRAINT `fk_PRODUCTOS_has_FACTURAS_DE_VENTA_PRODUCTOS1`
+    FOREIGN KEY (`PRODUCTOS_idproducto`)
+    REFERENCES `DB_Hierritos`.`PRODUCTOS` (`idproducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_PRODUCTOS_has_FACTURAS_DE_VENTA_FACTURAS_DE_VENTA1`
+    FOREIGN KEY (`FACTURAS_DE_VENTA_idfacturaDeVenta`)
+    REFERENCES `DB_Hierritos`.`FACTURAS_DE_VENTA` (`idfacturaDeVenta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se relaciona cada producto con las facturas de venta que contiene y cada factura de venta con los productos que contiene.';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`FACTURAS_DE_COMPRA_has_PRODUCTOS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_COMPRA_has_PRODUCTOS` (
+  `FACTURAS_DE_COMPRA_idfacturaDeCompra` INT NOT NULL COMMENT 'Llave foranea de Facturas de Compra',
+  `PRODUCTOS_idproducto` INT NOT NULL COMMENT 'Llave foranea de Productos',
+  `cantidadProducto` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad del producto que se relaciona con la factura de compra correspondiente.',
+  PRIMARY KEY (`FACTURAS_DE_COMPRA_idfacturaDeCompra`, `PRODUCTOS_idproducto`),
+  INDEX `fk_FACTURAS_DE_COMPRA_has_PRODUCTOS_PRODUCTOS1_idx` (`PRODUCTOS_idproducto` ASC) VISIBLE,
+  INDEX `fk_FACTURAS_DE_COMPRA_has_PRODUCTOS_FACTURAS_DE_COMPRA1_idx` (`FACTURAS_DE_COMPRA_idfacturaDeCompra` ASC) VISIBLE,
+  CONSTRAINT `fk_FACTURAS_DE_COMPRA_has_PRODUCTOS_FACTURAS_DE_COMPRA1`
+    FOREIGN KEY (`FACTURAS_DE_COMPRA_idfacturaDeCompra`)
+    REFERENCES `DB_Hierritos`.`FACTURAS_DE_COMPRA` (`idfacturaDeCompra`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_FACTURAS_DE_COMPRA_has_PRODUCTOS_PRODUCTOS1`
+    FOREIGN KEY (`PRODUCTOS_idproducto`)
+    REFERENCES `DB_Hierritos`.`PRODUCTOS` (`idproducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se relaciona cada producto con las facturas de compra que lo contienen y cada factura de compra con los productos que contiene.';
+
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`INVENTARIOS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`INVENTARIOS` (
+  `idinventario` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador del inventario.',
+  `valorVentas` DOUBLE NOT NULL COMMENT 'Aqui se almacena el valor de las ventas realizadas.',
+  `fecha` DATE NOT NULL COMMENT 'Aqui se almacena la fecha en que se realiza el cierre de inventario.',
+  PRIMARY KEY (`idinventario`))
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se almacenan los productos que se compraron. ';
+
+
+-- -----------------------------------------------------
+-- Table `DB_Hierritos`.`INVENTARIO_has_PRODUCTOS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`INVENTARIO_hferreteriaas_PRODUCTOS` (
+  `INVENTARIO_idinventario` INT NOT NULL COMMENT 'Llave foranea de la tabla de Inventario.',
+  `PRODUCTOS_idproducto` INT NOT NULL COMMENT 'Llave foranea de la tabla Productos.',
+  `cantidadProductos` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad del producto que se relaciona con el registro de inventario correspondiente.',
+  PRIMARY KEY (`INVENTARIO_idinventario`, `PRODUCTOS_idproducto`),
+  INDEX `fk_INVENTARIO_has_PRODUCTOS_PRODUCTOS1_idx` (`PRODUCTOS_idproducto` ASC) VISIBLE,
+  INDEX `fk_INVENTARIO_has_PRODUCTOS_INVENTARIO1_idx` (`INVENTARIO_idinventario` ASC) VISIBLE,
+  CONSTRAINT `fk_INVENTARIO_has_PRODUCTOS_INVENTARIO1`
+    FOREIGN KEY (`INVENTARIO_idinventario`)
+    REFERENCES `DB_Hierritos`.`INVENTARIOS` (`idinventario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_INVENTARIO_has_PRODUCTOS_PRODUCTOS1`
+    FOREIGN KEY (`PRODUCTOS_idproducto`)
+    REFERENCES `DB_Hierritos`.`PRODUCTOS` (`idproducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'En esta tabla se relacionan los productos con cada registro de inventario.';
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

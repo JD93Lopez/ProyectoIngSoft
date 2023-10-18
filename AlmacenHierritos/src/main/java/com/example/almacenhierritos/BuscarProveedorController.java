@@ -1,6 +1,7 @@
 package com.example.almacenhierritos;
 
 import clases.Producto;
+import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,6 +16,9 @@ import javafx.util.Builder;
 import javafx.util.BuilderFactory;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 public class BuscarProveedorController {
@@ -29,7 +33,15 @@ public class BuscarProveedorController {
     TextField textfieldBuscar;
     @FXML
     protected void clickBotonBuscar() {
-        insertarTarjeta(new Producto());
+        List<Producto> lista;
+        try {
+            lista = Client.client.ListaProductosInventario();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        for (Producto producto: lista){
+            insertarTarjeta(producto);
+        }
     }
     @FXML
     protected void clickBotonCrear() {
@@ -45,15 +57,16 @@ public class BuscarProveedorController {
 
     public void insertarTarjeta(Producto producto){
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaProducto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaproveedor.fxml"));
         try {
             tarjeta = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        TarjetaController tarjetaController = fxmlLoader.getController();
-        tarjetaController.setLabelNombreProducto(producto.getNombre());
-        tarjetaController.setLabelDescProducto(producto.getDescripcion());
+        TarjetaProveedorController tarjetaController = fxmlLoader.getController();
+        tarjetaController.setLabelNombre(producto.getNombre());
+        tarjetaController.setLabelID(""+producto.getIdProducto());
+        tarjetaController.setLabelNIT(""+producto.getIdProducto());
         gridPane.add(tarjeta, col++, fil);
         GridPane.setMargin(tarjeta,new Insets(10));
         if (col == 3) {

@@ -97,7 +97,6 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         try{
             //TODO fechaYHora
             Insercion.facturasDeVenta(
-                    "10-10-10",
                     ""+facturaVenta.getConsecutivoDian(),
                     facturaVenta.getFormaDePago().toString(),
                     "1",

@@ -26,7 +26,7 @@ public class CotizacionController {
         }
         if (facturaVenta!=null){
             CotizacionController.controller.setTextArea(
-                    "\n    Id Factura: "+facturaVenta.getIdFacturaVenta()+
+                    "\n    Id Cotización: "+facturaVenta.getIdFacturaVenta()+
                     "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
                     "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
                     "\n    Productos: "+facturaVenta.getProductos().size()
@@ -61,6 +61,7 @@ public class CotizacionController {
             textFieldId.setText("");
             BuscarCliente2Controller.controller.reiniciarListasYGrids();
             FacturaController.controller.setLabelIdFactura(""+facturaVenta.getIdFacturaVenta());
+            BuscarCliente2Controller.controller.cuadroFacturaRegistrada();
             Main.mainStage.setScene(FacturaController.scene);
         }else{
             cuadroErrorCotizacion();

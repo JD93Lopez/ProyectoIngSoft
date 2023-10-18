@@ -49,6 +49,9 @@ public class BuscarCliente2Controller {
                 "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
                 "\n    Productos: "+facturaVenta.getProductos().size()
         );
+        if(id>0){
+            cuadroFacturaRegistrada();
+        }
         Main.mainStage.setScene(FacturaController.scene);
     }
 
@@ -110,7 +113,7 @@ public class BuscarCliente2Controller {
         }
         CotizacionController.controller.setTextFieldId(""+id);
         CotizacionController.controller.setTextArea(
-                "\n    Id Factura: "+id+
+                "\n    Id Cotización: "+id+
                 "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
                 "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
                 "\n    Productos: "+facturaVenta.getProductos().size()
@@ -210,4 +213,20 @@ public class BuscarCliente2Controller {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+
+    public void cuadroFacturaRegistrada() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Factura Registrada");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("Factura registrada con éxito.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+
 }

@@ -13,6 +13,7 @@ public class FacturaCompra implements Serializable {
     private LinkedList<Producto> productos;
     private FormaDePago formaDePago;
     private double total;
+    private String fechaYHora;
 
     private int idFacturaCompra;
 
@@ -65,7 +66,13 @@ public class FacturaCompra implements Serializable {
     public void setTotal(double total) {
         this.total = total;
     }
+    public String getFechaYHora() {
+        return fechaYHora;
+    }
 
+    public void setFechaYHora(String fechaYHora) {
+        this.fechaYHora = fechaYHora;
+    }
     public int getIdFacturaCompra() {
         return idFacturaCompra;
     }
