@@ -36,7 +36,7 @@ public class CotizacionController {
         }
         if (bool){
             BuscarClienteController.controller.limpiarCampos();
-            FacturaController.controller.setLabelIdFactura("ID: "+textFieldId.getText());
+            FacturaController.controller.setLabelIdFactura(textFieldId.getText());
             textFieldId.setText("");
             BuscarCliente2Controller.controller.reiniciarListasYGrids();
             Main.mainStage.setScene(FacturaController.scene);
