@@ -35,10 +35,6 @@ public class Main extends Application {
         scene = new Scene(fxmlLoader.load());
         ActualizarInfoController.scene=scene;
 
-        fxmlLoader = new FXMLLoader(Main.class.getResource("cliente_actualizarinfo_admin.fxml"));
-        scene = new Scene(fxmlLoader.load());
-        ClienteActualizarInfoController.scene=scene;
-
         fxmlLoader = new FXMLLoader(Main.class.getResource("ventas_informes_admin.fxml"));
         scene = new Scene(fxmlLoader.load());
         VentasInformesController.scene=scene;
@@ -47,9 +43,6 @@ public class Main extends Application {
         scene = new Scene(fxmlLoader.load());
         VendedorMesInformeController.scene = scene;
 
-        fxmlLoader = new FXMLLoader(Main.class.getResource("cliente_actualizarinfo_admin.fxml"));
-        scene = new Scene(fxmlLoader.load());
-        VendedorMesInformeController.scene = scene;
 
         fxmlLoader = new FXMLLoader(Main.class.getResource("configuracion_admin.fxml"));
         scene = new Scene(fxmlLoader.load());
@@ -59,7 +52,11 @@ public class Main extends Application {
         scene = new Scene(fxmlLoader.load());
         UsuarioActualizarInfoController.scene = scene;
         UsuarioActualizarInfoController.controller = fxmlLoader.getController();
-        UsuarioActualizarInfoController.controller.desplegables();
+
+        fxmlLoader = new FXMLLoader(Main.class.getResource("cliente_actualizarinfo_admin.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        ClienteActualizarInfoController.scene=scene;
+        ClienteActualizarInfoController.controller = fxmlLoader.getController();
 
     }
 

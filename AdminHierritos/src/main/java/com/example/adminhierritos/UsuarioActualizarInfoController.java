@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 import java.rmi.RemoteException;
 
@@ -41,6 +42,8 @@ public class UsuarioActualizarInfoController {
 
     @FXML
     ComboBox comboBoxTipoUsuario;
+    @FXML
+    VBox vBox;
 
     public void ClickBotonBuscar() throws RemoteException {
 
@@ -123,6 +126,7 @@ public class UsuarioActualizarInfoController {
     public void desplegableTipoUsuario(){
         for (Usuario.TipoUsuario tipoUsuario : Usuario.TipoUsuario.values()) {
             comboBoxTipoUsuario.getItems().add(tipoUsuario);
+            System.out.println(tipoUsuario);
         }
     }
 }
