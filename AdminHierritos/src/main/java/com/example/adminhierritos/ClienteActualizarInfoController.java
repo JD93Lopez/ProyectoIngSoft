@@ -95,6 +95,11 @@ public class ClienteActualizarInfoController {
     }
     public void clickBotonGuardarCambios() {
 
+        Cliente.TipoPersona tipoPersona = (Cliente.TipoPersona) comboBoxTipoPers.getValue();
+        String responIva = (String) comboBoxTipoIVA.getValue();
+        String nombres = textfieldNombres.getText();
+
+       // Client.client.actualizarCliente();
     }
 
     private void cuadroClienteNoEncontrado() {
