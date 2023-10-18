@@ -19,6 +19,9 @@ public class MainServer {
             if(server.deployServiceVentas("5001","servicioVentas")) {
                 System.out.println("servicioVentas on");
             }
+            if(server.deployServiceAdmin("5002","servicioAdmin")) {
+                System.out.println("servicioAdmin on");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } /*catch (FileNotFoundException e) {
