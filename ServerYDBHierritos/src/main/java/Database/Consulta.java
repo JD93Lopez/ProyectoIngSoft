@@ -525,9 +525,6 @@ public class Consulta {
                 usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
                 usuario.setContrasena(resultSet.getString("contrasena"));
 
-
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
