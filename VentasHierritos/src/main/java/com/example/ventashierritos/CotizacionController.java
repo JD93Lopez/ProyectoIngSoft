@@ -4,10 +4,7 @@ import clases.EmpresaProveedora;
 import client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.rmi.RemoteException;
@@ -17,6 +14,8 @@ public class CotizacionController {
     static CotizacionController controller;
     @FXML
     TextField textFieldId;
+    @FXML
+    TextArea textArea;
     public void clickBotonBuscar() {
         //TODO
     }
@@ -70,6 +69,9 @@ public class CotizacionController {
 
         // Llamar al método que procesa la opción seleccionada (puedes hacer lo que necesites aquí)
         return  Enum.valueOf(EmpresaProveedora.FormaDePago.class,metodoSeleccionado.toUpperCase());
+    }
+    public void setTextArea(String string){
+        textArea.setText(string);
     }
 
     private void cuadroErrorCotizacion() {

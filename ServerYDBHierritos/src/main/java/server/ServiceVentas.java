@@ -111,6 +111,8 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
                 Update.consecutivoDian(""+entero);
                 restarProductosDeInventario(facturaVenta.getProductos());
             }
+            //TODO hacer pdf
+            //AbrirPdf.abrirPdf(""+entero);
         }catch (Exception e){
             entero = -2;
             e.printStackTrace();
@@ -134,7 +136,22 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         if(bool){
             restarProductosDeInventario(productosId);
         }
+        //FacturaVenta facturaVenta = obtenerFacturaVenta(id);
+        //TODO hacer pdf
+        //AbrirPdf.abrirPdf(""+id);
         return bool;
+    }
+
+    private FacturaVenta obtenerFacturaVenta(String id) {
+        FacturaVenta facturaVenta=null;
+        facturaVenta = Consulta.obtenerFacturaVentaPorId(id);
+        LinkedList<Producto> productosCompletos = new LinkedList<>();
+        LinkedList<Producto> productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
+        for (Producto producto : productosId) {
+            productosCompletos.add(Consulta.obtenerProductoPorId(""+producto.getIdProducto()));
+        }
+        facturaVenta.setProductos(productosCompletos);
+        return facturaVenta;
     }
 
     @Override

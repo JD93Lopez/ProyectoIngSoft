@@ -235,12 +235,12 @@ public class Consulta {
 
 
             if (resultSet.next()) {
+                cliente.setId(resultSet.getString("idcliente"));
                 cliente.setNombres(resultSet.getString("nombres"));
                 cliente.setDireccion(resultSet.getString("direccion"));
                 cliente.setCorreo(resultSet.getString("correo"));
                 cliente.setTelefono(resultSet.getString("telefono"));
                 cliente.setNumDocumento(resultSet.getString("numDocumento"));
-                cliente.setClienteFrecuente(resultSet.getBoolean("cliente frecuente"));
                 cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
                 cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
                 cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
@@ -342,20 +342,25 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM empresas_proveedoras WHERE id = ?";
+            String sql = "SELECT * FROM facturas_de_venta WHERE idfacturaDeVenta = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idfacturaDeVenta);
             resultSet = preparedStatement.executeQuery();
 
-
+            String idCliente=null;
+            String idVendedor=null;
             if (resultSet.next()) {
+                facturaVenta.setIdFacturaVenta(resultSet.getInt("idfacturaDeVenta"));
                 facturaVenta.setFechaYHora(resultSet.getString("fechaYHora"));
                 facturaVenta.setConsecutivoDian(Integer.parseInt(resultSet.getString("consecutivoDian")));
                 facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,resultSet.getString("formaDePago")));
-                facturaVenta.setTotal(Double.parseDouble(resultSet.getString("cuentaBancaria")));
-
-
+                facturaVenta.setTotal(Double.parseDouble(resultSet.getString("total")));
+                idCliente = resultSet.getString("CLIENTES_idcliente");
+                idVendedor = resultSet.getString("USUARIOS_idusuario");
             }
+            facturaVenta.setCliente(Consulta.obtenerClientePorId(idCliente));
+            facturaVenta.setVendedor(Consulta.obtenerUsuarioPorId(idVendedor));
+            facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -392,8 +397,6 @@ public class Consulta {
                 ferreteria.setNit(resultSet.getString("nit"));
                 ferreteria.setDireccion(resultSet.getString("cuentaBancaria"));
                 ferreteria.setCorreo(resultSet.getString("correo"));
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -460,9 +463,8 @@ public class Consulta {
 
             String sql = "SELECT * FROM productos WHERE idproducto = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idproducto);
+            preparedStatement.setInt(1,Integer.valueOf(idproducto));
             resultSet = preparedStatement.executeQuery();
-
 
             if (resultSet.next()) {
                 producto.setCodigo(resultSet.getString("codigo"));
@@ -477,8 +479,6 @@ public class Consulta {
                 producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
 //                producto.setPrecioTotal(Double.parseDouble(resultSet.getString("precioTotal")));
                 //TODO No esta la columna precioTotal dentro de la base de datos
-
-
 
             }
         } catch (SQLException e) {
