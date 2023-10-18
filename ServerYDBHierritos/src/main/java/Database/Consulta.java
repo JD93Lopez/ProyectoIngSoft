@@ -25,17 +25,11 @@ public class Consulta {
 
     public static String obtenerContraseñaPorNombre(String nombreDeUsuario) {
         String contrasena = null;
-//        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
 
-/*          String url = "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC";
-            String usuarioDB = "root";
-            String contrasenaDB = "root";
-
-            connection = DriverManager.getConnection(url, usuarioDB, contrasenaDB);*/
             conectar();
 
             String sql = "SELECT contrasena FROM usuarios WHERE nombreUsuario = ?";
@@ -269,13 +263,14 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM empresas_proveedoras WHERE id = ?";
+            String sql = "SELECT * FROM empresas_proveedoras WHERE idempresaProveedora = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idempresaProveedora);
             resultSet = preparedStatement.executeQuery();
 
 
             if (resultSet.next()) {
+                empresaProveedora.setId(Integer.parseInt(resultSet.getString("idempresaProveedora")));
                 empresaProveedora.setNombre(resultSet.getString("nombre"));
                 empresaProveedora.setNit(resultSet.getString("nit"));
                 empresaProveedora.setBanco(resultSet.getString("banco"));
@@ -306,16 +301,17 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM facturas_de_compra WHERE id = ?";
+            String sql = "SELECT * FROM facturas_de_compra WHERE idfacturaDeCompra = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idfacturaDeCompra);
             resultSet = preparedStatement.executeQuery();
 
 
             if (resultSet.next()) {
+                facturaCompra.setIdFacturaCompra(Integer.parseInt(resultSet.getString("idfacturaDeCompra")));
                 facturaCompra.setNombreVendedor(resultSet.getString("nombreVendedor"));
-//              facturaCompra.setFormaDePago(resultSet.getString("formaDePago"));
-//              facturaCompra.setFechaYHora(resultSet.getString("fechaYHora"));
+                facturaCompra.setFormaDePago(EmpresaProveedora.FormaDePago.valueOf(resultSet.getString("formaDePago")));
+                facturaCompra.setFechaYHora(resultSet.getString("fechaYHora"));
                 facturaCompra.setTotal(Double.parseDouble(resultSet.getString("total")));
             }
         } catch (SQLException e) {
@@ -354,9 +350,10 @@ public class Consulta {
                 facturaVenta.setFechaYHora(resultSet.getString("fechaYHora"));
                 facturaVenta.setConsecutivoDian(Integer.parseInt(resultSet.getString("consecutivoDian")));
                 facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,resultSet.getString("formaDePago")));
-                facturaVenta.setTotal(Double.parseDouble(resultSet.getString("total")));
                 idCliente = resultSet.getString("CLIENTES_idcliente");
                 idVendedor = resultSet.getString("USUARIOS_idusuario");
+                facturaVenta.setTotal(Double.parseDouble(resultSet.getString("total")));
+
             }
             facturaVenta.setCliente(Consulta.obtenerClientePorId(idCliente));
             facturaVenta.setVendedor(Consulta.obtenerUsuarioPorId(idVendedor));
@@ -415,44 +412,6 @@ public class Consulta {
 
     }
 
-//    public static EmpresaProveedora.FormaDePago obtenerFerreteriaPorId(String id_forma_de_pago) {
-//        EmpresaProveedora.FormaDePago formaDePago;
-//        formaDePago = new EmpresaProveedora.FormaDePago();
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//
-//        try {
-//            conectar();
-//
-//            String sql = "SELECT * FROM formas_de_pago WHERE id = ?";
-//            preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1,id_forma_de_pago);
-//            resultSet = preparedStatement.executeQuery();
-//
-//
-//            if (resultSet.next()) {
-//                formaDePago.setforma(resultSet.getString("nombre"));
-//
-//
-//
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//
-//        } finally {
-//
-//
-//            try {
-//                if (resultSet != null) resultSet.close();
-//                if (preparedStatement != null) preparedStatement.close();
-//                if (connection != null) connection.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            return facturaVenta;
-//        }
-//
-//    }
 
     public static Producto obtenerProductoPorId(String idproducto) {
         Producto producto = new Producto();
@@ -478,9 +437,8 @@ public class Consulta {
                 producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
                 producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
                 producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
-                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
-//                producto.setPrecioTotal(Double.parseDouble(resultSet.getString("precioTotal")));
-                //TODO No esta la columna precioTotal dentro de la base de datos
+                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));producto.setPrecioTotal(Double.parseDouble(resultSet.getString("precioTotal")));
+
 
             }
         } catch (SQLException e) {
@@ -630,27 +588,20 @@ public class Consulta {
         }
     }
 
-    public static LinkedList<EmpresaProveedora> listaProveedores() {
-        LinkedList<EmpresaProveedora> proveeedor = new LinkedList<>();
-        PreparedStatement preparedStatement = null;
+    public static LinkedList<Integer> listaIdEmpresasProveedorasHasFormasDePago(String idempresaProveedora){
+        LinkedList<Integer> lista = new LinkedList<Integer>();
         ResultSet resultSet = null;
 
-
+        PreparedStatement statement = null;
         try {
             conectar();
 
-            String sql = "SELECT * FROM empresas_proveedoras";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "SELECT * FROM empresas_proveedora_has_formas_de_pago WHERE EMPRESAS_PROVEEDORAS_idempresaProveedora = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,Integer.valueOf(idempresaProveedora));
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-
-                EmpresaProveedora proveedor= new EmpresaProveedora();
-                proveedor.setId(resultSet.getInt("idempresaProveedora"));
-                proveedor.setNombre(resultSet.getString("nombre"));
-                proveedor.setNit(resultSet.getString("nit"));
-                proveedor.setBanco(resultSet.getString("banco"));
-                proveedor.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
-
+                lista.add(resultSet.getInt("idformasDePago"));
             }
 
 
@@ -661,15 +612,93 @@ public class Consulta {
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
+                if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return proveeedor;
+            return lista;
 
         }
     }
+
+    public static LinkedList<Producto> listaIdProductosFacturaCompraHasProductos(String idfacturaDeCompra) {
+        LinkedList<Producto> productos = new LinkedList<>();
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM facturas_de_compra_has_productos WHERE FACTURAS_DE_COMPRA_idfacturaDeCompra = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,Integer.valueOf(idfacturaDeCompra));
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setExistencias(resultSet.getInt("cantidadProducto"));
+                producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
+                productos.add(producto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return productos;
+
+        }
+    }
+
+    public static LinkedList<Producto> listaIdInventarioHasProcutos(String idinventario) {
+        LinkedList<Producto> productos = new LinkedList<>();
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM inventario_has_productos WHERE INVENTARIO_idinventario = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,Integer.valueOf(idinventario));
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setExistencias(resultSet.getInt("cantidadProducto"));
+                producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
+                productos.add(producto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return productos;
+
+        }
+    }
+
+
+
+
 
     public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
