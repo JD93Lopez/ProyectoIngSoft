@@ -6,9 +6,12 @@ import Database.Update;
 import clases.*;
 import interfaces.RMIVentas;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -107,10 +110,15 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             guardarTablaFacturaVentaHasProductos(""+entero,facturaVenta.getProductos());
             if(facturaVenta.getConsecutivoDian()!=0){
                 Update.consecutivoDian(""+entero);
+                facturaVenta.setConsecutivoDian(entero);//Si nunca falla entero es el id
                 restarProductosDeInventario(facturaVenta.getProductos());
+            }else{
+                Date date = new Date();
+                facturaVenta.setFechaYHora(date.toString());
             }
             facturaVenta.setIdFacturaVenta(entero);
             facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
+
             CreatePDF createPDF = new CreatePDF(facturaVenta);
             createPDF.getPDF();
             AbrirPdf.abrirPdf(""+entero);
@@ -137,7 +145,16 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         if(bool){
             restarProductosDeInventario(productosId);
             facturaVenta = obtenerFacturaVenta(id);
+            facturaVenta.setConsecutivoDian(Integer.valueOf(id));
+            LinkedList<Producto> productos = facturaVenta.getProductos();
             CreatePDF createPDF = new CreatePDF(facturaVenta);
+            try {
+                createPDF.getPDF();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
             AbrirPdf.abrirPdf(""+id);
         }
         return facturaVenta;

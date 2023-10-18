@@ -48,7 +48,7 @@ public class CreatePDF implements Serializable {
         float[] pointColumnWidths = { 150F, 150F, 150F, 150F, 150F };
         float[] tamañoTablaDatos = { 200F, 200F, 200F, 200F };
         Table encabezado = new Table(tamañoTablaDatos);
-
+        System.out.println(facturaVenta.getConsecutivoDian());
         Cell datosFactura = new Cell();
         if (facturaVenta.getConsecutivoDian() == 0) {
             datosFactura.add("N° Cotización" );
@@ -67,13 +67,13 @@ public class CreatePDF implements Serializable {
           datosFacturCell.add(facturaVenta.getIdFacturaVenta() + "");  
         }
         
-        datosFacturCell.add(facturaVenta.getFechaYHora());
+
         if (facturaVenta.getConsecutivoDian() == 0) {
             datosFacturCell.add("");
         } else {
           datosFacturCell.add(facturaVenta.getConsecutivoDian() + "");  
         }
-        
+        datosFacturCell.add(facturaVenta.getFechaYHora());
         datosFacturCell.setBorder(Border.NO_BORDER);
         datosFacturCell.setTextAlignment(TextAlignment.CENTER);
         encabezado.addCell(datosFacturCell);
@@ -147,7 +147,7 @@ public class CreatePDF implements Serializable {
         Cell datosVendedorCell = new Cell();
         datosVendedorCell.add(facturaVenta.getVendedor().getNombres());
         datosVendedorCell.add(facturaVenta.getVendedor().getId());
-        datosVendedorCell.add(facturaVenta.getFechaYHora());
+        //datosVendedorCell.add(facturaVenta.getFechaYHora());
         datosVendedorCell.setBorder(Border.NO_BORDER);
         datosVendedorCell.setTextAlignment(TextAlignment.LEFT);
         tableDatos.addCell(datosVendedorCell);
@@ -192,7 +192,7 @@ public class CreatePDF implements Serializable {
 
         Cell descripcionProductos = new Cell();
         for (Producto producto : facturaVenta.getProductos()) {
-            descripcionProductos.add(producto.getNombre()+"\n"+producto.getDescripcion());
+            descripcionProductos.add(producto.getNombre());
         }
         descripcionProductos.setBorder(Border.NO_BORDER);
         descripcionProductos.setTextAlignment(TextAlignment.CENTER);

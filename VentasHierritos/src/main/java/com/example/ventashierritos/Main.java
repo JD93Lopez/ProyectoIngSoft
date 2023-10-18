@@ -49,4 +49,7 @@ public class Main extends Application{
         scene = new Scene(fxmlLoader.load());
         TarjetaProducto2Controller.scene = scene;
     }
+    public static void main(String[] args) {
+        launch();
+    }
 }
