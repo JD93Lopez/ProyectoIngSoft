@@ -43,6 +43,11 @@ public class BuscarCliente2Controller {
             throw new RuntimeException(e);
         }
         FacturaController.controller.setLabelIdFactura(""+id);
+        FacturaController.controller.setTextArea(
+                "\n    Id factura: "+facturaVenta.getIdFacturaVenta()+
+                "\n    Id cliente: "+facturaVenta.getCliente().getId()+
+                "\n    Id vendedor: "+facturaVenta.getVendedor().getId()
+        );
         Main.mainStage.setScene(FacturaController.scene);
     }
 

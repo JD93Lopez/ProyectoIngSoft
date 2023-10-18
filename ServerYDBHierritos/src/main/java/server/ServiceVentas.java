@@ -135,10 +135,10 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         }
         if(bool){
             restarProductosDeInventario(productosId);
+            //FacturaVenta facturaVenta = obtenerFacturaVenta(id);
+            //TODO hacer pdf
+            //AbrirPdf.abrirPdf(""+id);
         }
-        //FacturaVenta facturaVenta = obtenerFacturaVenta(id);
-        //TODO hacer pdf
-        //AbrirPdf.abrirPdf(""+id);
         return bool;
     }
 
