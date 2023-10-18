@@ -101,5 +101,16 @@ public class Client implements RMIAdmin {
         }
     }
 
+    @Override
+    public Usuario buscarUsuario(String telefono) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.buscarUsuario(telefono);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.adminhierritos;
 
 import Client.Client;
 import clases.Cliente;
+import clases.Persona;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -68,12 +69,29 @@ public class ClienteActualizarInfoController {
         }
     }
 
+    public void desplegableTipoDocumento(){
+        for (Persona.TipoDocumento tipoDoumento: Persona.TipoDocumento.values()) {
+            comboBoxTipoDoc.getItems().add(tipoDoumento);
+
+        }
+    }
+    public void desplegableTipoPersona(){
+        for (Cliente.TipoPersona tipoPersona: Cliente.TipoPersona.values()) {
+            comboBoxTipoPers.getItems().add(tipoPersona);
+        }
+    }
+    public void desplegableIva(){
+        comboBoxTipoIVA.getItems().add("Sí");
+        comboBoxTipoIVA.getItems().add("No");
+    }
     public void llenarEspacios(Cliente clienteActual){
         textfieldNombres.setText(clienteActual.getNombres());
         textfieldNumTel.setText(clienteActual.getTelefono());
         textfieldCorreo.setText(clienteActual.getCorreo());
         textfieldDireccion.setText(clienteActual.getDireccion());
         textfieldNumDoc.setText(clienteActual.getNumDocumento());
+
+        comboBoxTipoDoc.setValue(clienteActual.getTipoDocumento());
     }
     public void clickBotonGuardarCambios() {
 
@@ -107,4 +125,6 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+
+
 }

@@ -51,18 +51,17 @@ public class Main extends Application {
         scene = new Scene(fxmlLoader.load());
         VendedorMesInformeController.scene = scene;
 
-        fxmlLoader = new FXMLLoader(Main.class.getResource("cliente_actualizarinfo_admin.fxml"));
-        scene = new Scene(fxmlLoader.load());
-        VendedorMesInformeController.scene = scene;
-
         fxmlLoader = new FXMLLoader(Main.class.getResource("configuracion_admin.fxml"));
         scene = new Scene(fxmlLoader.load());
         ConfiguracionController.scene = scene;
 
-
+        fxmlLoader = new FXMLLoader(Main.class.getResource("usuario_actualizarinfo_admin.fxml"));
+        scene = new Scene(fxmlLoader.load());
+        UsuarioActualizarInfoController.scene = scene;
+        UsuarioActualizarInfoController.controller = fxmlLoader.getController();
+        UsuarioActualizarInfoController.controller.desplegables();
 
     }
-
 
     public static void main(String[] args) {
         launch();

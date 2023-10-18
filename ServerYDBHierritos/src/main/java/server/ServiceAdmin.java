@@ -75,4 +75,18 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         return cliente;
     }
 
+    @Override
+    public Usuario buscarUsuario(String telefono) throws RemoteException {
+        Usuario usuarioTest = new Usuario(Usuario.TipoUsuario.BODEGUERO,  "YeniferVentas", "1234",  "Paola", "3165", Persona.TipoDocumento.CEDULA_CIUDADANIA, "107910657", "Gamarra", "pepeGrillo@gmail.com" );
+
+        Usuario usuario = null;
+        try {
+            usuario = Consulta.obtenerUsuarioPorId(telefono);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return usuarioTest;
+    }
+
 }
