@@ -601,7 +601,7 @@ public class Consulta {
             statement.setInt(1,Integer.valueOf(idempresaProveedora));
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-              lista.add(resultSet.getInt("idformasDePago"));
+                lista.add(resultSet.getInt("idformasDePago"));
             }
 
 
