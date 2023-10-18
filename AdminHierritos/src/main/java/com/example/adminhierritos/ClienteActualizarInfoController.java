@@ -93,9 +93,10 @@ public class ClienteActualizarInfoController {
         Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
         Cliente.TipoPersona tipoPersona = (Cliente.TipoPersona) comboBoxTipoPers.getValue();
         String  respIva = (String) comboBoxTipoIVA.getValue();
+        String  respIva1 = (String) comboBoxTipoIVA.getValue();
 
       //  Cliente clientTemp = new Cliente(tipoPersona, respIva, nombre, telefono, tipDoc, numDoc, direc, correo);
-     //   Client.client.actualizarCliente(clientTemp);
+     //   Client.client.actualizarClsiente(clientTemp);
 
     }
 
