@@ -1,6 +1,7 @@
 package Client;
 
 import clases.Cliente;
+import clases.Persona;
 import clases.Usuario;
 import clases.Vendedor;
 import interfaces.RMIAdmin;

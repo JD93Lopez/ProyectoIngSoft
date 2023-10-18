@@ -1,6 +1,7 @@
 package interfaces;
 
 import clases.Cliente;
+import clases.Persona;
 import clases.Usuario;
 import clases.Vendedor;
 
@@ -22,4 +23,5 @@ public interface RMIAdmin extends Remote {
     public Usuario buscarUsuario (String telefono) throws RemoteException;
     public  Cliente actualizarCliente (Cliente cliente) throws RemoteException;
 
+    public Cliente actualizarCliente (Cliente cliente) throws RemoteException;
 }

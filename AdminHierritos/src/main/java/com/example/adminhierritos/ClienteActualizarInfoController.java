@@ -15,12 +15,12 @@ import java.rmi.RemoteException;
 
 public class ClienteActualizarInfoController {
 
+    static ClienteActualizarInfoController controller;
     static Scene scene;
-
     static Cliente clienteActual=null;
 
     @FXML
-    static VBox VBoxgrande;
+    VBox VBoxgrande;
 
     @FXML
     TextField textfieldBuscar;
@@ -32,9 +32,6 @@ public class ClienteActualizarInfoController {
     TextField textfieldNumTel;
 
     @FXML
-    ComboBox comboBoxTipoDoc;
-
-    @FXML
     TextField textfieldNumDoc;
 
     @FXML
@@ -42,6 +39,9 @@ public class ClienteActualizarInfoController {
 
     @FXML
     TextField textfieldCorreo;
+
+    @FXML
+    ComboBox comboBoxTipoDoc;
 
     @FXML
     ComboBox comboBoxTipoPers;
@@ -61,7 +61,8 @@ public class ClienteActualizarInfoController {
             llenarEspacios(clienteActual);
 
         }else if(textfieldBuscar.getText().equals("")){
-            cuadroRellenarCampos();
+
+             cuadroRellenarCampos();
 
         }else{
             cuadroClienteNoEncontrado();
@@ -69,21 +70,6 @@ public class ClienteActualizarInfoController {
         }
     }
 
-    public void desplegableTipoDocumento(){
-        for (Persona.TipoDocumento tipoDoumento: Persona.TipoDocumento.values()) {
-            comboBoxTipoDoc.getItems().add(tipoDoumento);
-
-        }
-    }
-    public void desplegableTipoPersona(){
-        for (Cliente.TipoPersona tipoPersona: Cliente.TipoPersona.values()) {
-            comboBoxTipoPers.getItems().add(tipoPersona);
-        }
-    }
-    public void desplegableIva(){
-        comboBoxTipoIVA.getItems().add("Sí");
-        comboBoxTipoIVA.getItems().add("No");
-    }
     public void llenarEspacios(Cliente clienteActual){
         textfieldNombres.setText(clienteActual.getNombres());
         textfieldNumTel.setText(clienteActual.getTelefono());
@@ -91,9 +77,25 @@ public class ClienteActualizarInfoController {
         textfieldDireccion.setText(clienteActual.getDireccion());
         textfieldNumDoc.setText(clienteActual.getNumDocumento());
 
+        if(!comboBoxTipoDoc.getItems().contains(clienteActual.getTipoDocumento()) ){
+            System.out.println("No está dentro de las opciones");
+        }
         comboBoxTipoDoc.setValue(clienteActual.getTipoDocumento());
+
     }
-    public void clickBotonGuardarCambios() {
+    public void clickBotonGuardarCambios() throws RemoteException {
+
+        String nombre = textfieldNombres.getText();
+        String telefono = textfieldNumTel.getText();
+        String numDoc = textfieldNumDoc.getText();
+        String direc = textfieldDireccion.getText();
+        String correo = textfieldCorreo.getText();
+        Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
+        Cliente.TipoPersona tipoPersona = (Cliente.TipoPersona) comboBoxTipoPers.getValue();
+        String  respIva = (String) comboBoxTipoIVA.getValue();
+
+      //  Cliente clientTemp = new Cliente(tipoPersona, respIva, nombre, telefono, tipDoc, numDoc, direc, correo);
+     //   Client.client.actualizarCliente(clientTemp);
 
         Cliente.TipoPersona tipoPersona = (Cliente.TipoPersona) comboBoxTipoPers.getValue();
         String responIva = (String) comboBoxTipoIVA.getValue();
@@ -130,6 +132,25 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+    public void desplegables() {
+        desplegableTipoPersona();
+        desplegableIva();
+        desplegableTipoDocumento();
+    }
+    public void desplegableTipoDocumento(){
+        for (Persona.TipoDocumento tipoDoumento: Persona.TipoDocumento.values()) {
+            comboBoxTipoDoc.getItems().add(tipoDoumento);
 
+        }
+    }
+    public void desplegableTipoPersona(){
+        for (Cliente.TipoPersona tipoPersona: Cliente.TipoPersona.values()) {
+            comboBoxTipoPers.getItems().add(tipoPersona);
+        }
+    }
+    public void desplegableIva(){
+        comboBoxTipoIVA.getItems().add("Sí");
+        comboBoxTipoIVA.getItems().add("No");
+    }
 
 }
