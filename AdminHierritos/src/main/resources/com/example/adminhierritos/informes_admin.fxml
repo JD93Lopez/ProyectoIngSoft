@@ -50,7 +50,7 @@
       </HBox>
       <VBox fx:id="VboxDisplay" alignment="TOP_CENTER" maxWidth="911.0" prefHeight="508.0" prefWidth="900.0" style="-fx-padding: 30; -fx-spacing: 20;">
          <children>
-            <Pane prefHeight="382.0" prefWidth="840.0" />
+            <Pane fx:id = "panel" prefHeight="382.0" prefWidth="840.0" />
             <Button fx:id="botonVolver" mnemonicParsing="false" onAction="#ClickBotonVolver" prefHeight="31.0" prefWidth="124.0" style="-fx-background-color: #0e103c;" text="Volver" textFill="#f7f7f7">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
