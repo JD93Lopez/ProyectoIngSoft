@@ -1,9 +1,6 @@
 package interfaces;
 
-import clases.Cliente;
-import clases.FacturaVenta;
-import clases.Producto;
-import clases.Usuario;
+import clases.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -20,4 +17,6 @@ public interface RMIVentas extends Remote {
 
     public Usuario obtenerVendedor(String usuario, String contrasena) throws RemoteException;
     public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException;
+
+    public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException;
 }

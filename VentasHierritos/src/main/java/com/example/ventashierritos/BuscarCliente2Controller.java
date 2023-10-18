@@ -56,6 +56,7 @@ public class BuscarCliente2Controller {
         facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
         facturaVenta.setFormaDePago(cuadroFormaDePago());
         facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
+        facturaVenta.setConsecutivoDian(1);
         LinkedList<Producto> productosFactura = new LinkedList();
         for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
             productosFactura.add(tarjeta.getProducto());
@@ -94,6 +95,16 @@ public class BuscarCliente2Controller {
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonHacerCot() {
+        FacturaVenta facturaVenta = armarFactura();
+        facturaVenta.setConsecutivoDian(0);
+        int id;
+        try {
+            id = Client.client.enviarFactura(facturaVenta);
+        } catch (RemoteException e) {
+            id = -4;
+            throw new RuntimeException(e);
+        }
+        CotizacionController.controller.setTextFieldId(""+id);
         Main.mainStage.setScene(CotizacionController.scene);
     }
 

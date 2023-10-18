@@ -1,9 +1,6 @@
 package client;
 
-import clases.Cliente;
-import clases.FacturaVenta;
-import clases.Producto;
-import clases.Usuario;
+import clases.*;
 import interfaces.RMIVentas;
 
 import java.net.MalformedURLException;
@@ -112,6 +109,17 @@ public class Client implements RMIVentas {
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return -3;
+        }
+    }
+
+    @Override
+    public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.pagarCotizacion(id,formaDePago);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
         }
     }
 

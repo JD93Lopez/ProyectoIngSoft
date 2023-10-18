@@ -590,6 +590,44 @@ public class Consulta {
         }
     }
 
+    public static LinkedList<Producto> listaIdProductosFacturaVentaHasProductos(String idFacturaVenta) {
+        LinkedList<Producto> productos = new LinkedList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM productos_has_facturas_de_venta WHERE FACTURAS_DE_VENTA_idfacturaDeVenta = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,idFacturaVenta);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setExistencias(resultSet.getInt("cantidadProducto"));
+                producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
+                productos.add(producto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return productos;
+
+        }
+    }
+
 
     public static void main(String[] args) {
 //        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");

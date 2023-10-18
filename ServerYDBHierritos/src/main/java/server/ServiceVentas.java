@@ -3,15 +3,13 @@ package server;
 import Database.Consulta;
 import Database.Insercion;
 import Database.Update;
-import clases.Cliente;
-import clases.FacturaVenta;
-import clases.Producto;
-import clases.Usuario;
+import clases.*;
 import interfaces.RMIVentas;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
@@ -97,9 +95,10 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
     public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException {
         int entero=-1;
         try{
+            //TODO fechaYHora
             Insercion.facturasDeVenta(
                     "10-10-10",
-                    "1",
+                    ""+facturaVenta.getConsecutivoDian(),
                     facturaVenta.getFormaDePago().toString(),
                     "1",
                     facturaVenta.getVendedor().getId(),
@@ -107,11 +106,44 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
                     ""+facturaVenta.getTotal()
             );
             entero = Integer.valueOf(Consulta.ultimaFacturaVenta());
-            Update.consecutivoDian(""+entero);
+            guardarTablaFacturaVentaHasProductos(""+entero,facturaVenta.getProductos());
+            if(facturaVenta.getConsecutivoDian()!=0){
+                Update.consecutivoDian(""+entero);
+                restarProductosDeInventario(facturaVenta.getProductos());
+            }
         }catch (Exception e){
             entero = -2;
         }
         return entero;
+    }
+
+    @Override
+    public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException {
+        boolean bool = false;
+        LinkedList<Producto> productosId = new LinkedList<>();
+        try{
+            productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
+            Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
+            bool = true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(bool){
+            restarProductosDeInventario(productosId);
+        }
+        return bool;
+    }
+
+    private void restarProductosDeInventario(LinkedList<Producto> productos) {
+        for (Producto producto : productos) {
+            Update.restarExistencias(Integer.valueOf(""+producto.getExistencias()),""+producto.getIdProducto());
+        }
+    }
+
+    private void guardarTablaFacturaVentaHasProductos(String idFactura,LinkedList<Producto> productos) {
+        for (Producto producto : productos) {
+            //TODO guardar tabla facturas_de_venta has productos
+        }
     }
 
 }
