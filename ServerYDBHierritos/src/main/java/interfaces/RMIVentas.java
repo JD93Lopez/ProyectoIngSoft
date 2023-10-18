@@ -19,4 +19,6 @@ public interface RMIVentas extends Remote {
     public int enviarFactura(FacturaVenta facturaVenta) throws RemoteException;
 
     public boolean pagarCotizacion(String id, EmpresaProveedora.FormaDePago formaDePago) throws RemoteException;
+
+    public boolean cantidadSuficiente(double cantidadPedida, int idProducto) throws RemoteException;
 }

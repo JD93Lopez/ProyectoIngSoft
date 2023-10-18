@@ -123,4 +123,15 @@ public class Client implements RMIVentas {
         }
     }
 
+    @Override
+    public boolean cantidadSuficiente(double cantidadPedida, int idProducto) throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.cantidadSuficiente(cantidadPedida,idProducto);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

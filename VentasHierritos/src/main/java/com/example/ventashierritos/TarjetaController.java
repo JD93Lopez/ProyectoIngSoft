@@ -1,6 +1,7 @@
 package com.example.ventashierritos;
 
 import clases.Producto;
+import client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -47,17 +48,51 @@ public class TarjetaController {
     protected void clickBotonChulito() {
         try{
             //TODO verificar cantidad vendida menor que existencias
-            producto.setExistencias(Double.valueOf(textFieldCantidad.getText()));
-            BuscarCliente2Controller.controller.insertarTarjetaPequena(producto);
-            double total = BuscarCliente2Controller.controller.total;
-            double totalPorCantidad = producto.getPrecioVenta()*producto.getExistencias();
-            double descuento = totalPorCantidad*producto.getpDescuento();
-            double granTotal = totalPorCantidad - descuento;
-            BuscarCliente2Controller.controller.total+=granTotal;
-            BuscarCliente2Controller.controller.setLabelTotal("Total: "+(total+granTotal));
+            double cantidadPedida = Double.valueOf(textFieldCantidad.getText());
+            TarjetaProducto2Controller tarjeta = tarjetaEnLista(producto.getIdProducto());
+            if(tarjeta==null){
+                if(Client.client.cantidadSuficiente(cantidadPedida,producto.getIdProducto())) {
+                    producto.setExistencias(cantidadPedida);
+                    BuscarCliente2Controller.controller.insertarTarjetaPequena(producto);
+                    double total = BuscarCliente2Controller.controller.total;
+                    double totalPorCantidad = producto.getPrecioVenta() * producto.getExistencias();
+                    double descuento = totalPorCantidad * producto.getpDescuento();
+                    double granTotal = totalPorCantidad - descuento;
+                    BuscarCliente2Controller.controller.total += granTotal;
+                    BuscarCliente2Controller.controller.setLabelTotal("Total: " + (total + granTotal));
+                }else{
+                    cuadroCantidadNoSuficiente();
+                }
+            }else{
+                double granCantidadPedida = tarjeta.getProducto().getExistencias()+cantidadPedida;
+                if(Client.client.cantidadSuficiente(granCantidadPedida,producto.getIdProducto())){
+                    tarjeta.getProducto().setExistencias(granCantidadPedida);
+                    tarjeta.setLabelCantidad("Cantidad: "+granCantidadPedida);
+                    double total = BuscarCliente2Controller.controller.total;
+                    double totalPorCantidad = producto.getPrecioVenta() * cantidadPedida;
+                    double descuento = totalPorCantidad * producto.getpDescuento();
+                    double granTotal = totalPorCantidad - descuento;
+                    BuscarCliente2Controller.controller.total += granTotal;
+                    BuscarCliente2Controller.controller.setLabelTotal("Total: " + (total + granTotal));
+                }else{
+                    cuadroCantidadNoSuficiente();
+                }
+            }
+
         }catch (Exception e){
             cuadroValorNoNumerico();
         }
+    }
+
+    private TarjetaProducto2Controller tarjetaEnLista(int idProducto) {
+        Producto producto;
+        for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
+            producto = tarjeta.getProducto();
+            if(producto.getIdProducto()==idProducto){
+                return tarjeta;
+            }
+        }
+        return null;
     }
 
     public VBox getTarjeta(){
@@ -97,6 +132,20 @@ public class TarjetaController {
         alert.setTitle("Valor No Numérico");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
         alert.setContentText("Por favor asegúrese de que colocó un valor numérico en el campo de cantidad.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void cuadroCantidadNoSuficiente() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Cantidad No Suficiente");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("La cantidad de producto solicitada excede las existencias en el inventario.");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");

@@ -113,6 +113,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             }
         }catch (Exception e){
             entero = -2;
+            e.printStackTrace();
         }
         return entero;
     }
@@ -123,26 +124,39 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         LinkedList<Producto> productosId = new LinkedList<>();
         try{
             productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
+            System.out.println(id);
             Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
+            Update.consecutivoDian(id);
             bool = true;
         }catch(Exception e){
             e.printStackTrace();
         }
         if(bool){
+            System.out.println("restar");
+            for (Producto producto:productosId) {
+                System.out.println(producto.getExistencias());
+                System.out.println(producto.getIdProducto());
+            }
             restarProductosDeInventario(productosId);
         }
         return bool;
     }
 
+    @Override
+    public boolean cantidadSuficiente(double cantidadPedida, int idProducto) throws RemoteException {
+        Producto producto = Consulta.obtenerProductoPorId(""+idProducto);
+        return (cantidadPedida<=producto.getExistencias());
+    }
+
     private void restarProductosDeInventario(LinkedList<Producto> productos) {
         for (Producto producto : productos) {
-            Update.restarExistencias(Integer.valueOf(""+producto.getExistencias()),""+producto.getIdProducto());
+            Update.restarExistencias(((int)producto.getExistencias()),""+producto.getIdProducto());
         }
     }
 
     private void guardarTablaFacturaVentaHasProductos(String idFactura,LinkedList<Producto> productos) {
         for (Producto producto : productos) {
-            //TODO guardar tabla facturas_de_venta has productos
+            Insercion.productos_has_facturas_de_venta(idFactura,""+producto.getIdProducto(),""+producto.getExistencias());
         }
     }
 

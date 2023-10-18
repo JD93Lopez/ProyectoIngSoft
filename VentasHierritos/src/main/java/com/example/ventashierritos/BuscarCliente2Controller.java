@@ -7,10 +7,7 @@ import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -93,6 +90,7 @@ public class BuscarCliente2Controller {
     public void clickBotonCancelar() {
         BuscarClienteController.controller.limpiarCampos();
         Main.mainStage.setScene(BuscarClienteController.scene);
+        BuscarCliente2Controller.controller.reiniciarListasYGrids();
     }
     public void clickBotonHacerCot() {
         FacturaVenta facturaVenta = armarFactura();
@@ -164,12 +162,38 @@ public class BuscarCliente2Controller {
                 insertarTarjeta(producto);
             }
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            cuadroFallaDeConexion();
+            e.printStackTrace();
         }
     }
     double total=0;
 
     public void setLabelTotal(String total) {
         labelTotal.setText(total);
+    }
+    public void reiniciarListasYGrids(){
+        for (TarjetaController tarjeta: tarjetasInventario) {
+            gridPane1.getChildren().remove(tarjeta.getTarjeta());
+        }
+        for (TarjetaProducto2Controller tarjeta2: tarjetasProductosSeleccionados) {
+            gridPane2.getChildren().remove(tarjeta2.getTarjeta());
+        }
+        BuscarCliente2Controller.tarjetasInventario.clear();
+        BuscarCliente2Controller.tarjetasProductosSeleccionados.clear();
+        dibujarTarjetasProductos();
+    }
+    private void cuadroFallaDeConexion() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Falla de Conexión");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("Hubo un error al comunicarse con el servidor. \nPor favor verifique que esté encendido.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
     }
 }

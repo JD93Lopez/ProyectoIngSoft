@@ -65,7 +65,6 @@ public class BuscarClienteController {
         if(clienteActual==null){
             cuadroClienteNulo();
         }else{
-            BuscarCliente2Controller.controller.dibujarTarjetasProductos();
             Main.mainStage.setScene(BuscarCliente2Controller.scene);
         }
     }

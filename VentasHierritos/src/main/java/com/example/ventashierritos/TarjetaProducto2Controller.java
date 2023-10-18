@@ -50,4 +50,8 @@ public class TarjetaProducto2Controller {
     public void setLabelCantidad(String cantidad) {
         labelCantidad.setText(cantidad);
     }
+
+    public HBox getTarjeta() {
+        return tarjeta;
+    }
 }

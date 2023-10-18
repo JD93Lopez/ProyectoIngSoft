@@ -458,7 +458,7 @@ public class Consulta {
         try {
             conectar();
 
-            String sql = "SELECT * FROM productos WHERE id = ?";
+            String sql = "SELECT * FROM productos WHERE idproducto = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idproducto);
             resultSet = preparedStatement.executeQuery();
@@ -592,22 +592,22 @@ public class Consulta {
 
     public static LinkedList<Producto> listaIdProductosFacturaVentaHasProductos(String idFacturaVenta) {
         LinkedList<Producto> productos = new LinkedList<>();
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-
+        PreparedStatement statement = null;
         try {
             conectar();
 
             String sql = "SELECT * FROM productos_has_facturas_de_venta WHERE FACTURAS_DE_VENTA_idfacturaDeVenta = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,idFacturaVenta);
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,Integer.valueOf(idFacturaVenta));
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Producto producto = new Producto();
                 producto.setExistencias(resultSet.getInt("cantidadProducto"));
                 producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
                 productos.add(producto);
+                System.out.println("AQUI");
             }
 
 
@@ -618,7 +618,7 @@ public class Consulta {
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
+                if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -628,11 +628,14 @@ public class Consulta {
         }
     }
 
-
     public static void main(String[] args) {
+        System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
+    }
+
+/*    public static void main(String[] args) {
 //        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");
         System.out.println(Consulta.ultimaFacturaVenta());
-    }
+    }*/
 
 /*    public static void main(String[] args) {
         Cliente cliente = Consulta.obtenerClientePorTelefono("3016995315");

@@ -40,6 +40,7 @@ public class InicioDeSesionController {
                     if(nUser!=""&&pass!=""){
                         if (Client.client.iniciarSesion(nUser, pass)) {
                             vendedorActual=Client.client.obtenerVendedor(nUser,pass);
+                            BuscarCliente2Controller.controller.dibujarTarjetasProductos();
                             Main.mainStage.setScene(BuscarClienteController.scene);
                         }else {
                             labelError.setText("Usuario o contraseña incorrectos.");

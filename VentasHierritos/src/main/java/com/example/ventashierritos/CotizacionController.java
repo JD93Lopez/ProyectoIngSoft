@@ -22,6 +22,8 @@ public class CotizacionController {
     }
     public void clickBotonCancelar() {
         BuscarClienteController.controller.limpiarCampos();
+        textFieldId.setText("");
+        BuscarCliente2Controller.controller.reiniciarListasYGrids();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void clickBotonPagarCot() {
@@ -34,6 +36,9 @@ public class CotizacionController {
         }
         if (bool){
             BuscarClienteController.controller.limpiarCampos();
+            FacturaController.controller.setLabelIdFactura("ID: "+textFieldId.getText());
+            textFieldId.setText("");
+            BuscarCliente2Controller.controller.reiniciarListasYGrids();
             Main.mainStage.setScene(FacturaController.scene);
         }else{
             cuadroErrorCotizacion();

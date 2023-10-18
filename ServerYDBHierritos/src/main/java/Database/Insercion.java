@@ -274,16 +274,15 @@ public class Insercion {
         int idFormaDePago = 2;
 
         conectar();
-        PreparedStatement preparedStatement = null;
         String sql = "INSERT INTO empresas_proveedoras_has_formas_de_pago(EMPRESAS_PROVEEDORAS_idempresaProveedora," +
                 " FORMAS_DE_PAGO_idforma_de_pago) VALUES (?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, idEmpresaProveedora);
-            preparedStatement.setInt(2, idFormaDePago);
+            statement.setInt(1, idEmpresaProveedora);
+            statement.setInt(2, idFormaDePago);
 
-            int filasAfectadas = preparedStatement.executeUpdate();
+            int filasAfectadas = statement.executeUpdate();
             if (filasAfectadas > 0) {
                 System.out.println("Inserción exitosa.");
             } else {
@@ -302,17 +301,41 @@ public class Insercion {
         int idProducto = 2;
 
         conectar();
-        PreparedStatement preparedStatement = null;
         String sql = "INSERT INTO facturas_de_compra_has_productos(FACTURAS_DE_COMPRA_idfacturaDeCompra," +
                 " PRODUCTOS_idproducto,cantidadProducto) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, idFacturaDeCompra);
-            preparedStatement.setInt(2, idProducto);
-            preparedStatement.setDouble(3, Double.parseDouble(cantidadProducto));
+            statement.setInt(1, idFacturaDeCompra);
+            statement.setInt(2, idProducto);
+            statement.setDouble(3, Double.parseDouble(cantidadProducto));
 
-            int filasAfectadas = preparedStatement.executeUpdate();
+            int filasAfectadas = statement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
+    }
+
+    public static boolean productos_has_facturas_de_venta(String idFactura,String idProducto,String cantidadProducto){
+
+        conectar();
+        String sql = "INSERT INTO productos_has_facturas_de_venta (PRODUCTOS_idproducto," +
+                " FACTURAS_DE_VENTA_idfacturaDeVenta,cantidadProducto) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, idProducto);
+            statement.setString(2, idFactura);
+            statement.setDouble(3, Double.parseDouble(cantidadProducto));
+
+            int filasAfectadas = statement.executeUpdate();
             if (filasAfectadas > 0) {
                 System.out.println("Inserción exitosa.");
             } else {

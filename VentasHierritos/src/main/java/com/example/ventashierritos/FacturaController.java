@@ -11,6 +11,8 @@ public class FacturaController {
     Label labelIdFactura;
     public void clickBotonSalir(){
         BuscarClienteController.controller.limpiarCampos();
+        labelIdFactura.setText("");
+        BuscarCliente2Controller.controller.reiniciarListasYGrids();
         Main.mainStage.setScene(BuscarClienteController.scene);
     }
     public void setLabelIdFactura(String id){
