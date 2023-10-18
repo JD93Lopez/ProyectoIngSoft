@@ -12,7 +12,7 @@ public class MainServer {
                 (String) properties.get("PORT"),
                 (String) properties.get("SERVICENAME")
             );*/
-            Server server = new Server("10.152.164.134");
+            Server server = new Server("localhost");
             if(server.deployServiceAlmacen("5000","servicioAlmacen")){
                 System.out.println("servicioAlmacen on");
             }
