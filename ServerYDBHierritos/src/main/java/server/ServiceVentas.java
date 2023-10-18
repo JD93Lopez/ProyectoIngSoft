@@ -132,11 +132,6 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             e.printStackTrace();
         }
         if(bool){
-            System.out.println("restar");
-            for (Producto producto:productosId) {
-                System.out.println(producto.getExistencias());
-                System.out.println(producto.getIdProducto());
-            }
             restarProductosDeInventario(productosId);
         }
         return bool;

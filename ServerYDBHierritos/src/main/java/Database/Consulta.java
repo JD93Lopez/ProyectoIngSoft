@@ -607,7 +607,6 @@ public class Consulta {
                 producto.setExistencias(resultSet.getInt("cantidadProducto"));
                 producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
                 productos.add(producto);
-                System.out.println("AQUI");
             }
 
 
