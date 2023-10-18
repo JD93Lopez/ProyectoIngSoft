@@ -8,6 +8,6 @@ import javafx.scene.control.TextField;
 public class VentasInformesController {
     static Scene scene;
     @FXML
-    TextArea textArea;
+     TextArea textArea;
 
 }

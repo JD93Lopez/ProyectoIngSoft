@@ -1,5 +1,6 @@
 package server;
 
+import interfaces.RMIAdmin;
 import interfaces.RMIAlmacen;
 import interfaces.RMIVentas;
 
@@ -52,6 +53,25 @@ public class Server{
             String url = "//" + ip + ":" + port + "/" + serviceName;
             System.setProperty( "java.rmi.server.hostname", ip);
             RMIVentas service = new ServiceVentas();
+            LocateRegistry.createRegistry(Integer.parseInt(port));
+            Naming.rebind(url, service);
+            ack = true;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } finally {
+            return ack;
+        }
+    }
+
+    public boolean deployServiceAdmin(String port, String serviceName) {
+        boolean ack = false;
+        if (ip == null | port == null | serviceName == null) return ack;
+        try {
+            String url = "//" + ip + ":" + port + "/" + serviceName;
+            System.setProperty( "java.rmi.server.hostname", ip);
+            RMIAdmin service = new ServiceAdmin();
             LocateRegistry.createRegistry(Integer.parseInt(port));
             Naming.rebind(url, service);
             ack = true;

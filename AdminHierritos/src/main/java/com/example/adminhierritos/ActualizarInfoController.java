@@ -19,7 +19,10 @@ public class ActualizarInfoController {
     VBox VboxDisplay;
 
     public void ClickBotonCliente( ) {
+
         cargarFxml("cliente_actualizarinfo_admin.fxml");
+
+
     }
 
     public void ClickBotonUsuario() {
