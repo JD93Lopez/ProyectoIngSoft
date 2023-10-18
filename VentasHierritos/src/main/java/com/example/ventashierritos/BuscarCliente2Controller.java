@@ -190,6 +190,7 @@ public class BuscarCliente2Controller {
         for (TarjetaProducto2Controller tarjeta2: tarjetasProductosSeleccionados) {
             gridPane2.getChildren().remove(tarjeta2.getTarjeta());
         }
+        BuscarCliente2Controller.controller.total=0;
         BuscarCliente2Controller.tarjetasInventario.clear();
         BuscarCliente2Controller.tarjetasProductosSeleccionados.clear();
         dibujarTarjetasProductos();
