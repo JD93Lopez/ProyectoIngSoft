@@ -122,8 +122,8 @@ public class Client implements RMIAdmin {
             e.printStackTrace();
             return null;
         }
-
     }
+
 
 
 }
