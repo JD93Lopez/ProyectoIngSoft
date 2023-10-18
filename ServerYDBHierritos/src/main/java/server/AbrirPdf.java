@@ -8,7 +8,7 @@ public class AbrirPdf {
     public static void abrirPdf(String nombrePdf){
         try {
             // Especifica la ubicación y el nombre del archivo PDF que deseas abrir
-            String nombrePDF = "facturaventa"+nombrePdf+".pdf"; // Reemplaza con la ubicación y el nombre de tu archivo PDF
+            String nombrePDF = nombrePdf+".pdf"; // Reemplaza con la ubicación y el nombre de tu archivo PDF
 
             // Crea un objeto File con la ubicación del archivo PDF
             File pdfFile = new File(nombrePDF);
