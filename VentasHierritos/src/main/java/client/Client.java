@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Client implements RMIVentas {
 
-    public static Client client = new Client("localhost","5001","servicioVentas");
+    public static Client client = new Client("10.152.164.147","5001","servicioVentas");
     private RMIVentas service;
     private String ip;
     private String port;
