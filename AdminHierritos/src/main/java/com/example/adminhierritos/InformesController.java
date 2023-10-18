@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class InformesController {
 
     @FXML
     Button botonVolver;
+    @FXML
+    Pane panel;
+
 
     public void ClickBotonVentas( ) {
      /*   FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ventas_informes_admin.fxml"));
@@ -47,13 +51,13 @@ public class InformesController {
     }
 
     private void cargarFxml(String archivoFxml) {
-        VboxDisplay.getChildren().clear();  // Limpiar el contenido actual
+        panel.getChildren().clear();  // Limpiar el contenido actual
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
         try {
             fxmlLoader.setLocation(Main.class.getResource(archivoFxml));
             informe = fxmlLoader.load();
-            VboxDisplay.getChildren().add(informe);
-            VboxDisplay.getChildren().add(botonVolver);
+            panel.getChildren().add(informe);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

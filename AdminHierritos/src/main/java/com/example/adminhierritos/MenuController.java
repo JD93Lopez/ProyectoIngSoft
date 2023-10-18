@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MenuController {
 
@@ -25,6 +26,7 @@ public class MenuController {
     public void  initialize(){
         botonConfig.setOnMouseClicked(event -> {
             ConfiguracionController.stage = new Stage();
+            ConfiguracionController.stage.initStyle(StageStyle.UNDECORATED);
             ConfiguracionController.stage.setScene(ConfiguracionController.scene);
             ConfiguracionController.stage.show();
         });
