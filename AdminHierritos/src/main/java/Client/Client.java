@@ -139,7 +139,7 @@ public class Client implements RMIAdmin {
     public boolean crearUsuario(Usuario usuario) throws RemoteException {
         try {
             service = (RMIAdmin) Naming.lookup(url);
-            return service.actualizarUsuario(usuario);
+            return service.crearUsuario(usuario);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return false;

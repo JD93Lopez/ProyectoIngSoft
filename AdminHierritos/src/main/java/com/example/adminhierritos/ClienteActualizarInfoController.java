@@ -105,7 +105,6 @@ public class ClienteActualizarInfoController {
             }
         }else {
             cuadroRellenarCampos();
-            System.out.println("entrón");
         }
 
     }

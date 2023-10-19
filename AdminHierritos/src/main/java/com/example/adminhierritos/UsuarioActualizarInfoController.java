@@ -56,17 +56,66 @@ public class UsuarioActualizarInfoController {
             llenarEspacios(usuarioActual);
 
         }else if(textfieldBuscar.getText().equals("")){
-            cuadroRellenarCampos();
+            cuadroRellenarCampoBusqueda();
 
         }else{
+
+            //Eliminar esta prueba de server
             usuarioActual = usuario;
-            llenarEspacios(usuarioActual);
+            llenarEspacios(usuario);
+            //Hasta aquí
 
             cuadroClienteNoEncontrado();
             usuarioActual=null;
         }
     }
 
+    public void clickBotonGuardarCambios() throws RemoteException {
+        String nombreUsuario = textfieldNombreUsuario.getText();
+        String telefono = textfieldNumTel.getText();
+        String nombres = textfieldNombresTrabajador.getText();
+        String contrasena = textfieldContrasena.getText();
+        String numDoc = textfieldNumDoc.getText();
+        Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
+        Usuario.TipoUsuario tipoUsuario = (Usuario.TipoUsuario) comboBoxTipoUsuario.getValue();
+
+        if ((tipDoc !=null) && (tipoUsuario != null) ){
+
+            Usuario usuarioTemp = new Usuario(
+                    tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc);
+            if(Client.client.actualizarUsuario(usuarioTemp)) {
+                cuadroExitoActualizar();
+            }
+
+        }else {
+            cuadroRellenarCampos();
+        }
+    }
+
+    public void clickBotonCrear( ) throws RemoteException {
+        String nombreUsuario = textfieldNombreUsuario.getText();
+        String telefono = textfieldNumTel.getText();
+        String nombres = textfieldNombresTrabajador.getText();
+        String contrasena = textfieldContrasena.getText();
+        String numDoc = textfieldNumDoc.getText();
+        Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
+        Usuario.TipoUsuario tipoUsuario = (Usuario.TipoUsuario) comboBoxTipoUsuario.getValue();
+
+        if ((tipDoc !=null) && (tipoUsuario != null) ){
+
+            Usuario usuarioTemp = new Usuario(
+                    tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc);
+            usuarioTemp.setTelefono(telefono);
+
+            System.out.println("Desde aquí, telefono:" + usuarioTemp.getTelefono() );
+            if(Client.client.crearUsuario(usuarioTemp)) {
+                cuadroExitoCrear();
+            }
+
+        }else {
+            cuadroRellenarCampos();
+        }
+    }
 
     public void desplegables() {
         desplegableTipoUsuario();
@@ -79,17 +128,16 @@ public class UsuarioActualizarInfoController {
         textfieldNombresTrabajador.setText(usuarioActual.getNombres());
         textfieldContrasena.setText(usuarioActual.getContrasena());
         textfieldNumDoc.setText(usuarioActual.getNumDocumento());
+        comboBoxTipoDoc.setValue(usuarioActual.getTipoDocumento());
+        comboBoxTipoUsuario.setValue(usuarioActual.getTipoUsuario());
     }
-    public void clickBotonGuardarCambios() {
 
-    }
-
-    private void cuadroClienteNoEncontrado() {
+    private void cuadroRellenarCampoBusqueda() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Usuario No Encontrado");
+        alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("\n Usuario no encontrado. Por favor agréguelo llenando los espacios y pulsando el botón \"Crear\"");
+        alert.setContentText("Rellene la barra de búsqueda con el id \n del Usuario");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
@@ -103,7 +151,20 @@ public class UsuarioActualizarInfoController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("\"Rellene la barra de búsqueda con el id \\n    del Usuario por favor");
+        alert.setContentText("Llene todos los campos por favor");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void cuadroClienteNoEncontrado() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Usuario No Encontrado");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\n Usuario no encontrado. Por favor, agréguelo completando los campos requeridos y haciendo clic en el botón \"Crear\"");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
@@ -113,10 +174,35 @@ public class UsuarioActualizarInfoController {
         alert.showAndWait();
     }
 
-    public void clickBotonCrear( ) {
+    private void cuadroExitoCrear() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Crear Usuario");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\n El usuario ha sido creado con éxito ");
 
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
     }
 
+    private void cuadroExitoActualizar() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Actualizar Usuario");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\n El usuario ha sido actualizado con éxito ");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
     public void desplegableTipoDocumento(){
         for (Persona.TipoDocumento tipoDoumento: Persona.TipoDocumento.values()) {
             comboBoxTipoDoc.getItems().add(tipoDoumento);
@@ -126,7 +212,6 @@ public class UsuarioActualizarInfoController {
     public void desplegableTipoUsuario(){
         for (Usuario.TipoUsuario tipoUsuario : Usuario.TipoUsuario.values()) {
             comboBoxTipoUsuario.getItems().add(tipoUsuario);
-            System.out.println(tipoUsuario);
         }
     }
 }
