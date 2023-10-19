@@ -1,6 +1,8 @@
 package client;
 
 import clases.EmpresaProveedora;
+import clases.FacturaCompra;
+import clases.Producto;
 import interfaces.RMIAlmacen;
 
 import java.net.MalformedURLException;
@@ -67,6 +69,47 @@ public class Client implements RMIAlmacen {
             return null;
         }
 
+    }
+
+    @Override
+    public List<EmpresaProveedora> ListaEmpresasProveedoras() throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            return service.ListaEmpresasProveedoras();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void enviarProductoInsertar(Producto producto, int id) throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            service.enviarProductoInsertar(producto,id);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actualizarExistencias(String text, int idProducto) throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            service.actualizarExistencias(text,idProducto);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            service.enviarFacturaDeCompra(facturaCompra);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
     }
 
 

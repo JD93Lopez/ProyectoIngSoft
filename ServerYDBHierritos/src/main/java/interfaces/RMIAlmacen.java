@@ -1,6 +1,8 @@
 package interfaces;
 
 import clases.EmpresaProveedora;
+import clases.FacturaCompra;
+import clases.Producto;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -13,5 +15,11 @@ public interface RMIAlmacen extends Remote {
 
     public List ListaProductosInventario () throws RemoteException;
 
+    public List<EmpresaProveedora> ListaEmpresasProveedoras() throws RemoteException;
 
+    public void enviarProductoInsertar(Producto producto, int id) throws RemoteException;
+
+    public void actualizarExistencias(String text, int idProducto) throws RemoteException;
+
+    public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException;
 }

@@ -293,6 +293,44 @@ public class Consulta {
 
     }
 
+    public static EmpresaProveedora obtenerEmpresaProveedoraPorNit(String nitEmpresaProveedora) {
+        EmpresaProveedora empresaProveedora  = new EmpresaProveedora();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM empresas_proveedoras WHERE nit = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,nitEmpresaProveedora);
+            resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                empresaProveedora.setId(Integer.parseInt(resultSet.getString("idempresaProveedora")));
+                empresaProveedora.setNombre(resultSet.getString("nombre"));
+                empresaProveedora.setNit(resultSet.getString("nit"));
+                empresaProveedora.setBanco(resultSet.getString("banco"));
+                empresaProveedora.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return empresaProveedora;
+        }
+
+    }
+
     public static FacturaCompra obtenerFacturaCompraPorId(String idfacturaDeCompra) {
         FacturaCompra facturaCompra  = new FacturaCompra();
         PreparedStatement preparedStatement = null;
@@ -545,6 +583,45 @@ public class Consulta {
                 e.printStackTrace();
             }
             return productos;
+
+        }
+    }
+    public static LinkedList<EmpresaProveedora> listaEmpresasProveedoras() {
+        LinkedList<EmpresaProveedora> empresaProveedoras = new LinkedList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM empresas_proveedoras";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                EmpresaProveedora empresaProveedora = new EmpresaProveedora();
+                empresaProveedora.setId(Integer.parseInt(resultSet.getString("idempresaProveedora")));
+                empresaProveedora.setNombre(resultSet.getString("nombre"));
+                empresaProveedora.setNit(resultSet.getString("nit"));
+                empresaProveedora.setBanco(resultSet.getString("banco"));
+                empresaProveedora.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
+                empresaProveedoras.add(empresaProveedora);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return empresaProveedoras;
 
         }
     }

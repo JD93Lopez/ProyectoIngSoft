@@ -1,5 +1,7 @@
 package com.example.almacenhierritos;
 
+import clases.EmpresaProveedora;
+import client.Client;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public class MenuController {
 
@@ -20,6 +23,15 @@ public class MenuController {
     }
     @FXML
     protected void clickBuscarProveedor() {
+        List<EmpresaProveedora> lista;
+        try {
+            lista = Client.client.ListaEmpresasProveedoras();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        for (EmpresaProveedora empresaProveedora: lista){
+            BuscarProveedorController.controller.insertarTarjeta(empresaProveedora);
+        }
         Main.mainStage.setScene(BuscarProveedorController.scene);
     }
     @FXML

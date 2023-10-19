@@ -1,6 +1,9 @@
 package server;
 
+import Database.Insercion;
+import Database.Update;
 import clases.EmpresaProveedora;
+import clases.FacturaCompra;
 import clases.Producto;
 import clases.Usuario;
 import interfaces.RMIAlmacen;
@@ -39,12 +42,50 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     @Override
     public EmpresaProveedora buscarProveedor(String nit) throws RemoteException {
-        return new EmpresaProveedora();
+        return Consulta.obtenerEmpresaProveedoraPorNit(nit);
     }
 
     @Override
     public List ListaProductosInventario() throws RemoteException {
         return Consulta.listaProductosStock();
+    }
+
+    @Override
+    public List<EmpresaProveedora> ListaEmpresasProveedoras() throws RemoteException {
+        return Consulta.listaEmpresasProveedoras();
+    }
+
+    @Override
+    public void enviarProductoInsertar(Producto producto, int id) throws RemoteException {
+        Insercion.productos(
+                "0"/*+producto.getCodigo()*/,
+                ""+producto.getNombre(),
+                ""+producto.getDescripcion(),
+                "0"/*+producto.getExistencias()*/,
+                ""+producto.getpDescuento(),
+                ""+producto.getpIva(),
+                ""+producto.getPrecioCompra(),
+                ""+producto.getPrecioVenta(),
+                ""+producto.getCantidadMinima(),
+                ""+producto.getCantidadMaxima()
+        );
+        //TODO empresaProveedora_has_productos
+    }
+
+    @Override
+    public void actualizarExistencias(String text, int idProducto) throws RemoteException {
+        Update.setExistencias(text,idProducto);
+    }
+
+    @Override
+    public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException {
+        //TODO
+        Insercion.facturasDeCompra(
+                ""+facturaCompra.getNombreVendedor(),
+                ""+facturaCompra.getFormaDePago(),
+                "",
+                ""+facturaCompra.getTotal()
+        );
     }
 
 }

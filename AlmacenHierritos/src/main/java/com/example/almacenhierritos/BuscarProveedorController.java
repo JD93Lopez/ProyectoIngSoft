@@ -1,5 +1,6 @@
 package com.example.almacenhierritos;
 
+import clases.EmpresaProveedora;
 import clases.Producto;
 import client.Client;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 public class BuscarProveedorController {
 
+    public static BuscarProveedorController controller;
     static Scene scene;
     static VBox tarjeta;
     @FXML
@@ -33,15 +35,7 @@ public class BuscarProveedorController {
     TextField textfieldBuscar;
     @FXML
     protected void clickBotonBuscar() {
-        List<Producto> lista;
-        try {
-            lista = Client.client.ListaProductosInventario();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        for (Producto producto: lista){
-            insertarTarjeta(producto);
-        }
+
     }
     @FXML
     protected void clickBotonCrear() {
@@ -55,7 +49,7 @@ public class BuscarProveedorController {
     private int col=0;
     private int fil=1;
 
-    public void insertarTarjeta(Producto producto){
+    public void insertarTarjeta(EmpresaProveedora empresaProveedora){
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaproveedor.fxml"));
         try {
@@ -64,9 +58,10 @@ public class BuscarProveedorController {
             throw new RuntimeException(e);
         }
         TarjetaProveedorController tarjetaController = fxmlLoader.getController();
-        tarjetaController.setLabelNombre(producto.getNombre());
-        tarjetaController.setLabelID(""+producto.getIdProducto());
-        tarjetaController.setLabelNIT(""+producto.getIdProducto());
+        tarjetaController.setEmpresaProveedora(empresaProveedora);
+        tarjetaController.setLabelNombre(empresaProveedora.getNombre());
+        tarjetaController.setLabelID(""+empresaProveedora.getId());
+        tarjetaController.setLabelNIT(""+empresaProveedora.getNit());
         gridPane.add(tarjeta, col++, fil);
         GridPane.setMargin(tarjeta,new Insets(10));
         if (col == 3) {

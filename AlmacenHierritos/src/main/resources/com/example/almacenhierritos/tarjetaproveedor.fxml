@@ -31,7 +31,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="72.0">
                <children>
-                  <Button fx:id="botonOK" mnemonicParsing="false" prefHeight="167.0" prefWidth="79.0" style="-fx-background-color: #8AE3A6;" text="✅" textFill="WHITE">
+                  <Button fx:id="botonOK" onAction="#clickBotonChulito" mnemonicParsing="false" prefHeight="167.0" prefWidth="79.0" style="-fx-background-color: #8AE3A6;" text="✅" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="28.0" />
                      </font>

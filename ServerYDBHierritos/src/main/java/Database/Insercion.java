@@ -129,13 +129,12 @@ public class Insercion {
         conectar();
 
         String sql = "INSERT INTO facturas_de_compra (nombreVendedor,formasDePago,fechaYHora,total"+
-                ")VALUES ( ?, ?, ?, ?)";
+                ")VALUES ( ?, ?, NOW(), ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, nombreVendedor);
             statement.setString(2, formasDePago);
-            statement.setString(3, fechaYHora);
-            statement.setString(4, total);
+            statement.setString(3, total);
 
             int filasAfectadas = statement.executeUpdate();
 

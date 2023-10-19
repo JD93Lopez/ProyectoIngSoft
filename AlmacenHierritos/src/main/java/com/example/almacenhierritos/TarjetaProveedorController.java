@@ -1,5 +1,6 @@
 package com.example.almacenhierritos;
 
+import clases.EmpresaProveedora;
 import clases.Producto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,15 +19,20 @@ public class TarjetaProveedorController {
     Label labelNIT;
     @FXML
     Label labelID;
-
-    private Producto producto;
-
-    public Producto getProducto() {
-        return producto;
+    @FXML
+    public void clickBotonChulito(){
+        AgregarProductoController.empresaActual = empresaProveedora;
+        Main.mainStage.setScene(AgregarProductoController.scene);
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    private EmpresaProveedora empresaProveedora;
+
+    public EmpresaProveedora getEmpresaProveedora() {
+        return empresaProveedora;
+    }
+
+    public void setEmpresaProveedora(EmpresaProveedora empresaProveedora) {
+        this.empresaProveedora = empresaProveedora;
     }
 
     public VBox getTarjeta(){

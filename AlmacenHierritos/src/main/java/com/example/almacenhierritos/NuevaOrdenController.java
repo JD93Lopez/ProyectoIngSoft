@@ -1,6 +1,7 @@
 package com.example.almacenhierritos;
 
 import clases.EmpresaProveedora;
+import clases.FacturaCompra;
 import clases.Producto;
 import client.Client;
 import javafx.beans.Observable;
@@ -23,9 +24,20 @@ public class NuevaOrdenController {
     TextField textfieldBuscar;
     @FXML
     ComboBox comboboxFormaPago;
-
     @FXML
     ComboBox comboboxNombreProducto;
+
+    @FXML
+    TextField textfieldEmpresaProveedora;
+    @FXML
+    TextField textfieldNombreVendedor;
+    @FXML
+    TextField textfieldCantidadProducto;
+    @FXML
+    TextField textfieldPrecio;
+    @FXML
+    TextField textfieldPorcentaje;
+    private static EmpresaProveedora empresaProveedora=null;
 
     @FXML
     protected void clickBotonBuscar() {
@@ -35,11 +47,24 @@ public class NuevaOrdenController {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
+        empresaProveedora = empresa;
+        textfieldEmpresaProveedora.setText(empresa.getNombre());
         NuevaOrdenController.controller.desplegableProductos(empresa.getNit());
     }
     @FXML
     protected void clickBotonAceptar() {
+        if(empresaProveedora!=null){
+            FacturaCompra facturaCompra = new FacturaCompra();
+            facturaCompra.setEmpresaProveedora(empresaProveedora);
+            facturaCompra.setFormaDePago(EmpresaProveedora.FormaDePago.valueOf(comboboxFormaPago.getSelectionModel().getSelectedItem().toString()));
+            facturaCompra.setNombreVendedor(textfieldNombreVendedor.getText());
+            facturaCompra.setTotal(Double.parseDouble(textfieldCantidadProducto.getText())*Double.parseDouble(textfieldPrecio.getText()));
+            try {
+                Client.client.enviarFacturaDeCompra(facturaCompra);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
     }
     @FXML
@@ -77,7 +102,6 @@ public class NuevaOrdenController {
             items.add("Producto 2");
             items.add("Producto 3");
             items.add("Producto 4");*/
-
             comboboxNombreProducto.setItems(items);
         }catch (Exception e){
             e.printStackTrace();

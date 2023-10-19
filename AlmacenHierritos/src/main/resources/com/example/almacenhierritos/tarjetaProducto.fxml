@@ -51,7 +51,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="72.0" style="-fx-padding: 5; -fx-spacing: 5;">
                <children>
-                  <ImageView fx:id="imageOk" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageOk" onMouseClicked="#clickChulito" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/okey.png" />
                      </image></ImageView>
