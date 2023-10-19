@@ -2,6 +2,7 @@ package Database;
 
 import clases.Cliente;
 import clases.Persona;
+import clases.Usuario;
 
 import java.sql.*;
 
@@ -139,6 +140,72 @@ public class Update {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(text));
             preparedStatement.setInt(2, idProducto);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void actualizarUsuario(Usuario usuario) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE clientes SET nombres = ?,telefono = ?,"+
+                    "tipoDocumento = ?,numDocumento=?,"+
+                    "tipoUsuario=?,nombreUsuario=?,contrasena=? WHERE (idcliente = ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,usuario.getNombres());
+            preparedStatement.setString(2,usuario.getTelefono());
+            preparedStatement.setString(3,usuario.getTipoDocumento().toString());
+            preparedStatement.setString(4,usuario.getNumDocumento());
+            preparedStatement.setString(5,usuario.getTipoUsuario().toString());
+            preparedStatement.setString(6,usuario.getNombreUsuario());
+            preparedStatement.setString(7,usuario.getContrasena());
+            preparedStatement.setInt(8,Integer.valueOf(usuario.getId()));
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void actualizarCliente(Cliente cliente) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE clientes SET nombres = ?,telefono = ?,"+
+                    "tipoDocumento = ?,numDocumento=?,direccion=?,correo=?,"+
+                    "tipoPersona=?,responsableDeIva=?,clienteFrecuente=? WHERE (idcliente = ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,cliente.getNombres());
+            preparedStatement.setString(2,cliente.getTelefono());
+            preparedStatement.setString(3,cliente.getTipoDocumento().toString());
+            preparedStatement.setString(4,cliente.getNumDocumento());
+            preparedStatement.setString(5,cliente.getDireccion());
+            preparedStatement.setString(6,cliente.getCorreo());
+            preparedStatement.setString(7,cliente.getTipoPersona().toString());
+            preparedStatement.setBoolean(8,cliente.getResponsableDeIva());
+            preparedStatement.setBoolean(9,false);
+            preparedStatement.setInt(10,Integer.valueOf(cliente.getId()));
+
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

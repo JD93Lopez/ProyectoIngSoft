@@ -1,6 +1,8 @@
 package server;
 
 import Database.Consulta;
+import Database.Insercion;
+import Database.Update;
 import clases.Cliente;
 import clases.Persona;
 import clases.Usuario;
@@ -91,16 +93,41 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public boolean actualizarCliente(Cliente cliente) throws RemoteException {
-        Cliente clientTemp = cliente;
-        System.out.println(clientTemp.getNombres());
+        if(cliente.getId()!=null){
+            Update.actualizarCliente(cliente);
+        }else{
+            Insercion.nuevoCliente(
+                    ""+cliente.getNombres(),
+                    ""+cliente.getTelefono(),
+                    ""+cliente.getTipoDocumento(),
+                    ""+cliente.getNumDocumento(),
+                    ""+cliente.getDireccion(),
+                    ""+cliente.getCorreo(),
+                    ""+cliente.getTipoPersona(),
+                    ""+cliente.getResponsableDeIva(),
+                    "0"
+            );
+        }
         return true;
-
     }
 
     @Override
     public boolean actualizarUsuario(Usuario usuario) throws RemoteException {
-        Usuario usiarioTemp= usuario;
-        System.out.println(usuario.getTipoDocumento());
+        if(usuario.getId()!=null){
+            Update.actualizarUsuario(usuario);
+        }else{
+            Insercion.nuevoUsuario(
+                    ""+usuario.getNombres(),
+                    ""+usuario.getTelefono(),
+                    ""+usuario.getTipoDocumento(),
+                    ""+usuario.getNumDocumento(),
+                    "",
+                    "",
+                    ""+usuario.getTipoUsuario(),
+                    ""+usuario.getNombreUsuario(),
+                    ""+usuario.getContrasena()
+            );
+        }
         return true;
     }
 
