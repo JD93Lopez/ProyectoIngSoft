@@ -114,13 +114,35 @@ public class Client implements RMIAdmin {
     }
 
     @Override
-    public Cliente actualizarCliente(Cliente cliente) throws RemoteException {
+    public boolean actualizarCliente(Cliente cliente) throws RemoteException {
         try {
             service = (RMIAdmin) Naming.lookup(url);
             return service.actualizarCliente(cliente);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
-            return null;
+            return false;
+        }
+    }
+
+    @Override
+    public boolean actualizarUsuario(Usuario usuario) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.actualizarUsuario(usuario);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean crearUsuario(Usuario usuario) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.actualizarUsuario(usuario);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
         }
     }
 

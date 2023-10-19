@@ -90,12 +90,12 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     }
 
     @Override
-    public Cliente actualizarCliente( Cliente cliente) throws RemoteException {
-
+    public boolean actualizarCliente(Cliente cliente) throws RemoteException {
         Cliente clientTemp = cliente;
-
         System.out.println(clientTemp.getNombres());
-        return null;
+        return true;
+
     }
+
 
 }

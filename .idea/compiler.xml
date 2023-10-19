@@ -13,8 +13,10 @@
         <module name="VentasHierritos" />
         <module name="AlmacenHierritos" />
         <module name="DB_Hierritos" />
-        <module name="ServerHierritos" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ServerHierritos" target="18" />
+    </bytecodeTargetLevel>
   </component>
 </project>
