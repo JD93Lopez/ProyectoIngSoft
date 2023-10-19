@@ -16,6 +16,16 @@ public class FacturaCompra implements Serializable {
 
     private int idFacturaCompra;
 
+    private  String fechaYHora;
+
+    public String getFechaYHora() {
+        return fechaYHora;
+    }
+
+    public void setFechaYHora(String fechaYHora) {
+        this.fechaYHora = fechaYHora;
+    }
+
     public FacturaCompra() {
     }
 
