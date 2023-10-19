@@ -18,7 +18,6 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     protected ServiceAdmin() throws RemoteException {
 
     }
-
     @Override
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException {
         Consulta consulta = new Consulta();
@@ -79,8 +78,7 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public Usuario buscarUsuario(String telefono) throws RemoteException {
-        Usuario usuarioTest = new Usuario(Usuario.TipoUsuario.INGENIERO,  "YeniferVentas", "1234",  "Paola", "3165", Persona.TipoDocumento.CEDULA_CIUDADANIA, "107910657", "Gamarra", "pepeGrillo@gmail.com" );
-
+        Usuario usuarioTest = Consulta.obtenerUsuarioPorNombre(telefono,"");
         Usuario usuario = null;
         try {
             usuario = Consulta.obtenerUsuarioPorId(telefono);
@@ -138,6 +136,11 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         System.out.println(usiarioTemp.getTelefono() + " contrasena " + usiarioTemp.getContrasena());
 
         return true;
+    }
+
+    @Override
+    public Usuario obtenerUsuario(String nUser, String pass) {
+        return Consulta.obtenerUsuarioPorNombre(nUser,pass);
     }
 
 

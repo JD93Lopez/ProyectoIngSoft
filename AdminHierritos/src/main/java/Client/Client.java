@@ -146,5 +146,16 @@ public class Client implements RMIAdmin {
         }
     }
 
+    @Override
+    public Usuario obtenerUsuario(String nUser, String pass) {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.obtenerUsuario(nUser,pass);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

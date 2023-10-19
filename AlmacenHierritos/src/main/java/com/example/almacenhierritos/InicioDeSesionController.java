@@ -1,19 +1,14 @@
 package com.example.almacenhierritos;
 
+import clases.Usuario;
 import client.Client;
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class InicioDeSesionController {
@@ -27,13 +22,15 @@ public class InicioDeSesionController {
     private TextField textfieldUsuario;
 
     @FXML
-    private TextField textfieldContrasena;
+    private PasswordField textfieldContrasena;
 
+    static Usuario vendedorActual;
     @FXML
     protected void clickBotonInicio() {
         try {
-            Main.mainStage.setScene(MenuController.scene);
+            //Main.mainStage.setScene(BuscarClienteController.scene);
             if(true) {
+
                 if (!Client.client.isConnected()) {
                     labelError.setText("Ups! Tenemos problemas de conexión.");
                     labelError.setStyle("-fx-background-color: #ff6666;");

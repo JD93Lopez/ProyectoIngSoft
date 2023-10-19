@@ -50,6 +50,7 @@ public class NuevaOrdenController {
         empresaProveedora = empresa;
         textfieldEmpresaProveedora.setText(empresa.getNombre());
         NuevaOrdenController.controller.desplegableProductos(empresa.getNit());
+        NuevaOrdenController.controller.textfieldPorcentaje.setText("15%");
     }
     @FXML
     protected void clickBotonAceptar() {

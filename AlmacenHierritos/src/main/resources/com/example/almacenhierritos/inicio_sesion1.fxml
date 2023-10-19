@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,7 +26,7 @@
             </ImageView>
          </children>
       </HBox>
-      <StackPane  prefHeight="600.0" prefWidth="900.0">
+      <StackPane prefHeight="600.0" prefWidth="900.0">
          <children>
             <ImageView fitHeight="508.0" fitWidth="900.0" pickOnBounds="true">
                <image>
@@ -39,13 +40,16 @@
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textfieldUsuario" />
+                  <TextField fx:id="textfieldUsuario">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font></TextField>
                   <Label text="Contraseña" textFill="#0e103c">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textfieldContrasena" />
+                  <PasswordField fx:id="textfieldContrasena" />
                   <Label fx:id="labelError" alignment="CENTER" prefHeight="15.0" prefWidth="233.0" style="-fx-background-color: white;" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI" size="12.0" />
