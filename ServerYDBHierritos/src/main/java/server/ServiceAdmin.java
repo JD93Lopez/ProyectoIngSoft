@@ -61,7 +61,6 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public Cliente buscarCliente(String telefono) throws RemoteException {
-        Cliente clienteTest = new Cliente(Cliente.TipoPersona.JURIDICA, true, "Yenifer Paola", "316533 ", Persona.TipoDocumento.CEDULA_CIUDADANIA, "1097910658", "Giron", "hpaola@gmail.com" );
 
         Cliente cliente = null;
         try {
@@ -78,15 +77,17 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public Usuario buscarUsuario(String telefono) throws RemoteException {
-        Usuario usuarioTest = Consulta.obtenerUsuarioPorNombre(telefono,"");
         Usuario usuario = null;
         try {
-            usuario = Consulta.obtenerUsuarioPorId(telefono);
+            usuario = Consulta.obtenerUsuarioPorNombre(telefono,"");
+            if(usuario==null) {
+                usuario = Consulta.obtenerUsuarioPorId(telefono);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return usuarioTest;
+        return usuario;
     }
 
     @Override
@@ -111,11 +112,26 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public boolean actualizarUsuario(Usuario usuario) throws RemoteException {
-        if(usuario.getId()!=null){
-            Update.actualizarUsuario(usuario);
-        }else{
+        boolean ack=false;
+        try {
+            if(usuario.getContrasena().equals("")){
+                Update.actualizarUsuarioSinContrasena(usuario);
+            }else {
+                Update.actualizarUsuario(usuario);
+            }
+            ack=true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ack;
+    }
+
+    @Override
+    public boolean crearUsuario(Usuario usuario) throws RemoteException {
+        boolean ack=false;
+        try {
             Insercion.nuevoUsuario(
-                    ""+usuario.getNombres(),
+                    ""+usuario.getNombreUsuario(),
                     ""+usuario.getTelefono(),
                     ""+usuario.getTipoDocumento(),
                     ""+usuario.getNumDocumento(),
@@ -125,17 +141,11 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
                     ""+usuario.getNombreUsuario(),
                     ""+usuario.getContrasena()
             );
+            ack=true;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return true;
-    }
-
-    @Override
-    public boolean crearUsuario(Usuario usuario) throws RemoteException {
-
-        Usuario usiarioTemp= usuario;
-        System.out.println(usiarioTemp.getTelefono() + " contrasena " + usiarioTemp.getContrasena());
-
-        return true;
+        return ack;
     }
 
     @Override

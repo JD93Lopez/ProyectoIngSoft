@@ -51,15 +51,11 @@ public class ClienteActualizarInfoController {
 
 
     public void ClickBotonBuscar() throws RemoteException {
-
         Cliente cliente;
-
         cliente = Client.client.buscarCliente(textfieldBuscar.getText());
-
         if(cliente.getId()!=null) {
             clienteActual = cliente;
             llenarEspacios(clienteActual);
-
         }else if(textfieldBuscar.getText().equals("")){
 
             cuadroRellenarCampoBusqueda();
@@ -71,17 +67,35 @@ public class ClienteActualizarInfoController {
     }
 
     public void llenarEspacios(Cliente clienteActual){
-        textfieldNombres.setText(clienteActual.getNombres());
-        textfieldNumTel.setText(clienteActual.getTelefono());
-        textfieldCorreo.setText(clienteActual.getCorreo());
-        textfieldDireccion.setText(clienteActual.getDireccion());
-        textfieldNumDoc.setText(clienteActual.getNumDocumento());
+        try{
+            textfieldNombres.setText(clienteActual.getNombres());
+            textfieldNumTel.setText(clienteActual.getTelefono());
+            textfieldCorreo.setText(clienteActual.getCorreo());
+            textfieldDireccion.setText(clienteActual.getDireccion());
+            textfieldNumDoc.setText(clienteActual.getNumDocumento());
 
-        if(!comboBoxTipoDoc.getItems().contains(clienteActual.getTipoDocumento()) ){
-            System.out.println("No está dentro de las opciones");
+            if(!comboBoxTipoDoc.getItems().contains(clienteActual.getTipoDocumento()) ){
+                System.out.println("No está dentro de las opciones");
+                System.out.println("ClienteActualizarInfoController.llenarEspacios: 78");
+            }
+            comboBoxTipoDoc.setValue(clienteActual.getTipoDocumento());
+
+
+            if(!comboBoxTipoPers.getItems().contains(clienteActual.getTipoPersona()) ){
+                System.out.println("No está dentro de las opciones");
+                System.out.println("ClienteActualizarInfoController.llenarEspacios: 87");
+            }
+            comboBoxTipoPers.setValue(clienteActual.getTipoPersona());
+
+            if(clienteActual.getResponsableDeIva()){
+                comboBoxTipoIVA.getSelectionModel().select("Sí");
+            }else {
+                comboBoxTipoIVA.getSelectionModel().select("No");
+            }
+        }catch (Exception e){
+            //cuadroExcepción()
+            e.printStackTrace();
         }
-        comboBoxTipoDoc.setValue(clienteActual.getTipoDocumento());
-
     }
     public void clickBotonGuardarCambios() throws RemoteException {
 
@@ -100,8 +114,14 @@ public class ClienteActualizarInfoController {
                 ack = true;
             }
             Cliente clientTemp = new Cliente(tipoPersona, ack, nombre, telefono, tipDoc, numDoc, direc, correo);
+            if(clienteActual==null){
+                clientTemp.setId(null);
+            }else{
+                clientTemp.setId(clienteActual.getId());
+            }
             if(Client.client.actualizarCliente(clientTemp)) {
                 cuadroExitoProceso();
+                Main.mainStage.setScene(MenuController.scene);
             }
         }else {
             cuadroRellenarCampos();

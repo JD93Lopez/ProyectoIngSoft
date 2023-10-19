@@ -40,19 +40,20 @@ public class AgregarProductoController {
         producto.setNombre(textFieldNomProducto.getText());
         producto.setPrecioVenta(Double.parseDouble(textfieldPrecioVenta.getText()));
         producto.setPrecioCompra(Double.parseDouble(textfieldPrecioCompra.getText()));
-        producto.setpIva(Double.parseDouble(textfieldPorcIVA.getText()));
-        String descuento = textfieldDescProducto.getText();
+        producto.setDescripcion(textfieldDescProducto.getText());
+        String descuento = textfieldPorcIVA.getText();
         if(descuento.charAt(descuento.length()-1)=='%'){
             descuento = descuento.substring(0,descuento.length()-1);
             double doble = Double.parseDouble(descuento);
             doble = doble/100;
             descuento = ""+doble;
         }
-        producto.setpDescuento(Double.parseDouble(descuento));
+        producto.setpIva(Double.parseDouble(descuento));
         producto.setCantidadMinima(Double.parseDouble(textfieldCantMinima.getText()));
         producto.setCantidadMaxima(Double.parseDouble(textfieldCantMaxima.getText()));
         try {
             Client.client.enviarProductoInsertar(producto,empresaActual.getId());
+            Main.mainStage.setScene(MenuController.scene);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

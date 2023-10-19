@@ -75,7 +75,7 @@ public class Insercion {
             statement.setString(5, direccion);
             statement.setString(6, correo);
             statement.setString(7, tipoPersona);
-            statement.setString(8, responsableDeIva);
+            statement.setBoolean(8, (responsableDeIva=="true"?true:false));
             statement.setString(9, clienteFrecuente);
 
             // Ejecutar la consulta de inserción

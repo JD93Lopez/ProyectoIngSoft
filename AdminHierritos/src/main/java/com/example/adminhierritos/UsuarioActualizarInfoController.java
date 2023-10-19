@@ -1,10 +1,8 @@
 package com.example.adminhierritos;
 
 import Client.Client;
-import clases.Cliente;
 import clases.Persona;
 import clases.Usuario;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -46,26 +44,18 @@ public class UsuarioActualizarInfoController {
     VBox vBox;
 
     public void ClickBotonBuscar() throws RemoteException {
-
         Usuario usuario;
 
         usuario = Client.client.buscarUsuario(textfieldBuscar.getText());
-
         if(usuario.getId()!=null) {
             usuarioActual = usuario;
             llenarEspacios(usuarioActual);
-
         }else if(textfieldBuscar.getText().equals("")){
             cuadroRellenarCampoBusqueda();
 
         }else{
-
-            //Eliminar esta prueba de server
-            usuarioActual = usuario;
-            llenarEspacios(usuario);
-            //Hasta aquí
-
-            cuadroClienteNoEncontrado();
+            cuadroUsuarioNoEncontrado();
+            System.out.println("UsuarioActualizarInfoController.ClickBotonBuscar");
             usuarioActual=null;
         }
     }
@@ -82,9 +72,21 @@ public class UsuarioActualizarInfoController {
         if ((tipDoc !=null) && (tipoUsuario != null) ){
 
             Usuario usuarioTemp = new Usuario(
-                    tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc);
-            if(Client.client.actualizarUsuario(usuarioTemp)) {
-                cuadroExitoActualizar();
+                    tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc
+            );
+            usuarioTemp.setTelefono(telefono);
+
+            if(usuarioActual==null){
+                if(Client.client.crearUsuario(usuarioTemp)) {
+                    cuadroExitoCrear();
+                    Main.mainStage.setScene(MenuController.scene);
+                }
+            }else{
+                usuarioTemp.setId(usuarioActual.getId());
+                if(Client.client.actualizarUsuario(usuarioTemp)) {
+                    cuadroExitoActualizar();
+                    Main.mainStage.setScene(MenuController.scene);
+                }
             }
 
         }else {
@@ -96,7 +98,12 @@ public class UsuarioActualizarInfoController {
         String nombreUsuario = textfieldNombreUsuario.getText();
         String telefono = textfieldNumTel.getText();
         String nombres = textfieldNombresTrabajador.getText();
-        String contrasena = textfieldContrasena.getText();
+        String contrasena;
+        if(textfieldContrasena.getText().equals("")){
+            contrasena = null;
+        }else{
+            contrasena = textfieldContrasena.getText();
+        }
         String numDoc = textfieldNumDoc.getText();
         Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
         Usuario.TipoUsuario tipoUsuario = (Usuario.TipoUsuario) comboBoxTipoUsuario.getValue();
@@ -107,9 +114,15 @@ public class UsuarioActualizarInfoController {
                     tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc);
             usuarioTemp.setTelefono(telefono);
 
-            System.out.println("Desde aquí, telefono:" + usuarioTemp.getTelefono() );
-            if(Client.client.crearUsuario(usuarioTemp)) {
-                cuadroExitoCrear();
+            if(usuarioActual==null){
+                if(usuarioTemp.getContrasena()==null){usuarioTemp.setContrasena("");}
+                if(Client.client.crearUsuario(usuarioTemp)) {
+                    cuadroExitoCrear();
+                }
+            }else{
+                if(Client.client.actualizarUsuario(usuarioTemp)) {
+                    cuadroExitoActualizar();
+                }
             }
 
         }else {
@@ -128,8 +141,8 @@ public class UsuarioActualizarInfoController {
         textfieldNombresTrabajador.setText(usuarioActual.getNombres());
         textfieldContrasena.setText(usuarioActual.getContrasena());
         textfieldNumDoc.setText(usuarioActual.getNumDocumento());
-        comboBoxTipoDoc.setValue(usuarioActual.getTipoDocumento());
-        comboBoxTipoUsuario.setValue(usuarioActual.getTipoUsuario());
+        comboBoxTipoDoc.getSelectionModel().select(usuarioActual.getTipoDocumento());
+        comboBoxTipoUsuario.getSelectionModel().select(usuarioActual.getTipoUsuario());
     }
 
     private void cuadroRellenarCampoBusqueda() {
@@ -159,7 +172,7 @@ public class UsuarioActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
-    private void cuadroClienteNoEncontrado() {
+    private void cuadroUsuarioNoEncontrado() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Usuario No Encontrado");

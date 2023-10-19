@@ -159,9 +159,9 @@ public class Update {
         try {
             conectar();
 
-            String sql = "UPDATE clientes SET nombres = ?,telefono = ?,"+
+            String sql = "UPDATE usuarios SET nombres = ?,telefono = ?,"+
                     "tipoDocumento = ?,numDocumento=?,"+
-                    "tipoUsuario=?,nombreUsuario=?,contrasena=? WHERE (idcliente = ?)";
+                    "tipoUsuario=?,nombreUsuario=?,contrasena=? WHERE (idusuario = ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,usuario.getNombres());
             preparedStatement.setString(2,usuario.getTelefono());
@@ -171,6 +171,37 @@ public class Update {
             preparedStatement.setString(6,usuario.getNombreUsuario());
             preparedStatement.setString(7,usuario.getContrasena());
             preparedStatement.setInt(8,Integer.valueOf(usuario.getId()));
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void actualizarUsuarioSinContrasena(Usuario usuario) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE usuarios SET nombres = ?,telefono = ?,"+
+                    "tipoDocumento = ?,numDocumento=?,"+
+                    "tipoUsuario=?,nombreUsuario=? WHERE (idusuario = ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,usuario.getNombres());
+            preparedStatement.setString(2,usuario.getTelefono());
+            preparedStatement.setString(3,usuario.getTipoDocumento().toString());
+            preparedStatement.setString(4,usuario.getNumDocumento());
+            preparedStatement.setString(5,usuario.getTipoUsuario().toString());
+            preparedStatement.setString(6,usuario.getNombreUsuario());
+            preparedStatement.setInt(7,Integer.valueOf(usuario.getId()));
 
             preparedStatement.executeUpdate();
 
@@ -220,4 +251,5 @@ public class Update {
             }
         }
     }
+
 }
