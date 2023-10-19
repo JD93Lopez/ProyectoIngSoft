@@ -62,7 +62,7 @@ public class ClienteActualizarInfoController {
 
         }else if(textfieldBuscar.getText().equals("")){
 
-             cuadroRellenarCampos();
+            cuadroRellenarCampoBusqueda();
 
         }else{
             cuadroClienteNoEncontrado();
@@ -95,17 +95,33 @@ public class ClienteActualizarInfoController {
         String  respIva = (String) comboBoxTipoIVA.getValue();
 
         boolean ack = false;
-        if (!respIva.equals("No")) {
-            ack = true;
+        if ((tipDoc !=null) && (respIva != null) && (tipoPersona != null) ){
+            if (!respIva.equals("No")) {
+                ack = true;
+            }
+            Cliente clientTemp = new Cliente(tipoPersona, ack, nombre, telefono, tipDoc, numDoc, direc, correo);
+            if(Client.client.actualizarCliente(clientTemp)) {
+                cuadroExitoProceso();
+            }
+        }else {
+            cuadroRellenarCampos();
         }
-
-        Cliente clientTemp = new Cliente(tipoPersona, ack, nombre, telefono, tipDoc, numDoc, direc, correo);
-        Client.client.actualizarCliente(clientTemp);
-
-       // Client.client.actualizarCliente();
 
     }
 
+    private void cuadroRellenarCampos() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Rellenar Campos");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\"Llene todos los campos por favor");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
     private void cuadroClienteNoEncontrado() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -120,12 +136,41 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
-    private void cuadroRellenarCampos() {
+    private void cuadroRellenarCampoBusqueda() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
         alert.setContentText("\"Rellene la barra de búsqueda con el teléfono o cédula\\n    del cliente por favor");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+
+    private void cuadroExitoProceso() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cliente Actualizado");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\nEl cliente ha sido actualizado con éxito ");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void CuadroErrorProceso() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Cliente No Actualizado");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("\nEl cliente no ha sido actualizado con éxito, por favor \n intente de nuevo ");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");

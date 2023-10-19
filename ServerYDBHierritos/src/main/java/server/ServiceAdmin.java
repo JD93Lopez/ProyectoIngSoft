@@ -77,7 +77,7 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
 
     @Override
     public Usuario buscarUsuario(String telefono) throws RemoteException {
-        Usuario usuarioTest = new Usuario(Usuario.TipoUsuario.BODEGUERO,  "YeniferVentas", "1234",  "Paola", "3165", Persona.TipoDocumento.CEDULA_CIUDADANIA, "107910657", "Gamarra", "pepeGrillo@gmail.com" );
+        Usuario usuarioTest = new Usuario(Usuario.TipoUsuario.INGENIERO,  "YeniferVentas", "1234",  "Paola", "3165", Persona.TipoDocumento.CEDULA_CIUDADANIA, "107910657", "Gamarra", "pepeGrillo@gmail.com" );
 
         Usuario usuario = null;
         try {
@@ -90,12 +90,28 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     }
 
     @Override
-    public Cliente actualizarCliente( Cliente cliente) throws RemoteException {
-
+    public boolean actualizarCliente(Cliente cliente) throws RemoteException {
         Cliente clientTemp = cliente;
-
         System.out.println(clientTemp.getNombres());
-        return null;
+        return true;
+
     }
+
+    @Override
+    public boolean actualizarUsuario(Usuario usuario) throws RemoteException {
+        Usuario usiarioTemp= usuario;
+        System.out.println(usuario.getTipoDocumento());
+        return true;
+    }
+
+    @Override
+    public boolean crearUsuario(Usuario usuario) throws RemoteException {
+
+        Usuario usiarioTemp= usuario;
+        System.out.println(usiarioTemp.getTelefono() + " contrasena " + usiarioTemp.getContrasena());
+
+        return true;
+    }
+
 
 }
