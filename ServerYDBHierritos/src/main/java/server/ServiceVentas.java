@@ -118,7 +118,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
 
             LinkedList<Producto> productos = facturaVenta.getProductos();
             for (Producto producto : productos) {
-                producto.setPrecioTotal((producto.getExistencias()*producto.getPrecioVenta()));
+                producto.setPrecioTotal((producto.getExistencias()*producto.getPrecioVenta()*(1-producto.getpDescuento())));
             }
 
             CreatePDF createPDF = new CreatePDF(facturaVenta);
@@ -157,7 +157,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
                 productoId = (Producto) iteratorId.next();
                 productoCompleto = (Producto) iteratorProducto.next();
                 productoCompleto.setExistencias(productoId.getExistencias());
-                productoCompleto.setPrecioTotal((productoCompleto.getExistencias()*productoCompleto.getPrecioVenta()));
+                productoCompleto.setPrecioTotal((productoCompleto.getExistencias()*productoCompleto.getPrecioVenta()*(1-productoCompleto.getpDescuento())));
             }
             CreatePDF createPDF = new CreatePDF(facturaVenta);
             try {

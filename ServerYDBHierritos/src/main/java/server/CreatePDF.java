@@ -134,7 +134,7 @@ public class CreatePDF implements Serializable {
         if (facturaVenta.getCliente().getResponsableDeIva() == true) {
             listaTipoPersona.add("Responsable de IVA");
         } else {
-            listaTipoPersona.add("No IVA");
+            listaTipoPersona.add("IVA = No");
         }
         listaTipoPersona.setBorder(Border.NO_BORDER);
         tableDatos.addCell(listaTipoPersona);
@@ -194,6 +194,7 @@ public class CreatePDF implements Serializable {
         for (Producto producto : facturaVenta.getProductos()) {
             descripcionProductos.add(producto.getNombre());
         }
+        descripcionProductos.add("TOTAL: ");
         descripcionProductos.setBorder(Border.NO_BORDER);
         descripcionProductos.setTextAlignment(TextAlignment.CENTER);
         table1.addCell(descripcionProductos);
