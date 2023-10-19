@@ -10,10 +10,7 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
 
@@ -119,6 +116,11 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             facturaVenta.setIdFacturaVenta(entero);
             facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
 
+            LinkedList<Producto> productos = facturaVenta.getProductos();
+            for (Producto producto : productos) {
+                producto.setPrecioTotal((producto.getExistencias()*producto.getPrecioVenta()));
+            }
+
             CreatePDF createPDF = new CreatePDF(facturaVenta);
             createPDF.getPDF();
             AbrirPdf.abrirPdf(""+entero);
@@ -147,6 +149,16 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             facturaVenta = obtenerFacturaVenta(id);
             facturaVenta.setConsecutivoDian(Integer.valueOf(id));
             LinkedList<Producto> productos = facturaVenta.getProductos();
+            Iterator iteratorId = productosId.iterator();
+            Iterator iteratorProducto = productos.iterator();
+            Producto productoId;
+            Producto productoCompleto;
+            while(iteratorId.hasNext()&&iteratorProducto.hasNext()){
+                productoId = (Producto) iteratorId.next();
+                productoCompleto = (Producto) iteratorProducto.next();
+                productoCompleto.setExistencias(productoId.getExistencias());
+                productoCompleto.setPrecioTotal((productoCompleto.getExistencias()*productoCompleto.getPrecioVenta()));
+            }
             CreatePDF createPDF = new CreatePDF(facturaVenta);
             try {
                 createPDF.getPDF();
