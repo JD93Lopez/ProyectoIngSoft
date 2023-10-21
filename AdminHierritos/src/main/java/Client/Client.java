@@ -46,17 +46,6 @@ public class Client implements RMIAdmin {
     }
 
     @Override
-    public Vendedor obtenerVendedorMes() throws RemoteException {
-        try {
-            service = (RMIAdmin) Naming.lookup(url);
-            return service.obtenerVendedorMes();
-        }catch (MalformedURLException | RemoteException | NotBoundException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
     public String informeBalanceMensual() throws RemoteException {
         try {
             service = (RMIAdmin) Naming.lookup(url);
@@ -149,6 +138,17 @@ public class Client implements RMIAdmin {
         try {
             service = (RMIAdmin) Naming.lookup(url);
             return service.informeVentas(fecha);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Vendedor informeVendedorMes() throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.informeVendedorMes();
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;

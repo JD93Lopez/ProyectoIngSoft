@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 public interface RMIAdmin extends Remote {
     public boolean iniciarSesion(String usuario, String contrasena) throws RemoteException;
-    public Vendedor obtenerVendedorMes( ) throws RemoteException;
     public String informeBalanceMensual() throws RemoteException;
     public String informeDevoluciones() throws RemoteException;
     public Cliente buscarCliente (String telefono) throws RemoteException;
@@ -18,5 +17,5 @@ public interface RMIAdmin extends Remote {
     public  boolean crearUsuario (Usuario usuario) throws RemoteException;
     public Usuario obtenerUsuario(String nUser, String pass) throws RemoteException;
     public LinkedList<ProductoVenta> informeVentas (String fecha) throws RemoteException;
-
+    public Vendedor informeVendedorMes () throws RemoteException;
 }

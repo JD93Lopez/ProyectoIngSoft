@@ -28,15 +28,6 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         return false;
     }
 
-    @Override
-    public Vendedor obtenerVendedorMes() throws RemoteException {
-
-        Vendedor vendedorPrueba = new Vendedor(Usuario.TipoUsuario.VENDEDOR, "PepeVentas" , "1234", "Pepe", Persona.TipoDocumento.CEDULA_CIUDADANIA, "63517971");
-        return vendedorPrueba;
-
-    }
-
-
 
     @Override
     public String informeBalanceMensual() throws RemoteException {
@@ -149,14 +140,20 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     public LinkedList<ProductoVenta>  informeVentas (String fecha) {
         LinkedList<ProductoVenta> listProductVenta = new LinkedList<>();
         try {
-            System.out.println("ServiceAdmin.informeVentas");
+
             listProductVenta = Consulta.obtenerVentasPorProducto(fecha);
 
-            System.out.println(listProductVenta);
         } catch (Exception e){
         e.printStackTrace();
         }
         return listProductVenta;
     }
+
+    public Vendedor informeVendedorMes() {
+
+        return Consulta.obtenerVendedorMes();
+
+    }
+
 
 }
