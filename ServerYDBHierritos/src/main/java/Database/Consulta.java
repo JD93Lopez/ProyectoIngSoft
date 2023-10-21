@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Consulta {
 
@@ -16,7 +17,7 @@ public class Consulta {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
                     "root",
-                    "root"
+                    "1234"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -770,11 +771,49 @@ public class Consulta {
 
         }
     }
+    public static LinkedList<ProductoVenta> obtenerVentasPorProducto(String fecha){
+        LinkedList <ProductoVenta> ventasPorProducto = new LinkedList<>();
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+
+            String sql = "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as totalVentas " +
+                    "FROM PRODUCTOS_has_FACTURAS_DE_VENTA " +
+                    "GROUP BY PRODUCTOS_idproducto " +
+                    "ORDER BY totalVentas DESC";
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
 
 
 
+            while (resultSet.next()){
+                System.out.println("Entró ");
+                System.out.println("Consulta.obtenerVentasPorProducto");
 
+                int idProducto = resultSet.getInt("PRODUCTOS_idproducto");
+                double totalVentas = resultSet.getDouble("totalVentas");
 
+                System.out.println( "id = " + idProducto);
+
+                ventasPorProducto.add( new ProductoVenta(idProducto, totalVentas));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ventasPorProducto;
+        }
+    }
     public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
     }

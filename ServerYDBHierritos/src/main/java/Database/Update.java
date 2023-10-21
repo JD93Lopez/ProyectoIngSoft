@@ -13,7 +13,7 @@ public class Update {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
                     "root",
-                    "root"
+                    "1234"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package com.example.adminhierritos;
 
 import Client.Client;
+import clases.ProductoVenta;
 import clases.Vendedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 public class InformesController {
 
@@ -61,9 +63,22 @@ public class InformesController {
 
             VentasInformesController ventasInformesController = fxmlLoader.getController();
 
-            String test = Client.client.informeVentas();
+            LinkedList<ProductoVenta> test = Client.client.informeVentas("2023-10-21 15:08:27.000000");
 
-            ventasInformesController.textArea.setText(test);
+            String stringInforme;
+
+            String encabezado = String.format("%-15s %-20s%n", "Id producto", "Cantidad Vendida");
+            ventasInformesController.textArea.appendText(encabezado);
+
+            for (int i = 0; i < test.size(); i++) {
+                ProductoVenta productoVenta = test.get(i);
+
+                String fila = String.format("%18d %20.2f%n", productoVenta.getIdProducto(), productoVenta.getTotalVentas());
+                ventasInformesController.textArea.appendText(fila);
+
+                System.out.println(fila);
+                System.out.println("InformesController.cargarFxmlVentas");
+            }
 
 
         } catch (IOException e) {

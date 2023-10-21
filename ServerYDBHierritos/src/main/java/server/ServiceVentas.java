@@ -121,9 +121,9 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
                 producto.setPrecioTotal((producto.getExistencias()*producto.getPrecioVenta()*(1-producto.getpDescuento())));
             }
 
-            CreatePDF createPDF = new CreatePDF(facturaVenta);
-            createPDF.getPDF();
-            AbrirPdf.abrirPdf(""+entero);
+            //CreatePDF createPDF = new CreatePDF(facturaVenta);
+            //createPDF.getPDF();
+            //AbrirPdf.abrirPdf(""+entero);
         }catch (Exception e){
             entero = -2;
             e.printStackTrace();
@@ -161,7 +161,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             }
             CreatePDF createPDF = new CreatePDF(facturaVenta);
             try {
-                createPDF.getPDF();
+               createPDF.getPDF();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (MalformedURLException e) {

@@ -1,15 +1,13 @@
 package Client;
 
-import clases.Cliente;
-import clases.Persona;
-import clases.Usuario;
-import clases.Vendedor;
+import clases.*;
 import interfaces.RMIAdmin;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 public class Client implements RMIAdmin {
 
@@ -52,17 +50,6 @@ public class Client implements RMIAdmin {
         try {
             service = (RMIAdmin) Naming.lookup(url);
             return service.obtenerVendedorMes();
-        }catch (MalformedURLException | RemoteException | NotBoundException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public String informeVentas() throws RemoteException {
-        try {
-            service = (RMIAdmin) Naming.lookup(url);
-            return service.informeVentas();
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
@@ -151,6 +138,17 @@ public class Client implements RMIAdmin {
         try {
             service = (RMIAdmin) Naming.lookup(url);
             return service.obtenerUsuario(nUser,pass);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public LinkedList<ProductoVenta> informeVentas(String fecha) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.informeVentas(fecha);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
