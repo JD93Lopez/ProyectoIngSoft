@@ -88,4 +88,26 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
         );
     }
 
+    @Override
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException {
+        boolean ack = false;
+        try {
+            if(empresaProveedora.getId()!=0){
+                Update.actualizarEmpresaProveedora(empresaProveedora);
+            }else {
+                Insercion.empresas_proveedoras(
+                        ""+empresaProveedora.getNombre(),
+                        ""+empresaProveedora.getNit(),
+                        ""+empresaProveedora.getBanco(),
+                        ""+empresaProveedora.getCuentaBancaria()
+                );
+            }
+            ack = true;
+        }catch (Exception e){
+            ack = false;
+            e.printStackTrace();
+        }
+        return ack;
+    }
+
 }

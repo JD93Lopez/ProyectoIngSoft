@@ -92,7 +92,7 @@ public class Insercion {
 
     public static boolean empresas_proveedoras(
             String nombre,String nit,
-            String banco,String cuentaBancaria,String formasDePago)
+            String banco,String cuentaBancaria)
 
     {
         conectar();
@@ -100,15 +100,14 @@ public class Insercion {
 
 
         // Consulta SQL para insertar un nuevo cliente
-        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria,formasDePago" +
-                ")VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria" +
+                ")VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, nombre);
             statement.setString(2, nit);
             statement.setString(3, banco);
             statement.setString(4, cuentaBancaria);
-            statement.setString(5, formasDePago);
 
 
             // Ejecutar la consulta de inserción

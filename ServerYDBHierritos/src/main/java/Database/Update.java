@@ -1,6 +1,7 @@
 package Database;
 
 import clases.Cliente;
+import clases.EmpresaProveedora;
 import clases.Persona;
 import clases.Usuario;
 
@@ -252,4 +253,32 @@ public class Update {
         }
     }
 
+    public static void actualizarEmpresaProveedora(EmpresaProveedora empresaProveedora) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE empresas_proveedoras SET nombre = ?,nit = ?,"+
+                    "banco = ?,cuentaBancaria=? WHERE (idempresaProveedora = ?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,empresaProveedora.getNombre());
+            preparedStatement.setString(2,empresaProveedora.getNit());
+            preparedStatement.setString(3,empresaProveedora.getBanco());
+            preparedStatement.setString(4,empresaProveedora.getCuentaBancaria());
+            preparedStatement.setInt(5,empresaProveedora.getId());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

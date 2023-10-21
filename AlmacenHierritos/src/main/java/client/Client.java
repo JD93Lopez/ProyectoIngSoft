@@ -112,5 +112,16 @@ public class Client implements RMIAlmacen {
         }
     }
 
+    @Override
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            return service.crearEmpresaProveedora(empresaProveedora);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

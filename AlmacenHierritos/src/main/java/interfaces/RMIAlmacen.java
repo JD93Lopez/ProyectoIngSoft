@@ -22,4 +22,5 @@ public interface RMIAlmacen extends Remote {
     public void actualizarExistencias(String text, int idProducto) throws RemoteException;
 
     public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException;
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException;
 }

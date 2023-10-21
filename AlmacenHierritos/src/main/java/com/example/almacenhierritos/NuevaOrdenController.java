@@ -98,11 +98,6 @@ public class NuevaOrdenController {
             for(String string : listaProductosDeLaEmpresa){
                 items.add(string);
             }
-            //Productos temporales
-/*          items.add("Producto 1");
-            items.add("Producto 2");
-            items.add("Producto 3");
-            items.add("Producto 4");*/
             comboboxNombreProducto.setItems(items);
         }catch (Exception e){
             e.printStackTrace();

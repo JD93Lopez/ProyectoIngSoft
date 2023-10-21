@@ -1,9 +1,10 @@
 INSERT INTO `db_hierritos`.`ferreterias` (`nombre`, `telefono`, `nit`, `direccion`, `correo`) VALUES ('Hierritos', '12345678', '87654321', 'Av Ejemplo #1-11', 'ejemplo@example.com');
-insert into clientes values (idcliente,"Nadia3", "3016995317", "CEDULA_CIUDADANIA", "37275689", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1);
-insert into clientes values (idcliente,"Nadia2", "3016995316", "CEDULA_CIUDADANIA", "37275688", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1);
+insert into clientes (nombres,telefono,tipoDocumento,numDocumento,direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) values ("Nadia3", "3016995317", "CEDULA_CIUDADANIA", "37275689", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1,1);
+insert into clientes (nombres,telefono,tipoDocumento,numDocumento,direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) values ("Nadia2", "3016995316", "CEDULA_CIUDADANIA", "37275688", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1,1);
 insert into usuarios values (idusuario,"1","1","PASAPORTE","1","Av 1 #1-1","uno@example.com","VENDEDOR","1","1");
-insert into usuarios values (idusuario,"juan","123","CEDULA_DE_CIUDADANIA",numDocumento,direccion,correo,"VENDEDOR","juan","1234");
-insert into clientes values (idcliente,"prueba", "1", "PASAPORTE", "1", "Av 1 #1-1", "1@example.com", "JURIDICA", 0);
+insert into usuarios values (idusuario,"juan","123","CEDULA_CIUDADANIA",numDocumento,direccion,correo,"VENDEDOR","juan","1234");
+insert into clientes values (idcliente,"prueba", "1", "PASAPORTE", "1", "Av 1 #1-1", "1@example.com", "JURIDICA", 0,0);
+INSERT INTO `db_hierritos`.`empresas_proveedoras` (`nombre`, `nit`, `banco`, `cuentaBancaria`) VALUES ('\"Constructor\"', '79888-8', 'Bancolombia', '72600083');
 insert into productos values (idproducto,"007","Tornillo","Buen tornillo","100","0.10","0.19","100","300","50","200");
 insert into productos values (idproducto,"001","Clavo","Buen tornillo","10","0.10","0.19","100","300","50","200");
 insert into productos values (idproducto,"002","Cinta","Buen tornillo","15","0.10","0.19","100","300","50","200");

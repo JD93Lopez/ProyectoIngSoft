@@ -57,7 +57,7 @@
                   </Label>
                   <VBox fx:id="vbox" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-spacing: 5;">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#clickBotonInicio" onMouseEntered="#mouseBotonInicio" prefHeight="37.0" prefWidth="102.0" style="-fx-background-color: #0e103c;" text="Inicia Sesión" textFill="#f7f7f7">
+                        <Button mnemonicParsing="false" onAction="#clickBotonInicio" prefHeight="37.0" prefWidth="102.0" style="-fx-background-color: #0e103c;" text="Inicia Sesión" textFill="#f7f7f7">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>

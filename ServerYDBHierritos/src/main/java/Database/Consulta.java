@@ -295,6 +295,7 @@ public class Consulta {
 
     public static EmpresaProveedora obtenerEmpresaProveedoraPorNit(String nitEmpresaProveedora) {
         EmpresaProveedora empresaProveedora  = new EmpresaProveedora();
+        empresaProveedora.setId(0);
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -313,7 +314,6 @@ public class Consulta {
                 empresaProveedora.setNit(resultSet.getString("nit"));
                 empresaProveedora.setBanco(resultSet.getString("banco"));
                 empresaProveedora.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
-
             }
         } catch (SQLException e) {
             e.printStackTrace();

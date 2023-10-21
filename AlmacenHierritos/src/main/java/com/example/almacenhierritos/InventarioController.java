@@ -80,4 +80,8 @@ public class InventarioController {
         }
         tarjetas.add(tarjeta);
     }
+    public void limpiarGridPane(){
+        gridPane.getChildren().clear();
+        tarjetas.clear();
+    }
 }
