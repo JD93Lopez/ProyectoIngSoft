@@ -146,7 +146,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         if(bool){
             restarProductosDeInventario(productosId);
             facturaVenta = obtenerFacturaVenta(id);
-            facturaVenta.setConsecutivoDian(Integer.valueOf(id));
+            facturaVenta.setConsecutivoDian(Consulta.ultimoConsecutivo());
             LinkedList<Producto> productos = facturaVenta.getProductos();
             Iterator iteratorId = productosId.iterator();
             Iterator iteratorProducto = productos.iterator();
