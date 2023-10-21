@@ -259,13 +259,14 @@ public class Update {
             conectar();
 
             String sql = "UPDATE empresas_proveedoras SET nombre = ?,nit = ?,"+
-                    "banco = ?,cuentaBancaria=? WHERE (idempresaProveedora = ?)";
+                    "banco = ?,cuentaBancaria=?,pDescuento=? WHERE (idempresaProveedora = ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,empresaProveedora.getNombre());
             preparedStatement.setString(2,empresaProveedora.getNit());
             preparedStatement.setString(3,empresaProveedora.getBanco());
             preparedStatement.setString(4,empresaProveedora.getCuentaBancaria());
-            preparedStatement.setInt(5,empresaProveedora.getId());
+            preparedStatement.setDouble(5,empresaProveedora.getpDescuento());
+            preparedStatement.setInt(6,empresaProveedora.getId());
 
             preparedStatement.executeUpdate();
 

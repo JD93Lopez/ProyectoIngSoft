@@ -4,7 +4,8 @@ package clases;
 import java.io.Serializable;
 
 public class Usuario extends Persona implements Serializable {
-    
+
+
     public enum TipoUsuario implements Serializable {
         INGENIERO, GERENTE, VENDEDOR, BODEGUERO;
     }

@@ -58,7 +58,7 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
     @Override
     public void enviarProductoInsertar(Producto producto, int id) throws RemoteException {
         Insercion.productos(
-                "0"/*+producto.getCodigo()*/,
+                ""/*+producto.getCodigo()*/,
                 ""+producto.getNombre(),
                 ""+producto.getDescripcion(),
                 "0"/*+producto.getExistencias()*/,
@@ -67,9 +67,9 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
                 ""+producto.getPrecioCompra(),
                 ""+producto.getPrecioVenta(),
                 ""+producto.getCantidadMinima(),
-                ""+producto.getCantidadMaxima()
+                ""+producto.getCantidadMaxima(),
+                id
         );
-        //TODO empresaProveedora_has_productos
     }
 
     @Override
@@ -99,7 +99,8 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
                         ""+empresaProveedora.getNombre(),
                         ""+empresaProveedora.getNit(),
                         ""+empresaProveedora.getBanco(),
-                        ""+empresaProveedora.getCuentaBancaria()
+                        ""+empresaProveedora.getCuentaBancaria(),
+                        empresaProveedora.getpDescuento()
                 );
             }
             ack = true;

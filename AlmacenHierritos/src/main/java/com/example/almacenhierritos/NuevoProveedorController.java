@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -59,6 +61,8 @@ public class NuevoProveedorController {
         empresaAEnviar.setBanco(textfieldBanco.getText());
         empresaAEnviar.setNit(textfieldNIT.getText());
         empresaAEnviar.setCuentaBancaria(textfieldCuentaBancaria.getText());
+        //TODO textfieldPDescuento
+        empresaAEnviar.setpDescuento(0.1);
         if(empresaProveedora!=null){
             empresaAEnviar.setId(empresaProveedora.getId());
         }else {
@@ -89,6 +93,18 @@ public class NuevoProveedorController {
     }
 
     private void cuadroEmpresaNoEncontrada() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Empresa No Encontrada");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("La empresa que está buscando no pudo ser encontrada.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
     }
 
 }

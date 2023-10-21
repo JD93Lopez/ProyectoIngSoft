@@ -57,7 +57,14 @@ public class TarjetaController {
                     double total = BuscarCliente2Controller.controller.total;
                     double totalPorCantidad = producto.getPrecioVenta() * producto.getExistencias();
                     double descuento = totalPorCantidad * producto.getpDescuento();
-                    double granTotal = totalPorCantidad - descuento;
+                    double totalSinDescuentoClienteFrectuente = totalPorCantidad - descuento;
+                    double granTotal;
+                    if(BuscarClienteController.clienteActual.getClienteFrecuente()){
+                        double descuentoClienteFrecuente = totalSinDescuentoClienteFrectuente * 0.15;//TODO obtener descuento clienteFrecuente
+                        granTotal = totalSinDescuentoClienteFrectuente - descuentoClienteFrecuente;
+                    }else{
+                        granTotal = totalSinDescuentoClienteFrectuente;
+                    }
                     BuscarCliente2Controller.controller.total += granTotal;
                     BuscarCliente2Controller.controller.setLabelTotal("Total: " + (total + granTotal));
                 }else{
@@ -71,7 +78,14 @@ public class TarjetaController {
                     double total = BuscarCliente2Controller.controller.total;
                     double totalPorCantidad = producto.getPrecioVenta() * cantidadPedida;
                     double descuento = totalPorCantidad * producto.getpDescuento();
-                    double granTotal = totalPorCantidad - descuento;
+                    double totalSinDescuentoClienteFrectuente = totalPorCantidad - descuento;
+                    double granTotal;
+                    if(BuscarClienteController.clienteActual.getClienteFrecuente()){
+                        double descuentoClienteFrecuente = totalSinDescuentoClienteFrectuente * 0.15;//TODO obtener descuento clienteFrecuente
+                        granTotal = totalSinDescuentoClienteFrectuente - descuentoClienteFrecuente;
+                    }else{
+                        granTotal = totalSinDescuentoClienteFrectuente;
+                    }
                     BuscarCliente2Controller.controller.total += granTotal;
                     BuscarCliente2Controller.controller.setLabelTotal("Total: " + (total + granTotal));
                 }else{

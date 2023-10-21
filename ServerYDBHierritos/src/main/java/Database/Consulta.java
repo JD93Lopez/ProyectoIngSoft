@@ -771,6 +771,36 @@ public class Consulta {
         }
     }
 
+    public static int ultimoProducto() {
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(idproducto) AS idproducto FROM productos";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
 
 
 
@@ -778,6 +808,8 @@ public class Consulta {
     public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
     }
+
+
 
 /*    public static void main(String[] args) {
 //        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");

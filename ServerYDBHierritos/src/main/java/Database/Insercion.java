@@ -92,7 +92,7 @@ public class Insercion {
 
     public static boolean empresas_proveedoras(
             String nombre,String nit,
-            String banco,String cuentaBancaria)
+            String banco,String cuentaBancaria,double pDescuento)
 
     {
         conectar();
@@ -100,14 +100,15 @@ public class Insercion {
 
 
         // Consulta SQL para insertar un nuevo cliente
-        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria" +
-                ")VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria,pDescuento" +
+                ")VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, nombre);
             statement.setString(2, nit);
             statement.setString(3, banco);
             statement.setString(4, cuentaBancaria);
+            statement.setDouble(5, pDescuento);
 
 
             // Ejecutar la consulta de inserción
@@ -234,13 +235,13 @@ public class Insercion {
     public static boolean productos(String codigo,String nombre,
                                     String descripcion,String existencia,String pDescuento,
                                     String pIva,String precioCompra,String precioVenta,
-                                    String cantidadMinima,String cantidadMaxima)
+                                    String cantidadMinima,String cantidadMaxima,int idEmpresaProveedora)
     {
         conectar();
 
         String sql = "INSERT INTO productos (codigo,nombre,descripcion,existencia," +
-                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima,EMPRESAS_PROVEEDORAS_idempresaProveedora) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, codigo);
@@ -253,6 +254,7 @@ public class Insercion {
             statement.setString(8, precioVenta);
             statement.setString(9, cantidadMinima);
             statement.setString(10, cantidadMaxima);
+            statement.setInt(11, idEmpresaProveedora);
 
 
             int filasAfectadas = statement.executeUpdate();
@@ -317,8 +319,6 @@ public class Insercion {
     public static void main(String[] args) {
         empresasHasFormas("1","1");
     }
-
-
 
 
 //    public static void main(String[] args) {
