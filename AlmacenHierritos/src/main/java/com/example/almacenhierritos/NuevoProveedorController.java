@@ -57,7 +57,7 @@ public class NuevoProveedorController {
 
         empresaAEnviar.setNombre(textfieldNombreProveedor.getText());
         empresaAEnviar.setBanco(textfieldBanco.getText());
-        empresaAEnviar.setNit(textfieldNIT.getId());
+        empresaAEnviar.setNit(textfieldNIT.getText());
         empresaAEnviar.setCuentaBancaria(textfieldCuentaBancaria.getText());
         if(empresaProveedora!=null){
             empresaAEnviar.setId(empresaProveedora.getId());
