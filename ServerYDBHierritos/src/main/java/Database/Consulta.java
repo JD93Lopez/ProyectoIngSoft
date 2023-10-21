@@ -161,6 +161,36 @@ public class Consulta {
         }
     }
 
+    public static int ultimoConsecutivo(){
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(consecutivoDian) AS consecutivoDian FROM facturas_de_venta";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
 
     public static Cliente obtenerClientePorTelefono(String telefono) {
         Cliente cliente  = new Cliente();

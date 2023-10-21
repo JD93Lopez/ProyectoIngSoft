@@ -73,7 +73,7 @@ public class Update {
         }
 
     }
-    public static boolean consecutivoDian(String id) {
+    public static boolean consecutivoDian(String id,int cosecutivo) {
         boolean bool = false;
         PreparedStatement preparedStatement = null;
         try {
@@ -81,7 +81,7 @@ public class Update {
 
             String sql = "UPDATE `db_hierritos`.`facturas_de_venta` SET `consecutivoDian` = ? WHERE (`idfacturaDeVenta` = ?)";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,id);
+            preparedStatement.setInt(1,cosecutivo);
             preparedStatement.setString(2,id);
             preparedStatement.executeUpdate();
 
