@@ -131,6 +131,36 @@ public class Consulta {
         }
     }
 
+    public static int ultimaFacturaCompra(){
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(idfacturaDeCompra) AS idfacturaDeCompra FROM facturas_de_compra";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
 
     public static Cliente obtenerClientePorTelefono(String telefono) {
         Cliente cliente  = new Cliente();
@@ -750,6 +780,52 @@ public class Consulta {
                 Producto producto = new Producto();
                 producto.setExistencias(resultSet.getInt("cantidadProducto"));
                 producto.setIdProducto(resultSet.getInt("PRODUCTOS_idproducto"));
+                productos.add(producto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return productos;
+
+        }
+    }
+
+    public static LinkedList<Producto> listaProductosEmpresasHasProductos(int idEmpresa) {
+        LinkedList<Producto> productos = new LinkedList<>();
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+
+            String sql = "SELECT * FROM productos WHERE EMPRESAS_PROVEEDORAS_idempresaProveedora = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,idEmpresa);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(resultSet.getInt("idproducto"));
+                producto.setCodigo(resultSet.getString("codigo"));
+                producto.setNombre(resultSet.getString("nombre"));
+                producto.setDescripcion(resultSet.getString("descripcion"));
+                producto.setExistencias(Double.parseDouble(resultSet.getString("existencia")));
+                producto.setpDescuento(Double.parseDouble(resultSet.getString("pDescuento")));
+                producto.setpIva(Double.parseDouble(resultSet.getString("pIva")));
+                producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
+                producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
+                producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
+                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
                 productos.add(producto);
             }
 

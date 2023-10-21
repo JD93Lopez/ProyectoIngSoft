@@ -11,13 +11,14 @@ import Database.Consulta;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     private boolean sesionIniciada = false;
 
-    public ServiceAlmacen() throws RemoteException {
+        public ServiceAlmacen() throws RemoteException {
     }
 
     @Override
@@ -79,13 +80,20 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     @Override
     public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException {
-        //TODO
-        Insercion.facturasDeCompra(
-                ""+facturaCompra.getNombreVendedor(),
-                ""+facturaCompra.getFormaDePago(),
-                "",
-                ""+facturaCompra.getTotal()
-        );
+        try{
+            Insercion.facturasDeCompra(
+                    ""+facturaCompra.getNombreVendedor(),
+                    ""+facturaCompra.getFormaDePago(),
+                    "",
+                    ""+facturaCompra.getTotal()
+            );
+            Producto producto = facturaCompra.getProductos().pop();
+            int idFacturaCompra = Consulta.ultimaFacturaCompra();
+            Insercion.facturas_de_compra_has_productos(idFacturaCompra,producto.getIdProducto(),producto.getExistencias());
+            Update.sumarExistencias((int) producto.getExistencias(),""+producto.getIdProducto());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -109,6 +117,11 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
             e.printStackTrace();
         }
         return ack;
+    }
+
+    @Override
+    public LinkedList<Producto> productosDeLaEmpresa(int idEmpresa) {
+        return Consulta.listaProductosEmpresasHasProductos(idEmpresa);
     }
 
 }

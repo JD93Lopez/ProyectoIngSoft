@@ -70,7 +70,7 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboboxNombreProducto" maxHeight="23.2" prefHeight="23.2" prefWidth="398.0" promptText="Escoge" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0.3;" />
+                        <ComboBox fx:id="comboboxNombreProducto" maxHeight="23.2" onHidden="#saleElMouse" prefHeight="23.2" prefWidth="398.0" promptText="Escoge" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0.3;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="223.0" prefWidth="521.0" style="-fx-spacing: 10; -fx-padding: 20;">
@@ -80,17 +80,17 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textfieldCantidadProducto">
+                        <TextField fx:id="textfieldCantidadProducto" onKeyTyped="#cantidadEscrita">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>
                         </TextField>
-                        <Label prefHeight="18.0" prefWidth="400.0" text="Precio" textFill="#0e103c">
+                        <Label prefHeight="18.0" prefWidth="400.0" text="Total" textFill="#0e103c">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textfieldPrecio">
+                        <TextField fx:id="textfieldPrecio" editable="false">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>
