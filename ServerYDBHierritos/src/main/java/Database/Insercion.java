@@ -13,7 +13,7 @@ public class Insercion {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
                     "root",
-                    "1234"
+                    "root"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
