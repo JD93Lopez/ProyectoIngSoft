@@ -1,6 +1,9 @@
 package com.example.adminhierritos;
 
 import Client.Client;
+import clases.Producto;
+import clases.ProductoVenta;
+import clases.Usuario;
 import clases.Vendedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +20,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 public class InformesController {
 
@@ -54,16 +58,29 @@ public class InformesController {
         panel.getChildren().clear();  // Limpiar el contenido actual
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
         try {
-
             fxmlLoader.setLocation(Main.class.getResource(archivoFxml));
             informeVBox = fxmlLoader.load();
             panel.getChildren().add(informeVBox);
 
             VentasInformesController ventasInformesController = fxmlLoader.getController();
 
-            String test = Client.client.informeVentas();
+            LinkedList<ProductoVenta> test = Client.client.informeVentas("'2023-10'");
 
-            ventasInformesController.textArea.setText(test);
+            String encabezado = String.format("%-15s %-19s %-15s%n","Id producto ","Nombre ", "Cantidad Vendida");
+            ventasInformesController.textArea.appendText(encabezado);
+
+            for (int i = 0; i < test.size(); i++) {
+                ProductoVenta productoVenta = test.get(i);
+
+                String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(),productoVenta.getNombreProducto(), productoVenta.getTotalVentas());
+                ventasInformesController.textArea.appendText(fila);
+
+                System.out.println(fila);
+                System.out.println("InformesController.cargarFxmlVentas");
+            }
+            ProductoVenta productoMasVendido = test.getFirst();
+            String masVendido = "\nProducto más vendido: " + productoMasVendido.getNombreProducto();
+            ventasInformesController.textArea.appendText(masVendido);
 
 
         } catch (IOException e) {
@@ -81,11 +98,10 @@ public class InformesController {
 
             VendedorMesInformeController vendedorMesInformeController  = fxmlLoader.getController();
 
-            Vendedor vendedorMes = Client.client.obtenerVendedorMes();
+            Vendedor vendedorMes = Client.client.informeVendedorMes();
 
             vendedorMesInformeController.textArea.setText("\n    Nombres: " + vendedorMes.getNombres() + "\n    "
-                    + vendedorMes.getTipoDocumento().toString().toLowerCase() + ": " + vendedorMes.getNumDocumento() + "\n  "
-            );
+                    + vendedorMes.getTipoDocumento().toString().toLowerCase() + ": " + vendedorMes.getNumDocumento() + "\n  " + "Total Ventas realizadas en el mes: " +vendedorMes.getDineroTotalVentasMes());
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Consulta {
 
@@ -16,7 +17,7 @@ public class Consulta {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
                     "root",
-                    "root"
+                    "1234"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -578,10 +579,6 @@ public class Consulta {
                 usuario.setTipoUsuario(Enum.valueOf(Usuario.TipoUsuario.class,resultSet.getString("tipoUsuario")));
                 usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
                 usuario.setContrasena(resultSet.getString("contrasena"));
-
-
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -830,7 +827,103 @@ public class Consulta {
 
         }
     }
+  //PAOLA
+    public static LinkedList<ProductoVenta> obtenerVentasPorProducto(String fecha){
+        LinkedList <ProductoVenta> ventasPorProducto = new LinkedList<>();
 
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+            String sql = "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as totalVentas " +
+                    "FROM PRODUCTOS_has_FACTURAS_DE_VENTA " +
+                    "GROUP BY PRODUCTOS_idproducto " +
+                    "ORDER BY totalVentas DESC";
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+
+
+            while (resultSet.next()){
+                System.out.println("Entró ");
+                System.out.println("Consulta.obtenerVentasPorProducto");
+
+                int idProducto = resultSet.getInt("PRODUCTOS_idproducto");
+                double totalVentas = resultSet.getDouble("totalVentas");
+
+                Producto producto = obtenerProductoPorId(String.valueOf(idProducto));
+                ProductoVenta productoVenta = new ProductoVenta(idProducto, totalVentas);
+                productoVenta.setNombreProducto(producto.getNombre());
+
+                System.out.println(productoVenta.getNombreProducto());
+                System.out.println("Consulta.obtenerVentasPorProducto");
+
+                ventasPorProducto.add(productoVenta);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ventasPorProducto;
+        }
+    }
+
+
+    public  static  Vendedor obtenerVendedorMes (){
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+
+
+        Vendedor vendedorMes = null;
+        try {
+            conectar();
+            String sql = "SELECT USUARIOS_idusuario, SUM(total) as totalVentas "+
+                    "FROM FACTURAS_DE_VENTA " +
+                    "GROUP BY USUARIOS_idusuario " +
+                    "ORDER BY totalVentas DESC";
+
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                System.out.println("Entro ");
+                System.out.println("Consulta.obtenerVendedorMes");
+
+                String idUsuario = resultSet.getString("USUARIOS_idusuario");
+                double totalVentas = resultSet.getDouble("totalVentas");
+                System.out.println(idUsuario);
+
+                //TODO
+
+                vendedorMes = (Vendedor) obtenerUsuarioPorId(idUsuario);
+                vendedorMes.setDineroTotalVentasMes((int) totalVentas);
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return vendedorMes;
+        }
+    }
+  //Juan
     public static LinkedList<Producto> listaProductosEmpresasHasProductos(int idEmpresa) {
         LinkedList<Producto> productos = new LinkedList<>();
         ResultSet resultSet = null;
@@ -838,7 +931,6 @@ public class Consulta {
         PreparedStatement statement = null;
         try {
             conectar();
-
             String sql = "SELECT * FROM productos WHERE EMPRESAS_PROVEEDORAS_idempresaProveedora = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1,idEmpresa);
@@ -907,12 +999,32 @@ public class Consulta {
         }
     }
 
+                System.out.println(idUsuario);
+
+                //TODO
+
+                vendedorMes = (Vendedor) obtenerUsuarioPorId(idUsuario);
+                vendedorMes.setDineroTotalVentasMes((int) totalVentas);
+            }
 
 
-
-
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return vendedorMes;
+        }
+    }
     public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
+        System.out.println(Consulta.obtenerVendedorMes());
+
     }
 
 

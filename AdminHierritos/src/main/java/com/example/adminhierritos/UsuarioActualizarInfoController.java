@@ -115,12 +115,20 @@ public class UsuarioActualizarInfoController {
             usuarioTemp.setTelefono(telefono);
 
             if(usuarioActual==null){
+
                 if(usuarioTemp.getContrasena()==null){usuarioTemp.setContrasena("");}
                 if(Client.client.crearUsuario(usuarioTemp)) {
                     cuadroExitoCrear();
                 }
             }else{
-                if(Client.client.actualizarUsuario(usuarioTemp)) {
+                usuarioActual.setNombreUsuario(usuarioTemp.getNombreUsuario());
+                usuarioActual.setTelefono(usuarioTemp.getTelefono());
+                usuarioActual.setNombres(usuarioTemp.getNombres());
+                usuarioActual.setContrasena(usuarioTemp.getContrasena());
+                usuarioActual.setNumDocumento(usuarioTemp.getNumDocumento());
+                usuarioActual.setTipoDocumento(usuarioTemp.getTipoDocumento());
+                usuarioActual.setTipoUsuario(usuarioTemp.getTipoUsuario());
+                if(Client.client.actualizarUsuario(usuarioActual)) {
                     cuadroExitoActualizar();
                 }
             }

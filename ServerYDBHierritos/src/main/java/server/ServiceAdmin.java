@@ -3,14 +3,12 @@ package server;
 import Database.Consulta;
 import Database.Insercion;
 import Database.Update;
-import clases.Cliente;
-import clases.Persona;
-import clases.Usuario;
-import clases.Vendedor;
+import clases.*;
 import interfaces.RMIAdmin;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.LinkedList;
 
 public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     private boolean sesionIniciada = false;
@@ -30,20 +28,6 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         return false;
     }
 
-    @Override
-    public Vendedor obtenerVendedorMes() throws RemoteException {
-
-        Vendedor vendedorPrueba = new Vendedor(Usuario.TipoUsuario.VENDEDOR, "PepeVentas" , "1234", "Pepe", Persona.TipoDocumento.CEDULA_CIUDADANIA, "63517971");
-        return vendedorPrueba;
-
-    }
-
-    @Override
-    public String informeVentas() throws RemoteException {
-        String test = "Informe Ventas";
-
-        return test;
-    }
 
     @Override
     public String informeBalanceMensual() throws RemoteException {
@@ -151,6 +135,24 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     @Override
     public Usuario obtenerUsuario(String nUser, String pass) {
         return Consulta.obtenerUsuarioPorNombre(nUser,pass);
+    }
+
+    public LinkedList<ProductoVenta>  informeVentas (String fecha) {
+        LinkedList<ProductoVenta> listProductVenta = new LinkedList<>();
+        try {
+
+            listProductVenta = Consulta.obtenerVentasPorProducto(fecha);
+
+        } catch (Exception e){
+        e.printStackTrace();
+        }
+        return listProductVenta;
+    }
+
+    public Vendedor informeVendedorMes() {
+
+        return Consulta.obtenerVendedorMes();
+
     }
 
 
