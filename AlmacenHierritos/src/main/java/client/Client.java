@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Client implements RMIAlmacen {
@@ -109,6 +110,28 @@ public class Client implements RMIAlmacen {
             service.enviarFacturaDeCompra(facturaCompra);
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            return service.crearEmpresaProveedora(empresaProveedora);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public LinkedList<Producto> productosDeLaEmpresa(int idEmpresa) {
+        try {
+            service = (RMIAlmacen) Naming.lookup(url);
+            return service.productosDeLaEmpresa(idEmpresa);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
         }
     }
 

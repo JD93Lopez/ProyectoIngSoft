@@ -106,13 +106,12 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
             entero = Integer.valueOf(Consulta.ultimaFacturaVenta());
             guardarTablaFacturaVentaHasProductos(""+entero,facturaVenta.getProductos());
             if(facturaVenta.getConsecutivoDian()!=0){
-                Update.consecutivoDian(""+entero);
+                Update.consecutivoDian(""+entero,Consulta.ultimoConsecutivo()+1);
                 facturaVenta.setConsecutivoDian(entero);//Si nunca falla entero es el id
                 restarProductosDeInventario(facturaVenta.getProductos());
-            }else{
-                Date date = new Date();
-                facturaVenta.setFechaYHora(date.toString());
             }
+            Date date = new Date();
+            facturaVenta.setFechaYHora(date.toString());
             facturaVenta.setIdFacturaVenta(entero);
             facturaVenta.setFerreteria(Consulta.obtenerFerreteriaPorId("1"));
 
@@ -139,7 +138,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         try{
             productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
             Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
-            Update.consecutivoDian(id);
+            Update.consecutivoDian(id,Consulta.ultimoConsecutivo()+1);
             bool = true;
         }catch(Exception e){
             e.printStackTrace();
@@ -147,7 +146,7 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         if(bool){
             restarProductosDeInventario(productosId);
             facturaVenta = obtenerFacturaVenta(id);
-            facturaVenta.setConsecutivoDian(Integer.valueOf(id));
+            facturaVenta.setConsecutivoDian(Consulta.ultimoConsecutivo());
             LinkedList<Producto> productos = facturaVenta.getProductos();
             Iterator iteratorId = productosId.iterator();
             Iterator iteratorProducto = productos.iterator();

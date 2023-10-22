@@ -21,7 +21,7 @@ public class TarjetaProveedorController {
     Label labelID;
     @FXML
     public void clickBotonChulito(){
-        AgregarProductoController.empresaActual = empresaProveedora;
+        AgregarProductoController.empresaActual = getEmpresaProveedora();
         Main.mainStage.setScene(AgregarProductoController.scene);
     }
 

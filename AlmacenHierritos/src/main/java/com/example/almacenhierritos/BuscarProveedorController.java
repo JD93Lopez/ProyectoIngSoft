@@ -26,7 +26,6 @@ public class BuscarProveedorController {
 
     public static BuscarProveedorController controller;
     static Scene scene;
-    static VBox tarjeta;
     @FXML
     GridPane gridPane;
     @FXML
@@ -39,19 +38,20 @@ public class BuscarProveedorController {
     }
     @FXML
     protected void clickBotonCrear() {
-        Main.mainStage.setScene(MenuController.scene);
+        Main.mainStage.setScene(NuevoProveedorController.scene);
     }
     @FXML
     protected void clickRegresar() {
         Main.mainStage.setScene(MenuController.scene);
     }
-
+    private static LinkedList<VBox> tarjetas = new LinkedList<>();
     private int col=0;
     private int fil=1;
 
     public void insertarTarjeta(EmpresaProveedora empresaProveedora){
         //SI HAY MENOS DE 9 Productos debe empezar en la fila 0
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tarjetaproveedor.fxml"));
+        VBox tarjeta;
         try {
             tarjeta = fxmlLoader.load();
         } catch (IOException e) {
@@ -68,6 +68,14 @@ public class BuscarProveedorController {
             col = 0;
             fil++;
         }
+        tarjetas.add(tarjeta);
+    }
+
+    public void limpiarGridPane() {
+        col = 0;
+        fil = 1;
+        gridPane.getChildren().clear();
+        tarjetas.clear();
     }
 
 /*    public void insertarTarjeta(){

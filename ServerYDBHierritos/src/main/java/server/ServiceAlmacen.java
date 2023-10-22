@@ -11,13 +11,14 @@ import Database.Consulta;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     private boolean sesionIniciada = false;
 
-    public ServiceAlmacen() throws RemoteException {
+        public ServiceAlmacen() throws RemoteException {
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
     @Override
     public void enviarProductoInsertar(Producto producto, int id) throws RemoteException {
         Insercion.productos(
-                "0"/*+producto.getCodigo()*/,
+                ""/*+producto.getCodigo()*/,
                 ""+producto.getNombre(),
                 ""+producto.getDescripcion(),
                 "0"/*+producto.getExistencias()*/,
@@ -67,9 +68,9 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
                 ""+producto.getPrecioCompra(),
                 ""+producto.getPrecioVenta(),
                 ""+producto.getCantidadMinima(),
-                ""+producto.getCantidadMaxima()
+                ""+producto.getCantidadMaxima(),
+                id
         );
-        //TODO empresaProveedora_has_productos
     }
 
     @Override
@@ -79,13 +80,48 @@ public class ServiceAlmacen extends UnicastRemoteObject implements RMIAlmacen {
 
     @Override
     public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException {
-        //TODO
-        Insercion.facturasDeCompra(
-                ""+facturaCompra.getNombreVendedor(),
-                ""+facturaCompra.getFormaDePago(),
-                "",
-                ""+facturaCompra.getTotal()
-        );
+        try{
+            Insercion.facturasDeCompra(
+                    ""+facturaCompra.getNombreVendedor(),
+                    ""+facturaCompra.getFormaDePago(),
+                    "",
+                    ""+facturaCompra.getTotal()
+            );
+            Producto producto = facturaCompra.getProductos().pop();
+            int idFacturaCompra = Consulta.ultimaFacturaCompra();
+            Insercion.facturas_de_compra_has_productos(idFacturaCompra,producto.getIdProducto(),producto.getExistencias());
+            Update.sumarExistencias((int) producto.getExistencias(),""+producto.getIdProducto());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException {
+        boolean ack = false;
+        try {
+            if(empresaProveedora.getId()!=0){
+                Update.actualizarEmpresaProveedora(empresaProveedora);
+            }else {
+                Insercion.empresas_proveedoras(
+                        ""+empresaProveedora.getNombre(),
+                        ""+empresaProveedora.getNit(),
+                        ""+empresaProveedora.getBanco(),
+                        ""+empresaProveedora.getCuentaBancaria(),
+                        empresaProveedora.getpDescuento()
+                );
+            }
+            ack = true;
+        }catch (Exception e){
+            ack = false;
+            e.printStackTrace();
+        }
+        return ack;
+    }
+
+    @Override
+    public LinkedList<Producto> productosDeLaEmpresa(int idEmpresa) {
+        return Consulta.listaProductosEmpresasHasProductos(idEmpresa);
     }
 
 }

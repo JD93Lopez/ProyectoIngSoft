@@ -132,6 +132,66 @@ public class Consulta {
         }
     }
 
+    public static int ultimaFacturaCompra(){
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(idfacturaDeCompra) AS idfacturaDeCompra FROM facturas_de_compra";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
+    public static int ultimoConsecutivo(){
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(consecutivoDian) AS consecutivoDian FROM facturas_de_venta";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
+
 
     public static Cliente obtenerClientePorTelefono(String telefono) {
         Cliente cliente  = new Cliente();
@@ -296,6 +356,7 @@ public class Consulta {
 
     public static EmpresaProveedora obtenerEmpresaProveedoraPorNit(String nitEmpresaProveedora) {
         EmpresaProveedora empresaProveedora  = new EmpresaProveedora();
+        empresaProveedora.setId(0);
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -314,7 +375,6 @@ public class Consulta {
                 empresaProveedora.setNit(resultSet.getString("nit"));
                 empresaProveedora.setBanco(resultSet.getString("banco"));
                 empresaProveedora.setCuentaBancaria(resultSet.getString("cuentaBancaria"));
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -767,15 +827,15 @@ public class Consulta {
 
         }
     }
-
+  //PAOLA
     public static LinkedList<ProductoVenta> obtenerVentasPorProducto(String fecha){
         LinkedList <ProductoVenta> ventasPorProducto = new LinkedList<>();
+
         ResultSet resultSet = null;
 
         PreparedStatement statement = null;
         try {
             conectar();
-
             String sql = "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as totalVentas " +
                     "FROM PRODUCTOS_has_FACTURAS_DE_VENTA " +
                     "GROUP BY PRODUCTOS_idproducto " +
@@ -841,6 +901,103 @@ public class Consulta {
 
                 String idUsuario = resultSet.getString("USUARIOS_idusuario");
                 double totalVentas = resultSet.getDouble("totalVentas");
+                System.out.println(idUsuario);
+
+                //TODO
+
+                vendedorMes = (Vendedor) obtenerUsuarioPorId(idUsuario);
+                vendedorMes.setDineroTotalVentasMes((int) totalVentas);
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return vendedorMes;
+        }
+    }
+  //Juan
+    public static LinkedList<Producto> listaProductosEmpresasHasProductos(int idEmpresa) {
+        LinkedList<Producto> productos = new LinkedList<>();
+        ResultSet resultSet = null;
+
+        PreparedStatement statement = null;
+        try {
+            conectar();
+            String sql = "SELECT * FROM productos WHERE EMPRESAS_PROVEEDORAS_idempresaProveedora = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,idEmpresa);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(resultSet.getInt("idproducto"));
+                producto.setCodigo(resultSet.getString("codigo"));
+                producto.setNombre(resultSet.getString("nombre"));
+                producto.setDescripcion(resultSet.getString("descripcion"));
+                producto.setExistencias(Double.parseDouble(resultSet.getString("existencia")));
+                producto.setpDescuento(Double.parseDouble(resultSet.getString("pDescuento")));
+                producto.setpIva(Double.parseDouble(resultSet.getString("pIva")));
+                producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
+                producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
+                producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
+                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
+                productos.add(producto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return productos;
+
+        }
+    }
+
+    public static int ultimoProducto() {
+        int id = 0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT MAX(idproducto) AS idproducto FROM productos";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return id;
+        }
+    }
 
                 System.out.println(idUsuario);
 
@@ -869,6 +1026,8 @@ public class Consulta {
         System.out.println(Consulta.obtenerVendedorMes());
 
     }
+
+
 
 /*    public static void main(String[] args) {
 //        Insercion.facturasDeVenta("10-10-10","3","1","1","1","1","1");

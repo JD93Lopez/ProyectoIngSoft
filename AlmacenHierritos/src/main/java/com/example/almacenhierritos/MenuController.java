@@ -23,6 +23,7 @@ public class MenuController {
     }
     @FXML
     protected void clickBuscarProveedor() {
+        BuscarProveedorController.controller.limpiarGridPane();
         List<EmpresaProveedora> lista;
         try {
             lista = Client.client.ListaEmpresasProveedoras();
@@ -36,6 +37,7 @@ public class MenuController {
     }
     @FXML
     protected void clickAccederInventario() throws RemoteException {
+        InventarioController.controller.limpiarGridPane();
         InventarioController.controller.ListaProductos();
         Main.mainStage.setScene(InventarioController.scene);
     }

@@ -28,11 +28,13 @@ public class MenuController {
             Scene scene;
             fxmlLoader = new FXMLLoader(Main.class.getResource("usuario_actualizarinfo_admin.fxml"));
             scene = new Scene(fxmlLoader.load());
+            UsuarioActualizarInfoController.usuarioActual = null;
             UsuarioActualizarInfoController.scene = scene;
             UsuarioActualizarInfoController.controller = fxmlLoader.getController();
 
             fxmlLoader = new FXMLLoader(Main.class.getResource("cliente_actualizarinfo_admin.fxml"));
             scene = new Scene(fxmlLoader.load());
+            ClienteActualizarInfoController.clienteActual=null;
             ClienteActualizarInfoController.scene=scene;
             ClienteActualizarInfoController.controller = fxmlLoader.getController();
         } catch (IOException e) {

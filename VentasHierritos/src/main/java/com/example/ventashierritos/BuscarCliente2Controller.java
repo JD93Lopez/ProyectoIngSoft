@@ -187,12 +187,11 @@ public class BuscarCliente2Controller {
         labelTotal.setText(total);
     }
     public void reiniciarListasYGrids(){
-        for (TarjetaController tarjeta: tarjetasInventario) {
-            gridPane1.getChildren().remove(tarjeta.getTarjeta());
-        }
-        for (TarjetaProducto2Controller tarjeta2: tarjetasProductosSeleccionados) {
-            gridPane2.getChildren().remove(tarjeta2.getTarjeta());
-        }
+        gridPane1.getChildren().clear();
+        gridPane2.getChildren().clear();
+        col=0;
+        fil=4;
+        fil2=1;
         BuscarCliente2Controller.controller.total=0;
         BuscarCliente2Controller.controller.setLabelTotal(""+0);
         BuscarCliente2Controller.tarjetasInventario.clear();

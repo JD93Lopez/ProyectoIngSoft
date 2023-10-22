@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
 public class UsuarioActualizarInfoController {
     static Scene scene;
     static UsuarioActualizarInfoController controller;
-    static Usuario usuarioActual;
+    static Usuario usuarioActual=null;
     @FXML
     TextField textfieldBuscar;
 

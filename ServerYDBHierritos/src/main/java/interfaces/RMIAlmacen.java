@@ -6,6 +6,7 @@ import clases.Producto;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.List;
 
 public interface RMIAlmacen extends Remote {
@@ -22,4 +23,6 @@ public interface RMIAlmacen extends Remote {
     public void actualizarExistencias(String text, int idProducto) throws RemoteException;
 
     public void enviarFacturaDeCompra(FacturaCompra facturaCompra) throws RemoteException;
+    public boolean crearEmpresaProveedora(EmpresaProveedora empresaProveedora) throws RemoteException;
+    public LinkedList<Producto> productosDeLaEmpresa(int idEmpresa) throws RemoteException;
 }

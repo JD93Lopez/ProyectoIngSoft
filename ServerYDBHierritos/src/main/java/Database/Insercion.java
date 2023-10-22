@@ -92,7 +92,7 @@ public class Insercion {
 
     public static boolean empresas_proveedoras(
             String nombre,String nit,
-            String banco,String cuentaBancaria,String formasDePago)
+            String banco,String cuentaBancaria,double pDescuento)
 
     {
         conectar();
@@ -100,7 +100,7 @@ public class Insercion {
 
 
         // Consulta SQL para insertar un nuevo cliente
-        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria,formasDePago" +
+        String sql = "INSERT INTO empresas_proveedoras (nombre,nit,banco,cuentaBancaria,pDescuento" +
                 ")VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -108,7 +108,7 @@ public class Insercion {
             statement.setString(2, nit);
             statement.setString(3, banco);
             statement.setString(4, cuentaBancaria);
-            statement.setString(5, formasDePago);
+            statement.setDouble(5, pDescuento);
 
 
             // Ejecutar la consulta de inserción
@@ -128,7 +128,7 @@ public class Insercion {
     {
         conectar();
 
-        String sql = "INSERT INTO facturas_de_compra (nombreVendedor,formasDePago,fechaYHora,total"+
+        String sql = "INSERT INTO facturas_de_compra (nombreVendedor,formaDePago,fechaYHora,total"+
                 ")VALUES ( ?, ?, NOW(), ?)";
 
         try(PreparedStatement statement = connection.prepareStatement(sql)){
@@ -235,13 +235,13 @@ public class Insercion {
     public static boolean productos(String codigo,String nombre,
                                     String descripcion,String existencia,String pDescuento,
                                     String pIva,String precioCompra,String precioVenta,
-                                    String cantidadMinima,String cantidadMaxima)
+                                    String cantidadMinima,String cantidadMaxima,int idEmpresaProveedora)
     {
         conectar();
 
         String sql = "INSERT INTO productos (codigo,nombre,descripcion,existencia," +
-                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "pDescuento,pIva,precioCompra,precioVenta,cantidadMinima,cantidadMaxima,EMPRESAS_PROVEEDORAS_idempresaProveedora) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, codigo);
@@ -254,6 +254,7 @@ public class Insercion {
             statement.setString(8, precioVenta);
             statement.setString(9, cantidadMinima);
             statement.setString(10, cantidadMaxima);
+            statement.setInt(11, idEmpresaProveedora);
 
 
             int filasAfectadas = statement.executeUpdate();
@@ -315,11 +316,34 @@ public class Insercion {
         return false;
     }
 
+    public static boolean facturas_de_compra_has_productos(int idFactura,int idProducto,double cantidadProducto){
+
+        conectar();
+        String sql = "INSERT INTO facturas_de_compra_has_productos (PRODUCTOS_idproducto," +
+                " FACTURAS_DE_COMPRA_idfacturaDeCompra,cantidadProducto) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, idProducto);
+            statement.setInt(2, idFactura);
+            statement.setDouble(3, cantidadProducto);
+
+            int filasAfectadas = statement.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Inserción exitosa.");
+            } else {
+                System.out.println("Error al insertar datos.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         empresasHasFormas("1","1");
     }
-
-
 
 
 //    public static void main(String[] args) {

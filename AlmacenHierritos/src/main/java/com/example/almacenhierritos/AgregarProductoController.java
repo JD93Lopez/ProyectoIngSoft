@@ -54,11 +54,13 @@ public class AgregarProductoController {
         try {
             Client.client.enviarProductoInsertar(producto,empresaActual.getId());
             Main.mainStage.setScene(MenuController.scene);
+            limpiarCampos();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
     public void limpiarCampos(){
+        empresaActual = null;
         textFieldNomProducto.setText("");
         textfieldPrecioVenta.setText("");
         textfieldPrecioCompra.setText("");

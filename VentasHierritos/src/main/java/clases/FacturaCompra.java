@@ -41,7 +41,6 @@ public class FacturaCompra implements Serializable {
     }
 
     public void setEmpresaProveedora(EmpresaProveedora empresaProveedora) {
-
         this.empresaProveedora = empresaProveedora;
     }
 

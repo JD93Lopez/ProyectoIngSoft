@@ -14,7 +14,7 @@ public class EmpresaProveedora implements Serializable {
     private LinkedList<Producto> productos;
     private String banco;
     private String cuentaBancaria;
-
+    private double pDescuento;
     private int id;
 
     public EmpresaProveedora() {
@@ -31,6 +31,14 @@ public class EmpresaProveedora implements Serializable {
         this.formasDePago = formasDePago;
         this.banco = banco;
         this.cuentaBancaria = cuentaBancaria;
+    }
+
+    public double getpDescuento() {
+        return pDescuento;
+    }
+
+    public void setpDescuento(double pDescuento) {
+        this.pDescuento = pDescuento;
     }
 
     public String getNombre() {
