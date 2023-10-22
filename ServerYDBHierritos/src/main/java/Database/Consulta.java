@@ -923,7 +923,7 @@ public class Consulta {
             return vendedorMes;
         }
     }
-  //Juan
+    //Juan
     public static LinkedList<Producto> listaProductosEmpresasHasProductos(int idEmpresa) {
         LinkedList<Producto> productos = new LinkedList<>();
         ResultSet resultSet = null;
@@ -998,34 +998,11 @@ public class Consulta {
             return id;
         }
     }
-
-                System.out.println(idUsuario);
-
-                //TODO
-
-                vendedorMes = (Vendedor) obtenerUsuarioPorId(idUsuario);
-                vendedorMes.setDineroTotalVentasMes((int) totalVentas);
-            }
-
-
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return vendedorMes;
-        }
-    }
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
         System.out.println(Consulta.obtenerVendedorMes());
 
-    }
+    }*/
 
 
 
