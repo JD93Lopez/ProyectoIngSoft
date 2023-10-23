@@ -155,5 +155,16 @@ public class Client implements RMIAdmin {
         }
     }
 
+    @Override
+    public LinkedList<Vendedor> informeTopVendedoresMes() throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.informeTopVendedoresMes();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

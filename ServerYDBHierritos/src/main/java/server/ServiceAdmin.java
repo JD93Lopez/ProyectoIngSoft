@@ -115,7 +115,7 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         boolean ack=false;
         try {
             Insercion.nuevoUsuario(
-                    ""+usuario.getNombreUsuario(),
+                    ""+usuario.getNombres(),
                     ""+usuario.getTelefono(),
                     ""+usuario.getTipoDocumento(),
                     ""+usuario.getNumDocumento(),
@@ -150,9 +150,11 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     }
 
     public Vendedor informeVendedorMes() {
-
         return Consulta.obtenerVendedorMes();
 
+    }
+    public LinkedList<Vendedor> informeTopVendedoresMes() {
+        return Consulta.obtenerTopVendedoresMes();
     }
 
 

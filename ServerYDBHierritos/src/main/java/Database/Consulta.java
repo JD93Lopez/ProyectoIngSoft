@@ -878,12 +878,12 @@ public class Consulta {
     }
 
 
-    public  static  Vendedor obtenerVendedorMes (){
+    public static Vendedor obtenerVendedorMes (){
         ResultSet resultSet = null;
         PreparedStatement statement = null;
 
 
-        Vendedor vendedorMes = null;
+        Vendedor vendedorMes = new Vendedor();
         try {
             conectar();
             String sql = "SELECT USUARIOS_idusuario, SUM(total) as totalVentas "+
@@ -901,12 +901,24 @@ public class Consulta {
 
                 String idUsuario = resultSet.getString("USUARIOS_idusuario");
                 double totalVentas = resultSet.getDouble("totalVentas");
-                System.out.println(idUsuario);
 
-                //TODO
+                //Se obtiene el usuario completo
+                Usuario usuarioTemp =  obtenerUsuarioPorId(idUsuario);
 
-                vendedorMes = (Vendedor) obtenerUsuarioPorId(idUsuario);
+                //Se guardan los datos del usuario
+                Usuario.TipoUsuario tipoUsuarioVendedor = usuarioTemp.getTipoUsuario();
+                String nombreUsuarioVendedor =  usuarioTemp.getNombreUsuario();
+                String contrasenaVendedor = usuarioTemp.getContrasena();
+                String nombresVendedor = usuarioTemp.getNombres();
+                Persona.TipoDocumento tipoDocumentoVendedor = usuarioTemp.getTipoDocumento();
+                String numDocumentoVendedor = usuarioTemp.getNumDocumento();
+
+                //Se asignan los datos del usuario al vendedor
+                vendedorMes = new Vendedor(tipoUsuarioVendedor, nombreUsuarioVendedor, contrasenaVendedor, nombresVendedor, tipoDocumentoVendedor, numDocumentoVendedor);
                 vendedorMes.setDineroTotalVentasMes((int) totalVentas);
+
+                System.out.println("xd  " +vendedorMes.getNombres());
+                System.out.println("Consulta.obtenerVendedorMes");
             }
 
 
@@ -923,6 +935,67 @@ public class Consulta {
             return vendedorMes;
         }
     }
+
+
+    public static LinkedList<Vendedor> obtenerTopVendedoresMes (){
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LinkedList<Vendedor> listTopVendedores = new LinkedList<>();
+
+        Vendedor vendedorMes = new Vendedor();
+        try {
+            conectar();
+            String sql = "SELECT USUARIOS_idusuario, SUM(total) as totalVentas "+
+                    "FROM FACTURAS_DE_VENTA " +
+                    "GROUP BY USUARIOS_idusuario " +
+                    "ORDER BY totalVentas DESC";
+
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                System.out.println("Entro ");
+                System.out.println("Consulta.obtenerVendedorMes");
+
+                String idUsuario = resultSet.getString("USUARIOS_idusuario");
+                double totalVentas = resultSet.getDouble("totalVentas");
+
+                //Se obtiene el usuario completo
+                Usuario usuarioTemp =  obtenerUsuarioPorId(idUsuario);
+
+                //Se guardan los datos del usuario
+                Usuario.TipoUsuario tipoUsuarioVendedor = usuarioTemp.getTipoUsuario();
+                String nombreUsuarioVendedor =  usuarioTemp.getNombreUsuario();
+                String contrasenaVendedor = usuarioTemp.getContrasena();
+                String nombresVendedor = usuarioTemp.getNombres();
+                Persona.TipoDocumento tipoDocumentoVendedor = usuarioTemp.getTipoDocumento();
+                String numDocumentoVendedor = usuarioTemp.getNumDocumento();
+
+                //Se asignan los datos del usuario al vendedor
+                vendedorMes = new Vendedor(tipoUsuarioVendedor, nombreUsuarioVendedor, contrasenaVendedor, nombresVendedor, tipoDocumentoVendedor, numDocumentoVendedor);
+                vendedorMes.setDineroTotalVentasMes((int) totalVentas);
+                //Se añade el vendedor a la lista
+                listTopVendedores.add(vendedorMes);
+
+                System.out.println("xd  " +vendedorMes.getNombres());
+                System.out.println("Consulta.obtenerVendedorMes");
+            }
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return listTopVendedores;
+        }
+    }
+
     //Juan
     public static LinkedList<Producto> listaProductosEmpresasHasProductos(int idEmpresa) {
         LinkedList<Producto> productos = new LinkedList<>();
@@ -998,11 +1071,12 @@ public class Consulta {
             return id;
         }
     }
-/*    public static void main(String[] args) {
+
+ public static void main(String[] args) {
         System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
         System.out.println(Consulta.obtenerVendedorMes());
 
-    }*/
+    }
 
 
 

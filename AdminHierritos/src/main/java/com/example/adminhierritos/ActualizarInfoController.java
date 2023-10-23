@@ -27,11 +27,7 @@ public class ActualizarInfoController {
         cargarFxmlUsuario("usuario_actualizarinfo_admin.fxml");
     }
 
-    public void ClickBotonVolver( ) {
-        Main.mainStage.setScene(MenuController.scene);
-    }
-
-    private void cargarFxmlUsuario(String archivoFxml) {
+    private  void cargarFxmlUsuario(String archivoFxml) {
         VboxDisplay.getChildren().clear();  // Limpiar el contenido actual
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
         try {
@@ -44,7 +40,7 @@ public class ActualizarInfoController {
         }
     }
 
-    private void cargarFxmlCliente(String archivoFxml) {
+    private  void cargarFxmlCliente(String archivoFxml) {
         VboxDisplay.getChildren().clear();  // Limpiar el contenido actual
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(archivoFxml));
         try {
@@ -57,6 +53,9 @@ public class ActualizarInfoController {
 
         //   newVbox = fxmlLoader.load();
         VboxDisplay.getChildren().add(ClienteActualizarInfoController.controller.VBoxgrande);
+    }
 
+    public void ClickBotonVolver(ActionEvent actionEvent) {
+        Main.mainStage.setScene(MenuController.scene);
     }
 }

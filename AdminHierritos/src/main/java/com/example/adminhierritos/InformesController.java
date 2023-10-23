@@ -98,10 +98,17 @@ public class InformesController {
 
             VendedorMesInformeController vendedorMesInformeController  = fxmlLoader.getController();
 
-            Vendedor vendedorMes = Client.client.informeVendedorMes();
+            LinkedList<Vendedor> listVendedorMes = Client.client.informeTopVendedoresMes();
 
-            vendedorMesInformeController.textArea.setText("\n    Nombres: " + vendedorMes.getNombres() + "\n    "
-                    + vendedorMes.getTipoDocumento().toString().toLowerCase() + ": " + vendedorMes.getNumDocumento() + "\n  " + "Total Ventas realizadas en el mes: " +vendedorMes.getDineroTotalVentasMes());
+            vendedorMesInformeController.textArea.appendText("Top vendedores del mes: "+"\n" );
+            vendedorMesInformeController.textArea.appendText("\nNombres: " + listVendedorMes.getFirst().getNombres() + "\n"
+                    + listVendedorMes.getFirst().getTipoDocumento().toString().toLowerCase() + ": " + listVendedorMes.getFirst().getNumDocumento() + "\n" + "Total Ventas realizadas en el mes: " +listVendedorMes.getFirst().getDineroTotalVentasMes()+ "\n");
+
+            for (int i = 1; i <listVendedorMes.size() ; i++) {
+                vendedorMesInformeController.textArea.appendText("\nNombres: " + listVendedorMes.get(i).getNombres() + "\n"
+                    + listVendedorMes.get(i).getTipoDocumento().toString().toLowerCase() + ": " + listVendedorMes.get(i).getNumDocumento() + "\n" + "Total Ventas realizadas en el mes: " +listVendedorMes.get(i).getDineroTotalVentasMes() + "\n");
+            }
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
