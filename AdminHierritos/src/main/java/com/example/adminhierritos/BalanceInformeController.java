@@ -54,22 +54,29 @@ public class BalanceInformeController {
 
 
         ObservableList<Item> data = FXCollections.observableArrayList();
-        Iterator it1 = ventasPorProducto.iterator();
-        Iterator it2 = comprasPorProducto.iterator();
+        Iterator it1 = comprasPorProducto.iterator();
+        Iterator it2;
         ProductoVenta productoVenta1;
         ProductoVenta productoCompra1;
+        ProductoVenta productoTemp=null;
+
         while (it1.hasNext()){
             productoCompra1  = (ProductoVenta) it1.next();
             System.out.println("C "+productoCompra1.getIdProducto());
-            it2 = comprasPorProducto.iterator();
+            it2 = ventasPorProducto.iterator();
             while (it2.hasNext()){
                 productoVenta1 = (ProductoVenta) it2.next();
                 System.out.println("v "+productoVenta1.getIdProducto());
                 if(productoCompra1.getIdProducto()==productoVenta1.getIdProducto()){
+                    productoTemp = productoVenta1;
                     data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getTotalVentas(), (int) productoVenta1.getTotalVentas()));
                     break;
                 }
             }
+            if(productoTemp==null){
+                data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getTotalVentas(), 0));
+            }
+            productoTemp = null;
         }
 
         // Establecer la fuente de datos de la tabla
