@@ -59,8 +59,10 @@ public class BuscarCliente2Controller {
 
     private FacturaVenta armarFactura() {
         FacturaVenta facturaVenta = null;
-        if(!cuadroFormaDePago().equals("NO SELECCIONADO")){
+        String formaPago = cuadroFormaDePago();
+        if(!formaPago.equals("NO SELECCIONADO")){
             facturaVenta = new FacturaVenta();
+            facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,formaPago));
             facturaVenta.setCliente(BuscarClienteController.clienteActual);
             facturaVenta.setFechaYHora("now()");
             facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
