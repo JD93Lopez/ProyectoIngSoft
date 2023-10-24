@@ -35,43 +35,47 @@ public class BuscarCliente2Controller {
     }
     public void clickBotonAceptar() {
         FacturaVenta facturaVenta = armarFactura();
-        int id;
-        try {
-            id = Client.client.enviarFactura(facturaVenta);
-        } catch (RemoteException e) {
-            id = -4;
-            throw new RuntimeException(e);
+        if(facturaVenta!=null) {
+            int id;
+            try {
+                id = Client.client.enviarFactura(facturaVenta);
+            } catch (RemoteException e) {
+                id = -4;
+                throw new RuntimeException(e);
+            }
+            FacturaController.controller.setLabelIdFactura("" + id);
+            FacturaController.controller.setTextArea(
+                    "\n    Id Factura: " + id +
+                            "\n    Id Cliente: " + facturaVenta.getCliente().getId() +
+                            "\n    Id Vendedor: " + facturaVenta.getVendedor().getId() +
+                            "\n    Productos: " + facturaVenta.getProductos().size()
+            );
+            if (id > 0) {
+                cuadroFacturaRegistrada();
+            }
+            Main.mainStage.setScene(FacturaController.scene);
         }
-        FacturaController.controller.setLabelIdFactura(""+id);
-        FacturaController.controller.setTextArea(
-                "\n    Id Factura: "+id+
-                "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
-                "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
-                "\n    Productos: "+facturaVenta.getProductos().size()
-        );
-        if(id>0){
-            cuadroFacturaRegistrada();
-        }
-        Main.mainStage.setScene(FacturaController.scene);
     }
 
     private FacturaVenta armarFactura() {
-        FacturaVenta facturaVenta = new FacturaVenta();
-        facturaVenta.setCliente(BuscarClienteController.clienteActual);
-        facturaVenta.setFechaYHora("now()");
-        facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
-        facturaVenta.setFormaDePago(cuadroFormaDePago());
-        facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
-        facturaVenta.setConsecutivoDian(1);
-        LinkedList<Producto> productosFactura = new LinkedList();
-        for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
-            productosFactura.add(tarjeta.getProducto());
+        FacturaVenta facturaVenta = null;
+        if(!cuadroFormaDePago().equals("NO SELECCIONADO")){
+            facturaVenta = new FacturaVenta();
+            facturaVenta.setCliente(BuscarClienteController.clienteActual);
+            facturaVenta.setFechaYHora("now()");
+            facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
+            facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
+            facturaVenta.setConsecutivoDian(1);
+            LinkedList<Producto> productosFactura = new LinkedList();
+            for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
+                productosFactura.add(tarjeta.getProducto());
+            }
+            facturaVenta.setProductos(productosFactura);
         }
-        facturaVenta.setProductos(productosFactura);
         return facturaVenta;
     }
 
-    private EmpresaProveedora.FormaDePago cuadroFormaDePago() {
+    private String cuadroFormaDePago() {
         // Crear un cuadro de diálogo emergente (Alert) de tipo Confirmación
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Método de Pago");
@@ -79,8 +83,8 @@ public class BuscarCliente2Controller {
 
         // Crear un ChoiceBox para seleccionar el método de pago
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Efectivo", "Tarjeta", "Transferencia");
-        choiceBox.setValue("Efectivo"); // Opción predeterminada
+        choiceBox.getItems().addAll("No Seleccionado","Efectivo", "Tarjeta", "Transferencia");
+        choiceBox.setValue("No Seleccionado"); // Opción predeterminada
 
         // Agregar el ChoiceBox al contenido del cuadro de diálogo
         VBox vbox = new VBox(choiceBox);
@@ -93,7 +97,7 @@ public class BuscarCliente2Controller {
         String metodoSeleccionado = choiceBox.getValue();
 
         // Llamar al método que procesa la opción seleccionada (puedes hacer lo que necesites aquí)
-        return  Enum.valueOf(EmpresaProveedora.FormaDePago.class,metodoSeleccionado.toUpperCase());
+        return  metodoSeleccionado.toUpperCase();
     }
 
     public void clickBotonCancelar() {
@@ -103,22 +107,24 @@ public class BuscarCliente2Controller {
     }
     public void clickBotonHacerCot() {
         FacturaVenta facturaVenta = armarFactura();
-        facturaVenta.setConsecutivoDian(0);
-        int id;
-        try {
-            id = Client.client.enviarFactura(facturaVenta);
-        } catch (RemoteException e) {
-            id = -4;
-            throw new RuntimeException(e);
+        if(facturaVenta!=null) {
+            facturaVenta.setConsecutivoDian(0);
+            int id;
+            try {
+                id = Client.client.enviarFactura(facturaVenta);
+            } catch (RemoteException e) {
+                id = -4;
+                throw new RuntimeException(e);
+            }
+            CotizacionController.controller.setTextFieldId("" + id);
+            CotizacionController.controller.setTextArea(
+                    "\n    Id Cotización: " + id +
+                            "\n    Id Cliente: " + facturaVenta.getCliente().getId() +
+                            "\n    Id Vendedor: " + facturaVenta.getVendedor().getId() +
+                            "\n    Productos: " + facturaVenta.getProductos().size()
+            );
+            Main.mainStage.setScene(CotizacionController.scene);
         }
-        CotizacionController.controller.setTextFieldId(""+id);
-        CotizacionController.controller.setTextArea(
-                "\n    Id Cotización: "+id+
-                "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
-                "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
-                "\n    Productos: "+facturaVenta.getProductos().size()
-        );
-        Main.mainStage.setScene(CotizacionController.scene);
     }
 
     public static List<TarjetaController> tarjetasInventario = new LinkedList();
