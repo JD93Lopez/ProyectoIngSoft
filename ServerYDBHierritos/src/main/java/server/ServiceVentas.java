@@ -194,6 +194,11 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         return obtenerFacturaVenta(id);
     }
 
+    @Override
+    public double descuentoFrecuente() throws RemoteException {
+        return Consulta.obtenerDescuentoFrecuente();
+    }
+
     private void restarProductosDeInventario(LinkedList<Producto> productos) {
         for (Producto producto : productos) {
             Update.restarExistencias(((int)producto.getExistencias()),""+producto.getIdProducto());

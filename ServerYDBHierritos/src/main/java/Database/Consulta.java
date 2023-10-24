@@ -219,6 +219,7 @@ public class Consulta {
                 cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
                 cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
                 cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
+                cliente.setClienteFrecuente(resultSet.getBoolean("clienteFrecuente"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -260,6 +261,7 @@ public class Consulta {
                 cliente.setTipoDocumento(Enum.valueOf(Persona.TipoDocumento.class,resultSet.getString("tipoDocumento")));
                 cliente.setTipoPersona(Enum.valueOf(Cliente.TipoPersona.class,resultSet.getString("tipoPersona")));
                 cliente.setResponsableDeIva(resultSet.getBoolean("responsableDeIva"));
+                cliente.setClienteFrecuente(resultSet.getBoolean("clienteFrecuente"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -509,6 +511,39 @@ public class Consulta {
                 e.printStackTrace();
             }
             return ferreteria;
+        }
+
+    }
+
+    public static double obtenerDescuentoFrecuente() {
+        double doble=-1;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+
+            String sql = "SELECT descuentoFrecuente FROM ferreterias WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,1);
+            resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                doble = resultSet.getDouble("descuentoFrecuente");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return doble;
         }
 
     }

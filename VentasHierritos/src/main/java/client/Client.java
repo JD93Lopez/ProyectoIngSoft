@@ -145,4 +145,15 @@ public class Client implements RMIVentas {
         }
     }
 
+    @Override
+    public double descuentoFrecuente() throws RemoteException {
+        try {
+            service = (RMIVentas) Naming.lookup(url);
+            return service.descuentoFrecuente();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

@@ -22,5 +22,7 @@ public interface RMIVentas extends Remote {
 
     public boolean cantidadSuficiente(double cantidadPedida, int idProducto) throws RemoteException;
 
-    FacturaVenta buscarCotizacion(String id) throws RemoteException;
+    public FacturaVenta buscarCotizacion(String id) throws RemoteException;
+
+    public double descuentoFrecuente() throws  RemoteException;
 }

@@ -81,7 +81,7 @@ public class TarjetaController {
                     double totalSinDescuentoClienteFrectuente = totalPorCantidad - descuento;
                     double granTotal;
                     if(BuscarClienteController.clienteActual.getClienteFrecuente()){
-                        double descuentoClienteFrecuente = totalSinDescuentoClienteFrectuente * 0.15;//TODO obtener descuento clienteFrecuente
+                        double descuentoClienteFrecuente = totalSinDescuentoClienteFrectuente * Client.client.descuentoFrecuente();
                         granTotal = totalSinDescuentoClienteFrectuente - descuentoClienteFrecuente;
                     }else{
                         granTotal = totalSinDescuentoClienteFrectuente;

@@ -14,8 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class BuscarCliente2Controller {
     static Scene scene;
@@ -29,6 +28,39 @@ public class BuscarCliente2Controller {
     @FXML
     GridPane gridPane2;
     public void clickBotonBuscar() {
+        String text = textfieldBuscar.getText();
+        double max=0;
+        double actual;
+        TarjetaController mayor=null;
+        Producto producto;
+        for (TarjetaController tarjetaController : tarjetasInventario) {
+            producto = tarjetaController.getProducto();
+            actual = calcularSimilitud(text,producto.getNombre());
+            if(actual>max){
+                max = actual;
+                mayor=tarjetaController;
+            }
+        }
+        //gridPane1.getChildren().clear();
+        if(mayor!=null){
+            tarjetasInventario.remove(mayor);
+            tarjetasInventario.addFirst(mayor);
+            col=0;
+            fil=4;
+            LinkedList<TarjetaController> temp = (LinkedList) tarjetasInventario.clone();
+            tarjetasInventario.clear();
+            //Iterator iter = tarjetasInventario.iterator();
+            for (int i = 0; i < temp.size(); i++) {
+                producto = temp.get(i).getProducto();
+                insertarTarjeta(producto);
+            }
+
+            /*while(iter.hasNext()){
+                TarjetaController tarjetaController = (TarjetaController) iter.next();
+                producto = tarjetaController.getProducto();
+                insertarTarjeta(producto);
+            }*/
+        }
     }
     public void clickRegresar() {
         Main.mainStage.setScene(BuscarClienteController.scene);
@@ -55,51 +87,6 @@ public class BuscarCliente2Controller {
             }
             Main.mainStage.setScene(FacturaController.scene);
         }
-    }
-
-    private FacturaVenta armarFactura() {
-        FacturaVenta facturaVenta = null;
-        String formaPago = cuadroFormaDePago();
-        if(!formaPago.equals("NO SELECCIONADO")){
-            facturaVenta = new FacturaVenta();
-            facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,formaPago));
-            facturaVenta.setCliente(BuscarClienteController.clienteActual);
-            facturaVenta.setFechaYHora("now()");
-            facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
-            facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
-            facturaVenta.setConsecutivoDian(1);
-            LinkedList<Producto> productosFactura = new LinkedList();
-            for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
-                productosFactura.add(tarjeta.getProducto());
-            }
-            facturaVenta.setProductos(productosFactura);
-        }
-        return facturaVenta;
-    }
-
-    private String cuadroFormaDePago() {
-        // Crear un cuadro de diálogo emergente (Alert) de tipo Confirmación
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Método de Pago");
-        alert.setHeaderText("Selecciona un método de pago:");
-
-        // Crear un ChoiceBox para seleccionar el método de pago
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("No Seleccionado","Efectivo", "Tarjeta", "Transferencia");
-        choiceBox.setValue("No Seleccionado"); // Opción predeterminada
-
-        // Agregar el ChoiceBox al contenido del cuadro de diálogo
-        VBox vbox = new VBox(choiceBox);
-        alert.getDialogPane().setContent(vbox);
-
-        // Mostrar el cuadro de diálogo y esperar a que el usuario seleccione una opción
-        alert.showAndWait();
-
-        // Obtener la opción seleccionada y retornarla como un String
-        String metodoSeleccionado = choiceBox.getValue();
-
-        // Llamar al método que procesa la opción seleccionada (puedes hacer lo que necesites aquí)
-        return  metodoSeleccionado.toUpperCase();
     }
 
     public void clickBotonCancelar() {
@@ -129,7 +116,26 @@ public class BuscarCliente2Controller {
         }
     }
 
-    public static List<TarjetaController> tarjetasInventario = new LinkedList();
+    private FacturaVenta armarFactura() {
+        FacturaVenta facturaVenta = null;
+        String formaPago = cuadroFormaDePago();
+        if(!formaPago.equals("NO SELECCIONADO")){
+            facturaVenta = new FacturaVenta();
+            facturaVenta.setFormaDePago(Enum.valueOf(EmpresaProveedora.FormaDePago.class,formaPago));
+            facturaVenta.setCliente(BuscarClienteController.clienteActual);
+            facturaVenta.setFechaYHora("now()");
+            facturaVenta.setTotal(BuscarCliente2Controller.controller.total);
+            facturaVenta.setVendedor(InicioDeSesionController.vendedorActual);
+            facturaVenta.setConsecutivoDian(1);
+            LinkedList<Producto> productosFactura = new LinkedList();
+            for (TarjetaProducto2Controller tarjeta: BuscarCliente2Controller.tarjetasProductosSeleccionados) {
+                productosFactura.add(tarjeta.getProducto());
+            }
+            facturaVenta.setProductos(productosFactura);
+        }
+        return facturaVenta;
+    }
+    public static LinkedList<TarjetaController> tarjetasInventario = new LinkedList();
     private static int col=0;
     private static int fil=4;
     public void insertarTarjeta(Producto producto){
@@ -206,6 +212,31 @@ public class BuscarCliente2Controller {
         BuscarCliente2Controller.tarjetasProductosSeleccionados.clear();
         dibujarTarjetasProductos();
     }
+
+    private static double calcularSimilitud(String s1, String s2) {
+        Set<Character> set1 = new HashSet<>();
+        Set<Character> set2 = new HashSet<>();
+
+        for (char c : s1.toCharArray()) {
+            set1.add(c);
+        }
+
+        for (char c : s2.toCharArray()) {
+            set2.add(c);
+        }
+
+        int interseccion = 0;
+
+        for (char c : set1) {
+            if (set2.contains(c)) {
+                interseccion++;
+            }
+        }
+
+        double union = set1.size() + set2.size() - interseccion;
+
+        return interseccion / union;
+    }
     private void cuadroFallaDeConexion() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -234,6 +265,31 @@ public class BuscarCliente2Controller {
 
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
+    }
+
+    private String cuadroFormaDePago() {
+        // Crear un cuadro de diálogo emergente (Alert) de tipo Confirmación
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Método de Pago");
+        alert.setHeaderText("Selecciona un método de pago:");
+
+        // Crear un ChoiceBox para seleccionar el método de pago
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.getItems().addAll("No Seleccionado","Efectivo", "Tarjeta", "Transferencia");
+        choiceBox.setValue("No Seleccionado"); // Opción predeterminada
+
+        // Agregar el ChoiceBox al contenido del cuadro de diálogo
+        VBox vbox = new VBox(choiceBox);
+        alert.getDialogPane().setContent(vbox);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario seleccione una opción
+        alert.showAndWait();
+
+        // Obtener la opción seleccionada y retornarla como un String
+        String metodoSeleccionado = choiceBox.getValue();
+
+        // Llamar al método que procesa la opción seleccionada (puedes hacer lo que necesites aquí)
+        return  metodoSeleccionado.toUpperCase();
     }
 
 }
