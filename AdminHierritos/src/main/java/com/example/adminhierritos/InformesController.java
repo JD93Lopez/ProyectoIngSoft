@@ -64,23 +64,20 @@ public class InformesController {
             String encabezado = String.format("%-15s %-19s %-15s%n","Id producto ","Nombre ", "Cantidad Vendida");
             ventasInformesController.textArea.appendText(encabezado);
 
-            System.out.println("InformesController.cargarFxmlVentas");
             LinkedList<ProductoVenta> test = Client.client.informeVentas();
-            test.getFirst().getNombreProducto();
 
-            for (int i = 0; i < test.size(); i++) {
-                ProductoVenta productoVenta = test.get(i);
+            if(!test.isEmpty()) {
+                test.getFirst().getNombreProducto();
+                for (int i = 0; i < test.size(); i++) {
+                    ProductoVenta productoVenta = test.get(i);
 
-                String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(),productoVenta.getNombreProducto(), productoVenta.getTotalVentas());
-                ventasInformesController.textArea.appendText(fila);
-
-                System.out.println(fila);
-                System.out.println("InformesController.cargarFxmlVentas");
+                    String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(), productoVenta.getNombreProducto(), productoVenta.getTotalVentas());
+                    ventasInformesController.textArea.appendText(fila);
+                }
+                ProductoVenta productoMasVendido = test.getFirst();
+                String masVendido = "\nProducto más vendido: " + productoMasVendido.getNombreProducto();
+                ventasInformesController.textArea.appendText(masVendido);
             }
-            ProductoVenta productoMasVendido = test.getFirst();
-            String masVendido = "\nProducto más vendido: " + productoMasVendido.getNombreProducto();
-            ventasInformesController.textArea.appendText(masVendido);
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -29,7 +29,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
                   <Label prefHeight="37.0" prefWidth="173.0" text="Descuento Cliente Frecuente:" />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldDescuento" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="560.0" style="-fx-pref-height: 47; -fx-spacing: 20;">
@@ -37,35 +37,35 @@
                   <Button mnemonicParsing="false" onAction="#buttonCorreo" prefHeight="25.0" prefWidth="34.0" />
 
                   <Label prefHeight="17.0" prefWidth="173.0" text="Correo:" />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldCorreo" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="560.0" style="-fx-pref-height: 47; -fx-spacing: 20;">
                <children>
                   <Button mnemonicParsing="false"  onAction="#buttonNombre"  prefHeight="25.0" prefWidth="34.0" />
                   <Label prefHeight="17.0" prefWidth="173.0" text="Nombre:" />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldNombre" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="560.0" style="-fx-pref-height: 47; -fx-spacing: 20;">
                <children>
                   <Button mnemonicParsing="false" onAction="#buttonNit" prefHeight="25.0" prefWidth="34.0" />
                   <Label prefHeight="17.0" prefWidth="173.0" text="NIT:" />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldNit" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="560.0" style="-fx-pref-height: 47; -fx-spacing: 20;">
                <children>
                   <Button mnemonicParsing="false" onAction="#buttonDireccion"  prefHeight="25.0" prefWidth="34.0" />
                   <Label prefHeight="17.0" prefWidth="173.0" text="Dirección:" />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldDireccion" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="560.0" style="-fx-pref-height: 47; -fx-spacing: 20;">
                <children>
                   <Button mnemonicParsing="false" onAction="#buttonTelefono"  prefHeight="25.0" prefWidth="34.0" />
                   <Label prefHeight="17.0" prefWidth="173.0" text="Teléfono: " />
-                  <TextField prefHeight="14.0" prefWidth="262.0" />
+                  <TextField fx:id="textfieldTelefono" prefHeight="14.0" prefWidth="262.0" />
                </children>
             </HBox>
          </children>

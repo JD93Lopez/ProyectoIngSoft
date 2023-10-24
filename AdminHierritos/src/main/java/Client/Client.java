@@ -177,7 +177,64 @@ public class Client implements RMIAdmin {
         }
     }
 
+    @Override
+    public void actualizarDescuentoFrecuente(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarDescuentoFrecuente(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void actualizarCorreo(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarCorreo(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void actualizarNombre(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarNombre(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actualizarNit(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarNit(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actualizarDireccion(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarDireccion(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actualizarTelefono(String text) throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            service.actualizarTelefono(text);
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+        }
+    }
 
 }

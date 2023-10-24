@@ -180,5 +180,35 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         return listProductCompra;
     }
 
+    @Override
+    public void actualizarDescuentoFrecuente(String text) throws RemoteException {
+        Update.setDescuentoFrecuente(text);
+    }
+
+    @Override
+    public void actualizarCorreo(String text) throws RemoteException {
+        Update.setCorreo(text);
+    }
+
+    @Override
+    public void actualizarNombre(String text) throws RemoteException {
+        Update.setNombre(text);
+    }
+
+    @Override
+    public void actualizarNit(String text) throws RemoteException {
+        Update.setNit(text);
+    }
+
+    @Override
+    public void actualizarDireccion(String text) throws RemoteException {
+        Update.setDireccion(text);
+    }
+
+    @Override
+    public void actualizarTelefono(String text) throws RemoteException {
+        Update.setTelefono(text);
+    }
+
 
 }

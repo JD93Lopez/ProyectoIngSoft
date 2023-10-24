@@ -208,7 +208,6 @@ public class Consulta {
             preparedStatement.setString(1,telefono);
             resultSet = preparedStatement.executeQuery();
 
-
             if (resultSet.next()) {
                 cliente.setId(resultSet.getString("idcliente"));
                 cliente.setNombres(resultSet.getString("nombres"));
@@ -879,6 +878,7 @@ public class Consulta {
                     "ORDER BY totalVentas DESC";
 
             statement = connection.prepareStatement(sql);
+            System.out.println(sql);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()){

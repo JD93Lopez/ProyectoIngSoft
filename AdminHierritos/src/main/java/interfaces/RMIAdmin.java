@@ -20,4 +20,10 @@ public interface RMIAdmin extends Remote {
     public Vendedor informeVendedorMes () throws RemoteException;
     public LinkedList<Vendedor>  informeTopVendedoresMes() throws RemoteException;
     public LinkedList<ProductoVenta> obtenerComprasPorProducto () throws RemoteException;
+    public void actualizarDescuentoFrecuente(String text) throws  RemoteException;
+    public void actualizarCorreo(String text) throws RemoteException;
+    public void actualizarNombre(String text) throws RemoteException;
+    public void actualizarNit(String text) throws RemoteException;
+    public void actualizarDireccion(String text) throws RemoteException;
+    public void actualizarTelefono(String text) throws RemoteException;
 }

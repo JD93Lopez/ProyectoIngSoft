@@ -99,6 +99,29 @@ public class Update {
         }
 
     }
+    public static void setExistencias(String text, int idProducto) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE productos SET existencia = ? WHERE idproducto = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(text));
+            preparedStatement.setInt(2, idProducto);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static boolean cambiarFormaDePagoFacturaVenta(String id,String formaDePago) {
         boolean bool = false;
         PreparedStatement preparedStatement = null;
@@ -125,35 +148,12 @@ public class Update {
         }
 
     }
+
     /*UPDATE `db_hierritos`.`facturas_de_venta` SET `consecutivoDian` = '2' WHERE (`idfacturaDeVenta` = '1');*/
 
     public static void main(String[] args) {
         Update.restarExistencias(20,"1");
         Update.sumarExistencias(20,"1");
-    }
-
-    public static void setExistencias(String text, int idProducto) {
-        PreparedStatement preparedStatement = null;
-        try {
-            conectar();
-
-            String sql = "UPDATE productos SET existencia = ? WHERE idproducto = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(text));
-            preparedStatement.setInt(2, idProducto);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
     public static void actualizarUsuario(Usuario usuario) {
         PreparedStatement preparedStatement = null;
@@ -268,6 +268,145 @@ public class Update {
             preparedStatement.setDouble(5,empresaProveedora.getpDescuento());
             preparedStatement.setInt(6,empresaProveedora.getId());
 
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void setDescuentoFrecuente(String descuentoFrecuente) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET descuentoFrecuente = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDouble(1, Double.parseDouble(descuentoFrecuente));
+            preparedStatement.setInt(2,1);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void setCorreo(String correo) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET correo = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, correo);
+            preparedStatement.setInt(2,1);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void setNombre(String nombre) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET nombre = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nombre);
+            preparedStatement.setInt(2,1);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void setNit(String nit) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET nit = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nit);
+            preparedStatement.setInt(2,1);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void setDireccion(String direccion) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET direccion = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, direccion);
+            preparedStatement.setInt(2,1);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void setTelefono(String telefono) {
+        PreparedStatement preparedStatement = null;
+        try {
+            conectar();
+
+            String sql = "UPDATE ferreterias SET telefono = ? WHERE idferreteria = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, telefono);
+            preparedStatement.setInt(2,1);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

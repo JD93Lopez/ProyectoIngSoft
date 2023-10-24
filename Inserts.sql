@@ -1,4 +1,4 @@
-INSERT INTO `db_hierritos`.`ferreterias` (`nombre`, `telefono`, `nit`, `direccion`, `correo`) VALUES ('Hierritos', '12345678', '87654321', 'Av Ejemplo #1-11', 'ejemplo@example.com');
+INSERT INTO `db_hierritos`.`ferreterias` (`nombre`, `telefono`, `nit`, `direccion`, `correo`,`descuentoFrecuente`) VALUES ('Hierritos', '12345678', '87654321', 'Av Ejemplo #1-11', 'ejemplo@example.com',0.05);
 insert into clientes (nombres,telefono,tipoDocumento,numDocumento,direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) values ("Nadia3", "3016995317", "CEDULA_CIUDADANIA", "37275689", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1,1);
 insert into clientes (nombres,telefono,tipoDocumento,numDocumento,direccion,correo,tipoPersona,responsableDeIva,clienteFrecuente) values ("Nadia2", "3016995316", "CEDULA_CIUDADANIA", "37275688", "C Fontana Real", "nadiaestupinan15@gmail.com", "NATURAL", 1,1);
 insert into usuarios values (idusuario,"1","1","PASAPORTE","1","Av 1 #1-1","uno@example.com","VENDEDOR","1","1");
