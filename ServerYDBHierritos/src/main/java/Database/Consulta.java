@@ -1081,6 +1081,7 @@ public class Consulta {
                     "GROUP BY PRODUCTOS_idproducto";
 
             statement = connection.prepareStatement(sql);
+            System.out.println(sql);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()){

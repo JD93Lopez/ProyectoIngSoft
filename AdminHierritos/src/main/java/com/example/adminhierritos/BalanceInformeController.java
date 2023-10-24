@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class BalanceInformeController {
@@ -49,16 +50,26 @@ public class BalanceInformeController {
         //Obtener los dats del producto desde el server
         LinkedList<ProductoVenta> ventasPorProducto = Client.client.informeVentas();
         LinkedList<ProductoVenta> comprasPorProducto = Client.client.obtenerComprasPorProducto();
-
         // Crear datos
 
+
         ObservableList<Item> data = FXCollections.observableArrayList();
-        for (int i = 0; i < ventasPorProducto.size() ; i++) {
-            ProductoVenta productoVenta = ventasPorProducto.get(i);
-            ProductoVenta productoCompra = comprasPorProducto.get(i);
-
-             data. add(new Item(productoVenta.getIdProducto(), productoVenta.getNombreProducto(), (int) productoCompra.getTotalVentas(), (int) productoVenta.getTotalVentas()));
-
+        Iterator it1 = ventasPorProducto.iterator();
+        Iterator it2 = comprasPorProducto.iterator();
+        ProductoVenta productoVenta1;
+        ProductoVenta productoCompra1;
+        while (it1.hasNext()){
+            productoCompra1  = (ProductoVenta) it1.next();
+            System.out.println("C "+productoCompra1.getIdProducto());
+            it2 = comprasPorProducto.iterator();
+            while (it2.hasNext()){
+                productoVenta1 = (ProductoVenta) it2.next();
+                System.out.println("v "+productoVenta1.getIdProducto());
+                if(productoCompra1.getIdProducto()==productoVenta1.getIdProducto()){
+                    data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getTotalVentas(), (int) productoVenta1.getTotalVentas()));
+                    break;
+                }
+            }
         }
 
         // Establecer la fuente de datos de la tabla
