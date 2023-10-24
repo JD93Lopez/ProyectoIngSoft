@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -828,7 +830,7 @@ public class Consulta {
         }
     }
   //PAOLA
-    public static LinkedList<ProductoVenta> obtenerVentasPorProducto(String fecha){
+    public static LinkedList<ProductoVenta> obtenerVentasPorProducto( ){
         LinkedList <ProductoVenta> ventasPorProducto = new LinkedList<>();
 
         ResultSet resultSet = null;
@@ -836,7 +838,7 @@ public class Consulta {
         PreparedStatement statement = null;
         try {
             conectar();
-            String sql = "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as totalVentas " +
+            String sql =  "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as totalVentas " +
                     "FROM PRODUCTOS_has_FACTURAS_DE_VENTA " +
                     "GROUP BY PRODUCTOS_idproducto " +
                     "ORDER BY totalVentas DESC";
@@ -844,11 +846,7 @@ public class Consulta {
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
-
-
             while (resultSet.next()){
-                System.out.println("Entró ");
-                System.out.println("Consulta.obtenerVentasPorProducto");
 
                 int idProducto = resultSet.getInt("PRODUCTOS_idproducto");
                 double totalVentas = resultSet.getDouble("totalVentas");
@@ -856,9 +854,6 @@ public class Consulta {
                 Producto producto = obtenerProductoPorId(String.valueOf(idProducto));
                 ProductoVenta productoVenta = new ProductoVenta(idProducto, totalVentas);
                 productoVenta.setNombreProducto(producto.getNombre());
-
-                System.out.println(productoVenta.getNombreProducto());
-                System.out.println("Consulta.obtenerVentasPorProducto");
 
                 ventasPorProducto.add(productoVenta);
             }
@@ -878,7 +873,7 @@ public class Consulta {
     }
 
 
-    public static Vendedor obtenerVendedorMes (){
+    public static Vendedor obtenerVendedorMes (int anio, int mes){
         ResultSet resultSet = null;
         PreparedStatement statement = null;
 
@@ -888,16 +883,18 @@ public class Consulta {
             conectar();
             String sql = "SELECT USUARIOS_idusuario, SUM(total) as totalVentas "+
                     "FROM FACTURAS_DE_VENTA " +
+                    "WHERE YEAR(fechaYHora) = ? AND MONTH(fechaYHora) = ? " +
                     "GROUP BY USUARIOS_idusuario " +
                     "ORDER BY totalVentas DESC";
 
-
             statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, anio);
+            statement.setInt(2, mes);
             resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
-                System.out.println("Entro ");
-                System.out.println("Consulta.obtenerVendedorMes");
+
+            if (resultSet.next()){
 
                 String idUsuario = resultSet.getString("USUARIOS_idusuario");
                 double totalVentas = resultSet.getDouble("totalVentas");
@@ -917,10 +914,7 @@ public class Consulta {
                 vendedorMes = new Vendedor(tipoUsuarioVendedor, nombreUsuarioVendedor, contrasenaVendedor, nombresVendedor, tipoDocumentoVendedor, numDocumentoVendedor);
                 vendedorMes.setDineroTotalVentasMes((int) totalVentas);
 
-                System.out.println("xd  " +vendedorMes.getNombres());
-                System.out.println("Consulta.obtenerVendedorMes");
             }
-
 
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -937,7 +931,7 @@ public class Consulta {
     }
 
 
-    public static LinkedList<Vendedor> obtenerTopVendedoresMes (){
+    public static LinkedList<Vendedor> obtenerTopVendedoresMes (int anio, int mes){
         ResultSet resultSet = null;
         PreparedStatement statement = null;
         LinkedList<Vendedor> listTopVendedores = new LinkedList<>();
@@ -947,16 +941,19 @@ public class Consulta {
             conectar();
             String sql = "SELECT USUARIOS_idusuario, SUM(total) as totalVentas "+
                     "FROM FACTURAS_DE_VENTA " +
+                    "WHERE YEAR(fechaYHora) = ? AND MONTH(fechaYHora) = ? " +
                     "GROUP BY USUARIOS_idusuario " +
                     "ORDER BY totalVentas DESC";
 
 
             statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, anio);
+            statement.setInt(2, mes);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()){
-                System.out.println("Entro ");
-                System.out.println("Consulta.obtenerVendedorMes");
+
 
                 String idUsuario = resultSet.getString("USUARIOS_idusuario");
                 double totalVentas = resultSet.getDouble("totalVentas");
@@ -1041,7 +1038,6 @@ public class Consulta {
 
         }
     }
-
     public static int ultimoProducto() {
         int id = 0;
         PreparedStatement preparedStatement = null;
@@ -1072,10 +1068,63 @@ public class Consulta {
         }
     }
 
- public static void main(String[] args) {
-        System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
-        System.out.println(Consulta.obtenerVendedorMes());
+    public static LinkedList<ProductoVenta> obtenerComprasPorProducto(){
+        LinkedList <ProductoVenta> ventasPorProducto = new LinkedList<>();
 
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+
+        try {
+            conectar();
+            String sql =  "SELECT PRODUCTOS_idproducto, SUM(cantidadProducto) as cantidadComprada " +
+                    "FROM FACTURAS_DE_COMPRA_has_PRODUCTOS " +
+                    "GROUP BY PRODUCTOS_idproducto";
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+
+                int idProducto = resultSet.getInt("PRODUCTOS_idproducto");
+                double cantidadComprada = resultSet.getDouble("cantidadComprada");
+
+                System.out.println(cantidadComprada);
+                System.out.println("Consulta.obtenerComprasPorProducto");
+
+                Producto producto = obtenerProductoPorId(String.valueOf(idProducto));
+                ProductoVenta productoCompra = new ProductoVenta(idProducto, cantidadComprada);
+                productoCompra.setNombreProducto(producto.getNombre());
+
+
+                ventasPorProducto.add(productoCompra);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ventasPorProducto;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Consulta.obtenerVentasPorProducto().get(1).getNombreProducto());
+        System.out.println(Consulta.obtenerComprasPorProducto().get(1).getIdProducto());
+    /*System.out.println(Consulta.obtenerProductoPorId("7").getExistencias());
+     Calendar calendar = Calendar.getInstance();
+     // Obtén el año actual
+     int year = calendar.get(Calendar.YEAR);
+     // Obtén el mes actual
+     String montj = String.valueOf(calendar.get(Calendar.MONTH));
+     int month = calendar.get(Calendar.MONTH ) + 1;
+     System.out.println(Consulta.obtenerVentasPorProducto("2023-10"));
+*/
     }
 
 

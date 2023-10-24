@@ -134,10 +134,10 @@ public class Client implements RMIAdmin {
     }
 
     @Override
-    public LinkedList<ProductoVenta> informeVentas(String fecha) throws RemoteException {
+    public LinkedList<ProductoVenta> informeVentas() throws RemoteException {
         try {
             service = (RMIAdmin) Naming.lookup(url);
-            return service.informeVentas(fecha);
+            return service.informeVentas();
         }catch (MalformedURLException | RemoteException | NotBoundException e){
             e.printStackTrace();
             return null;
@@ -165,6 +165,19 @@ public class Client implements RMIAdmin {
             return null;
         }
     }
+
+    @Override
+    public LinkedList<ProductoVenta> obtenerComprasPorProducto() throws RemoteException {
+        try {
+            service = (RMIAdmin) Naming.lookup(url);
+            return service.obtenerComprasPorProducto();
+        }catch (MalformedURLException | RemoteException | NotBoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 
 }

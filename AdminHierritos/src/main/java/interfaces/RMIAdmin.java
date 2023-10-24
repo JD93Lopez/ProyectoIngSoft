@@ -16,7 +16,8 @@ public interface RMIAdmin extends Remote {
     public  boolean actualizarUsuario (Usuario usuario) throws RemoteException;
     public  boolean crearUsuario (Usuario usuario) throws RemoteException;
     public Usuario obtenerUsuario(String nUser, String pass) throws RemoteException;
-    public LinkedList<ProductoVenta> informeVentas (String fecha) throws RemoteException;
+    public LinkedList<ProductoVenta> informeVentas ( ) throws RemoteException;
     public Vendedor informeVendedorMes () throws RemoteException;
     public LinkedList<Vendedor>  informeTopVendedoresMes() throws RemoteException;
+    public LinkedList<ProductoVenta> obtenerComprasPorProducto () throws RemoteException;
 }
