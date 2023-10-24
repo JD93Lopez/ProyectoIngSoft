@@ -36,22 +36,20 @@ public class InformesController {
     @FXML
     Pane panel;
 
-
     public void ClickBotonVentas( ) {
         cargarFxmlVentas("ventas_informes_admin.fxml");
     }
 
     public void ClickBotonVendedor( ) {
         cargarFxmlVendedorMes("vendedor_informes_admin.fxml");
-
     }
 
     public void ClickBotonBalance( ) {
         cargarFxmlBalance("balance_informes_admin.fxml");
     }
 
-    public void ClickBotonDevoluciones() {
-        cargarFxmlDevoluciones("devoluciones_informes_admin.fxml");
+    public void ClickBotonVolver() {
+        Main.mainStage.setScene(MenuController.scene);
     }
 
     private void cargarFxmlVentas(String archivoFxml) {
@@ -63,11 +61,12 @@ public class InformesController {
             panel.getChildren().add(informeVBox);
 
             VentasInformesController ventasInformesController = fxmlLoader.getController();
-
-            LinkedList<ProductoVenta> test = Client.client.informeVentas("'2023-10'");
-
             String encabezado = String.format("%-15s %-19s %-15s%n","Id producto ","Nombre ", "Cantidad Vendida");
             ventasInformesController.textArea.appendText(encabezado);
+
+            System.out.println("InformesController.cargarFxmlVentas");
+            LinkedList<ProductoVenta> test = Client.client.informeVentas();
+            test.getFirst().getNombreProducto();
 
             for (int i = 0; i < test.size(); i++) {
                 ProductoVenta productoVenta = test.get(i);
@@ -123,14 +122,8 @@ public class InformesController {
             fxmlLoader.setLocation(Main.class.getResource(archivoFxml));
             informeVBox = fxmlLoader.load();
             panel.getChildren().add(informeVBox);
-
             BalanceInformeController balanceInformeController = fxmlLoader.getController();
-
-            String test = Client.client.informeBalanceMensual();
-
-            balanceInformeController.textArea.setText(test);
-
-
+         //   balanceInformeController.textArea.setText();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -155,8 +148,6 @@ public class InformesController {
             throw new RuntimeException(e);
         }
     }
-    public void ClickBotonVolver() {
-        Main.mainStage.setScene(MenuController.scene);
-    }
+
 
 }

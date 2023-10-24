@@ -8,6 +8,7 @@ import interfaces.RMIAdmin;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
@@ -137,11 +138,11 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
         return Consulta.obtenerUsuarioPorNombre(nUser,pass);
     }
 
-    public LinkedList<ProductoVenta>  informeVentas (String fecha) {
+    public LinkedList<ProductoVenta>  informeVentas ( ) {
         LinkedList<ProductoVenta> listProductVenta = new LinkedList<>();
         try {
 
-            listProductVenta = Consulta.obtenerVentasPorProducto(fecha);
+            listProductVenta = Consulta.obtenerVentasPorProducto();
 
         } catch (Exception e){
         e.printStackTrace();
@@ -150,11 +151,33 @@ public class ServiceAdmin extends UnicastRemoteObject implements RMIAdmin {
     }
 
     public Vendedor informeVendedorMes() {
-        return Consulta.obtenerVendedorMes();
-
+        Calendar calendar = Calendar.getInstance();
+        // Obtén el año actual
+        int year = calendar.get(Calendar.YEAR);
+        // Obtén el mes actual
+        int month = calendar.get(Calendar.MONTH+1);
+        return Consulta.obtenerVendedorMes(year, month);
     }
     public LinkedList<Vendedor> informeTopVendedoresMes() {
-        return Consulta.obtenerTopVendedoresMes();
+        Calendar calendar = Calendar.getInstance();
+        // Obtén el año actual
+        int year = calendar.get(Calendar.YEAR);
+        // Obtén el mes actual
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        LinkedList list = Consulta.obtenerTopVendedoresMes(year, month);
+
+        return Consulta.obtenerTopVendedoresMes(year, month);
+    }
+
+    public LinkedList<ProductoVenta> obtenerComprasPorProducto() {
+        LinkedList<ProductoVenta> listProductCompra = new LinkedList<>();
+        try {
+            listProductCompra = Consulta.obtenerComprasPorProducto();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return listProductCompra;
     }
 
 
