@@ -80,7 +80,6 @@ public class ClienteActualizarInfoController {
             }
             comboBoxTipoDoc.setValue(clienteActual.getTipoDocumento());
 
-
             if(!comboBoxTipoPers.getItems().contains(clienteActual.getTipoPersona()) ){
                 System.out.println("No está dentro de las opciones");
                 System.out.println("ClienteActualizarInfoController.llenarEspacios: 87");
@@ -97,6 +96,7 @@ public class ClienteActualizarInfoController {
             e.printStackTrace();
         }
     }
+
     public void clickBotonGuardarCambios() throws RemoteException {
 
         String nombre = textfieldNombres.getText();
@@ -116,25 +116,33 @@ public class ClienteActualizarInfoController {
             Cliente clientTemp = new Cliente(tipoPersona, ack, nombre, telefono, tipDoc, numDoc, direc, correo);
             if(clienteActual==null){
                 clientTemp.setId(null);
+
             }else{
                 clientTemp.setId(clienteActual.getId());
             }
             if(Client.client.actualizarCliente(clientTemp)) {
                 cuadroExitoProceso();
+                limpirarContenido();
                 Main.mainStage.setScene(MenuController.scene);
             }
         }else {
             cuadroRellenarCampos();
         }
-
     }
 
+    private void limpirarContenido(){
+        textfieldNombres.setText("");
+        textfieldNumTel.setText("");
+        textfieldCorreo.setText("");
+        textfieldDireccion.setText("");
+        textfieldNumDoc.setText("");
+    }
     private void cuadroRellenarCampos() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("\"Llene todos los campos por favor");
+        alert.setContentText("Llene todos los campos por favor");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
@@ -156,12 +164,13 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+
     private void cuadroRellenarCampoBusqueda() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("\"Rellene la barra de búsqueda con el teléfono o cédula\\n    del cliente por favor");
+        alert.setContentText("Rellene la barra de búsqueda con el teléfono o cédula \n del cliente por favor");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
@@ -170,7 +179,6 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
-
     private void cuadroExitoProceso() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -185,12 +193,13 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+
     private void CuadroErrorProceso() {
         // Crear un cuadro de diálogo de tipo INFORMATION
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Cliente No Actualizado");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("\nEl cliente no ha sido actualizado con éxito, por favor \n intente de nuevo ");
+        alert.setContentText("\n Cliente no ha sido actualizado, por favor \n intente de nuevo ");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
@@ -199,6 +208,7 @@ public class ClienteActualizarInfoController {
         // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
         alert.showAndWait();
     }
+
     public void desplegables() {
         desplegableTipoPersona();
         desplegableIva();

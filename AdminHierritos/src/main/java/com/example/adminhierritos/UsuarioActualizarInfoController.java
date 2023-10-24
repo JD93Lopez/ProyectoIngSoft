@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 
 import java.rmi.RemoteException;
 
+
+
 public class UsuarioActualizarInfoController {
     static Scene scene;
     static UsuarioActualizarInfoController controller;
@@ -70,7 +72,6 @@ public class UsuarioActualizarInfoController {
         Usuario.TipoUsuario tipoUsuario = (Usuario.TipoUsuario) comboBoxTipoUsuario.getValue();
 
         if ((tipDoc !=null) && (tipoUsuario != null) ){
-
             Usuario usuarioTemp = new Usuario(
                     tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc
             );
@@ -79,12 +80,14 @@ public class UsuarioActualizarInfoController {
             if(usuarioActual==null){
                 if(Client.client.crearUsuario(usuarioTemp)) {
                     cuadroExitoCrear();
+                    limpirarContenido();
                     Main.mainStage.setScene(MenuController.scene);
                 }
             }else{
                 usuarioTemp.setId(usuarioActual.getId());
                 if(Client.client.actualizarUsuario(usuarioTemp)) {
                     cuadroExitoActualizar();
+                    limpirarContenido();
                     Main.mainStage.setScene(MenuController.scene);
                 }
             }
@@ -108,7 +111,7 @@ public class UsuarioActualizarInfoController {
         Persona.TipoDocumento tipDoc = (Persona.TipoDocumento) comboBoxTipoDoc.getValue();
         Usuario.TipoUsuario tipoUsuario = (Usuario.TipoUsuario) comboBoxTipoUsuario.getValue();
 
-        if ((tipDoc !=null) && (tipoUsuario != null) ){
+        if ((tipDoc !=null) && (tipoUsuario != null) && (textfieldContrasena.getText() != null)){
 
             Usuario usuarioTemp = new Usuario(
                     tipoUsuario, nombreUsuario, contrasena, nombres, tipDoc, numDoc);
@@ -138,12 +141,8 @@ public class UsuarioActualizarInfoController {
         }
     }
 
-    public void desplegables() {
-        desplegableTipoUsuario();
-        desplegableTipoDocumento();
-    }
-
     public void llenarEspacios(Usuario usuarioActual){
+        textfieldBuscar.setText("");
         textfieldNombreUsuario.setText(usuarioActual.getNombreUsuario());
         textfieldNumTel.setText(usuarioActual.getTelefono());
         textfieldNombresTrabajador.setText(usuarioActual.getNombres());
@@ -151,6 +150,19 @@ public class UsuarioActualizarInfoController {
         textfieldNumDoc.setText(usuarioActual.getNumDocumento());
         comboBoxTipoDoc.getSelectionModel().select(usuarioActual.getTipoDocumento());
         comboBoxTipoUsuario.getSelectionModel().select(usuarioActual.getTipoUsuario());
+    }
+    public void desplegables() {
+        desplegableTipoUsuario();
+        desplegableTipoDocumento();
+    }
+    private void limpirarContenido(){
+        textfieldNombreUsuario.setText("");
+        textfieldNumTel.setText("");
+        textfieldNombresTrabajador.setText("");
+        textfieldContrasena.setText("");
+        textfieldNumDoc.setText("");
+        comboBoxTipoDoc.setValue(null);
+        comboBoxTipoUsuario.setValue(null);
     }
 
     private void cuadroRellenarCampoBusqueda() {

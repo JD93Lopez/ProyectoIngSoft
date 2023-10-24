@@ -7,7 +7,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema DB_Hierritos
 -- -----------------------------------------------------
-
+select * from usuarios;
+describe usuarios;
+select * from clientes;
+select * from EMPRESAS_PROVEEDORAS;
 -- -----------------------------------------------------
 -- Schema DB_Hierritos
 -- -----------------------------------------------------
@@ -27,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`CLIENTES` (
   `correo` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el correo electronico o email  del cliente que realiza la compra.',
   `tipoPersona` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo de persona  del cliente que realiza la compra, ya sea \"NATURAL\" o \"JURIDICA\".',
   `responsableDeIva` TINYINT NOT NULL COMMENT 'Aqui se almacena un TYNYINT que representa si el cliente es responsable de Iva o no. Uno(1) representa que si es reponsable de Iva y Dos(2) representa que no es Responsable del Iva.',
-  `clienteFrecuente` TINYINT NOT NULL,
   PRIMARY KEY (`idcliente`))
 ENGINE = InnoDB
 COMMENT = 'Esta es la tabla donde se registran los clientes que compran en la ferreteria Hierritos.';
@@ -41,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`USUARIOS` (
   `nombres` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacenan los nombres y apellidos de cada usuario.',
   `telefono` VARCHAR(10) NOT NULL COMMENT 'Aqui se almacena el numero de telefono de cada usuario.',
   `tipoDocumento` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo de documento de cada usuario.',
-  `numDocumento` VARCHAR(15) NOT NULL COMMENT 'Aqui se almacena el numero de documento de cada usuario.',
+  `numDocumento` VARCHAR(20) NOT NULL COMMENT 'Aqui se almacena el numero de documento de cada usuario.',
   `direccion` VARCHAR(200) NOT NULL COMMENT 'Aqui se almacena la direccion o lugar de residencia de cada usuario.',
   `correo` VARCHAR(100) NOT NULL COMMENT 'Aqui se almacena el correo o email de cada usuario.',
   `tipoUsuario` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el tipo de usuario.',
@@ -50,21 +52,6 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`USUARIOS` (
   PRIMARY KEY (`idusuario`))
 ENGINE = InnoDB
 COMMENT = 'En esta tabla se almacenan los datos de cada usuario ya sea: Administrador, Ingeniero, Bodeguero o Vendedor.';
-
-
--- -----------------------------------------------------
--- Table `DB_Hierritos`.`EMPRESAS_PROVEEDORAS`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (
-  `idempresaProveedora` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la empresa proveedora.',
-  `nombre` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre de la empresa proveedora',
-  `nit` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el numero de identificacion tributario de la empresa proveedora.',
-  `banco` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del banco.',
-  `cuentaBancaria` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la cuenta bancaria de la empresa proveedora para poder realizar sus ventas.',
-  `pDescuento` DOUBLE NOT NULL,
-  PRIMARY KEY (`idempresaProveedora`))
-ENGINE = InnoDB
-COMMENT = 'Esta tabla almacena los datos de las empresas proveedoras a las que se les realiza la compra.';
 
 
 -- -----------------------------------------------------
@@ -82,14 +69,7 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`PRODUCTOS` (
   `precioVenta` DOUBLE NOT NULL COMMENT 'Aqui se almacena el precio para la venta de cada producto.',
   `cantidadMinima` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad minima de productos de la ferreteria.',
   `cantidadMaxima` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad maxima de productos de la ferrreteria.',
-  `EMPRESAS_PROVEEDORAS_idempresaProveedora` INT NOT NULL,
-  PRIMARY KEY (`idproducto`),
-  INDEX `fk_PRODUCTOS_EMPRESAS_PROVEEDORAS1_idx` (`EMPRESAS_PROVEEDORAS_idempresaProveedora` ASC) VISIBLE,
-  CONSTRAINT `fk_PRODUCTOS_EMPRESAS_PROVEEDORAS1`
-    FOREIGN KEY (`EMPRESAS_PROVEEDORAS_idempresaProveedora`)
-    REFERENCES `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (`idempresaProveedora`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`idproducto`))
 ENGINE = InnoDB;
 
 
@@ -112,8 +92,8 @@ COMMENT = 'En esta tabla se almacenan los datos de la ferreterría.';
 -- Table `DB_Hierritos`.`FACTURAS_DE_VENTA`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_VENTA` (
-  `idfacturaDeVenta` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la Factura de Venta.',
-  `fechaYHora` TIMESTAMP(6) NOT NULL COMMENT 'Aqui se almacena la fecha y hora del dia en que se realice la venta de los productos.',
+  `idfacturaDeVenta` INT NOT NULL COMMENT 'Este es el identificador de la Factura de Venta.',
+  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y hora del dia en que se realice la venta de los productos.',
   `consecutivoDian` INT NOT NULL COMMENT 'Este es un identificador que da la Dian para cada factura.',
   `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacenan la forma de pago con la que se realizo la compra.',
   `FERRETERIA_idferreteria` INT NOT NULL COMMENT 'Llave foranea de la tabla Ferreteria.',
@@ -144,15 +124,37 @@ COMMENT = 'Esta tabla almacena los atributos de las facturas de los productos qu
 
 
 -- -----------------------------------------------------
+-- Table `DB_Hierritos`.`EMPRESAS_PROVEEDORAS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (
+  `idempresaProveedora` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la empresa proveedora.',
+  `nombre` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre de la empresa proveedora',
+  `nit` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el numero de identificacion tributario de la empresa proveedora.',
+  `banco` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del banco.',
+  `cuentaBancaria` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la cuenta bancaria de la empresa proveedora para poder realizar sus ventas.',
+  `formasDePago` VARCHAR(10000) NOT NULL COMMENT 'Aqui se almacenan las formas de pago de la empresa proveedora.',
+  PRIMARY KEY (`idempresaProveedora`))
+ENGINE = InnoDB
+COMMENT = 'Esta tabla almacena los datos de las empresas proveedoras a las que se les realiza la compra.';
+
+
+-- -----------------------------------------------------
 -- Table `DB_Hierritos`.`FACTURAS_DE_COMPRA`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FACTURAS_DE_COMPRA` (
   `idfacturaDeCompra` INT NOT NULL AUTO_INCREMENT COMMENT 'Este es el identificador de la factura de compra.',
   `nombreVendedor` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena el nombre del vendedor que realiza la compra de los productos.',
   `formaDePago` VARCHAR(45) NOT NULL COMMENT 'Aqui se almacena la forma de pago con la cual se realiza la compra de productos.',
-  `fechaYHora` TIMESTAMP(6) NOT NULL COMMENT 'Aqui se almacena la fecha y la hora en que se realizo la compra de los productos.',
+  `EMPRESAS_PROVEEDORAS_idempresaProveedora` INT NOT NULL COMMENT 'Llave foranea de Empresas proveedoras.',
+  `fechaYHora` DATETIME(6) NOT NULL COMMENT 'Aqui se almacena la fecha y la hora en que se realizo la compra de los productos.',
   `total` DOUBLE NOT NULL COMMENT 'Aqui se almacena el total de la compra de todos los productos.',
-  PRIMARY KEY (`idfacturaDeCompra`))
+  PRIMARY KEY (`idfacturaDeCompra`),
+  INDEX `fk_FACTURAS_DE_COMPRA_EMPRESAS_PROVEEDORAS1_idx` (`EMPRESAS_PROVEEDORAS_idempresaProveedora` ASC) VISIBLE,
+  CONSTRAINT `fk_FACTURAS_DE_COMPRA_EMPRESAS_PROVEEDORAS1`
+    FOREIGN KEY (`EMPRESAS_PROVEEDORAS_idempresaProveedora`)
+    REFERENCES `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (`idempresaProveedora`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = 'En esta tabla se almacenan los datos de cada factura de las compras que se realizan para suministrar productos al almacen.';
 
@@ -205,6 +207,7 @@ ENGINE = InnoDB
 COMMENT = 'En esta tabla se relaciona cada producto con las facturas de compra que lo contienen y cada factura de compra con los productos que contiene.';
 
 
+
 -- -----------------------------------------------------
 -- Table `DB_Hierritos`.`INVENTARIOS`
 -- -----------------------------------------------------
@@ -220,7 +223,7 @@ COMMENT = 'En esta tabla se almacenan los productos que se compraron. ';
 -- -----------------------------------------------------
 -- Table `DB_Hierritos`.`INVENTARIO_has_PRODUCTOS`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`INVENTARIO_has_PRODUCTOS` (
+CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`INVENTARIO_hferreteriaas_PRODUCTOS` (
   `INVENTARIO_idinventario` INT NOT NULL COMMENT 'Llave foranea de la tabla de Inventario.',
   `PRODUCTOS_idproducto` INT NOT NULL COMMENT 'Llave foranea de la tabla Productos.',
   `cantidadProductos` DOUBLE NOT NULL COMMENT 'Aqui se almacena la cantidad del producto que se relaciona con el registro de inventario correspondiente.',
@@ -239,38 +242,6 @@ CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`INVENTARIO_has_PRODUCTOS` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = 'En esta tabla se relacionan los productos con cada registro de inventario.';
-
-
--- -----------------------------------------------------
--- Table `DB_Hierritos`.`FORMAS_DE_PAGO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`FORMAS_DE_PAGO` (
-  `idforma_de_pago` INT NOT NULL AUTO_INCREMENT,
-  `formaDePago` ENUM('EFECTIVO', 'TARJETA', 'TRANSFERENCIA') NOT NULL,
-  PRIMARY KEY (`idforma_de_pago`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DB_Hierritos`.`EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_Hierritos`.`EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO` (
-  `EMPRESAS_PROVEEDORAS_idempresaProveedora` INT NOT NULL,
-  `FORMAS_DE_PAGO_idforma_de_pago` INT NOT NULL,
-  PRIMARY KEY (`EMPRESAS_PROVEEDORAS_idempresaProveedora`, `FORMAS_DE_PAGO_idforma_de_pago`),
-  INDEX `fk_EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO_FORMAS_DE_PAGO1_idx` (`FORMAS_DE_PAGO_idforma_de_pago` ASC) VISIBLE,
-  INDEX `fk_EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO_EMPRESAS_PROVEED_idx` (`EMPRESAS_PROVEEDORAS_idempresaProveedora` ASC) VISIBLE,
-  CONSTRAINT `fk_EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO_EMPRESAS_PROVEEDOR1`
-    FOREIGN KEY (`EMPRESAS_PROVEEDORAS_idempresaProveedora`)
-    REFERENCES `DB_Hierritos`.`EMPRESAS_PROVEEDORAS` (`idempresaProveedora`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_EMPRESAS_PROVEEDORAS_has_FORMAS_DE_PAGO_FORMAS_DE_PAGO1`
-    FOREIGN KEY (`FORMAS_DE_PAGO_idforma_de_pago`)
-    REFERENCES `DB_Hierritos`.`FORMAS_DE_PAGO` (`idforma_de_pago`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
