@@ -51,18 +51,22 @@ public class CotizacionController {
             throw new RuntimeException(e);
         }
         if (facturaVenta!=null){
-            BuscarClienteController.controller.limpiarCampos();
-            FacturaController.controller.setTextArea(
-                    "\n    Id Factura: "+facturaVenta.getIdFacturaVenta()+
-                    "\n    Id Cliente: "+facturaVenta.getCliente().getId()+
-                    "\n    Id Vendedor: "+facturaVenta.getVendedor().getId()+
-                    "\n    Productos: "+facturaVenta.getProductos().size()
-            );
-            textFieldId.setText("");
-            BuscarCliente2Controller.controller.reiniciarListasYGrids();
-            FacturaController.controller.setLabelIdFactura(""+facturaVenta.getIdFacturaVenta());
-            BuscarCliente2Controller.controller.cuadroFacturaRegistrada();
-            Main.mainStage.setScene(FacturaController.scene);
+            if(facturaVenta.getIdFacturaVenta()!=-1) {
+                BuscarClienteController.controller.limpiarCampos();
+                FacturaController.controller.setTextArea(
+                        "\n    Id Factura: " + facturaVenta.getIdFacturaVenta() +
+                                "\n    Id Cliente: " + facturaVenta.getCliente().getId() +
+                                "\n    Id Vendedor: " + facturaVenta.getVendedor().getId() +
+                                "\n    Productos: " + facturaVenta.getProductos().size()
+                );
+                textFieldId.setText("");
+                BuscarCliente2Controller.controller.reiniciarListasYGrids();
+                FacturaController.controller.setLabelIdFactura("" + facturaVenta.getIdFacturaVenta());
+                BuscarCliente2Controller.controller.cuadroFacturaRegistrada();
+                Main.mainStage.setScene(FacturaController.scene);
+            }else{
+                cuadroErrorCotizacion2();
+            }
         }else{
             cuadroErrorCotizacion();
         }
@@ -104,6 +108,20 @@ public class CotizacionController {
         alert.setTitle("Error Pagando la Cotización");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
         alert.setContentText("Hubo un error pagando la cotización, verifique el id e inténtelo de nuevo.");
+
+        // Agregar un botón "Ok"
+        ButtonType okButton = new ButtonType("Ok");
+        alert.getButtonTypes().setAll(okButton);
+
+        // Mostrar el cuadro de diálogo y esperar a que el usuario lo cierre
+        alert.showAndWait();
+    }
+    private void cuadroErrorCotizacion2() {
+        // Crear un cuadro de diálogo de tipo INFORMATION
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error Pagando la Cotización");
+        alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
+        alert.setContentText("Hubo un error pagando la cotización, la cantidad de productos en la cotización excede las existencias.");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");

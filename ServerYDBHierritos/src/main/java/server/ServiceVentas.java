@@ -135,38 +135,54 @@ public class ServiceVentas extends UnicastRemoteObject implements RMIVentas {
         FacturaVenta facturaVenta = null;
         LinkedList<Producto> productosId = new LinkedList<>();
         boolean bool = false;
-        try{
+        try {
             productosId = Consulta.listaIdProductosFacturaVentaHasProductos(id);
-            Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
-            Update.consecutivoDian(id,Consulta.ultimoConsecutivo()+1);
-            bool = true;
-        }catch(Exception e){
+        }catch (Exception e){
             e.printStackTrace();
         }
-        if(bool){
-            restarProductosDeInventario(productosId);
-            facturaVenta = obtenerFacturaVenta(id);
-            facturaVenta.setConsecutivoDian(Consulta.ultimoConsecutivo());
-            LinkedList<Producto> productos = facturaVenta.getProductos();
-            Iterator iteratorId = productosId.iterator();
-            Iterator iteratorProducto = productos.iterator();
-            Producto productoId;
-            Producto productoCompleto;
-            while(iteratorId.hasNext()&&iteratorProducto.hasNext()){
-                productoId = (Producto) iteratorId.next();
-                productoCompleto = (Producto) iteratorProducto.next();
-                productoCompleto.setExistencias(productoId.getExistencias());
-                productoCompleto.setPrecioTotal((productoCompleto.getExistencias()*productoCompleto.getPrecioVenta()*(1-productoCompleto.getpDescuento())));
+        boolean boolPosible=true;
+        for (Producto producto : productosId) {
+            Producto productoExistencia = Consulta.obtenerProductoPorId(""+producto.getIdProducto());
+            if(producto.getExistencias()>productoExistencia.getExistencias()){
+                boolPosible=false;
             }
-            CreatePDF createPDF = new CreatePDF(facturaVenta);
-            try {
-               createPDF.getPDF();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
+        }
+        if(boolPosible){
+            try{
+                Update.cambiarFormaDePagoFacturaVenta(id,formaDePago.toString());
+                Update.consecutivoDian(id,Consulta.ultimoConsecutivo()+1);
+                bool = true;
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            AbrirPdf.abrirPdf(""+id);
+            if(bool){
+                restarProductosDeInventario(productosId);
+                facturaVenta = obtenerFacturaVenta(id);
+                facturaVenta.setConsecutivoDian(Consulta.ultimoConsecutivo());
+                LinkedList<Producto> productos = facturaVenta.getProductos();
+                Iterator iteratorId = productosId.iterator();
+                Iterator iteratorProducto = productos.iterator();
+                Producto productoId;
+                Producto productoCompleto;
+                while(iteratorId.hasNext()&&iteratorProducto.hasNext()){
+                    productoId = (Producto) iteratorId.next();
+                    productoCompleto = (Producto) iteratorProducto.next();
+                    productoCompleto.setExistencias(productoId.getExistencias());
+                    productoCompleto.setPrecioTotal((productoCompleto.getExistencias()*productoCompleto.getPrecioVenta()*(1-productoCompleto.getpDescuento())));
+                }
+                CreatePDF createPDF = new CreatePDF(facturaVenta);
+                try {
+                    createPDF.getPDF();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+                AbrirPdf.abrirPdf(""+id);
+            }
+        }else{
+            facturaVenta = new FacturaVenta();
+            facturaVenta.setIdFacturaVenta(-1);
         }
         return facturaVenta;
     }
