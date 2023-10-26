@@ -52,7 +52,7 @@ public class InformesController {
             panel.getChildren().add(informeVBox);
 
             VentasInformesController ventasInformesController = fxmlLoader.getController();
-            String encabezado = String.format("%-15s %-19s %-15s%n","Id producto ","Nombre ", "Cantidad Vendida");
+            String encabezado = String.format("%-15s %-14s %-20s %-18s %-15s%n","Id producto ","Nombre ", "Cantidad Vendida", "Total Ventas", "Ingreso");
             ventasInformesController.textArea.appendText(encabezado);
 
             LinkedList<ProductoVenta> test = Client.client.informeVentas();
@@ -62,7 +62,7 @@ public class InformesController {
                 for (int i = 0; i < test.size(); i++) {
                     ProductoVenta productoVenta = test.get(i);
 
-                    String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(), productoVenta.getNombreProducto(), productoVenta.getCantidadVentas());
+                    String fila = String.format("%-22d %-15s %20.2f %20.2f %20.2f%n", productoVenta.getIdProducto(), productoVenta.getNombreProducto(), productoVenta.getCantidadVentas(), productoVenta.getTotalVentas(), productoVenta.getIngreso());
                     ventasInformesController.textArea.appendText(fila);
                 }
                 ProductoVenta productoMasVendido = test.getFirst();
