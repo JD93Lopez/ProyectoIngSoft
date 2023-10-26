@@ -48,7 +48,7 @@ public class CreatePDF implements Serializable {
         float[] pointColumnWidths = { 150F, 150F, 150F, 150F, 150F };
         float[] tamañoTablaDatos = { 200F, 200F, 200F, 200F };
         Table encabezado = new Table(tamañoTablaDatos);
-        System.out.println(facturaVenta.getConsecutivoDian());
+//        System.out.println(facturaVenta.getConsecutivoDian());
         Cell datosFactura = new Cell();
         if (facturaVenta.getConsecutivoDian() == 0) {
             datosFactura.add("N° Cotización" );
@@ -244,7 +244,7 @@ public class CreatePDF implements Serializable {
         document.add(table1);
         document.add(formaDePago);
         document.close();
-        System.out.println("PDF CREATED");
+//        System.out.println("PDF CREATED");
     }
 
 /*    public static void main(String[] args) throws FileNotFoundException, MalformedURLException {

@@ -1,25 +1,16 @@
 package com.example.adminhierritos;
 
 import Client.Client;
-import clases.Producto;
 import clases.ProductoVenta;
-import clases.Usuario;
 import clases.Vendedor;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 public class InformesController {
@@ -71,7 +62,7 @@ public class InformesController {
                 for (int i = 0; i < test.size(); i++) {
                     ProductoVenta productoVenta = test.get(i);
 
-                    String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(), productoVenta.getNombreProducto(), productoVenta.getTotalVentas());
+                    String fila = String.format("%-22d %-20s  %20.2f%n", productoVenta.getIdProducto(), productoVenta.getNombreProducto(), productoVenta.getCantidadVentas());
                     ventasInformesController.textArea.appendText(fila);
                 }
                 ProductoVenta productoMasVendido = test.getFirst();

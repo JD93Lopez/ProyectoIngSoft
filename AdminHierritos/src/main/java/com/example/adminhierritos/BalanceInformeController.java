@@ -1,9 +1,7 @@
 package com.example.adminhierritos;
 
 import Client.Client;
-import clases.Cliente;
 import clases.Item;
-import clases.Producto;
 import clases.ProductoVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,19 +60,17 @@ public class BalanceInformeController {
 
         while (it1.hasNext()){
             productoCompra1  = (ProductoVenta) it1.next();
-            System.out.println("C "+productoCompra1.getIdProducto());
             it2 = ventasPorProducto.iterator();
             while (it2.hasNext()){
                 productoVenta1 = (ProductoVenta) it2.next();
-                System.out.println("v "+productoVenta1.getIdProducto());
                 if(productoCompra1.getIdProducto()==productoVenta1.getIdProducto()){
                     productoTemp = productoVenta1;
-                    data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getTotalVentas(), (int) productoVenta1.getTotalVentas()));
+                    data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getCantidadVentas(), (int) productoVenta1.getCantidadVentas()));
                     break;
                 }
             }
             if(productoTemp==null){
-                data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getTotalVentas(), 0));
+                data.add(new Item(productoCompra1.getIdProducto(), productoCompra1.getNombreProducto(), (int) productoCompra1.getCantidadVentas(), 0));
             }
             productoTemp = null;
         }

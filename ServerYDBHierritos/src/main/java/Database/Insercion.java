@@ -305,7 +305,7 @@ public class Insercion {
 
             int filasAfectadas = statement.executeUpdate();
             if (filasAfectadas > 0) {
-                System.out.println("Inserción exitosa.");
+//                System.out.println("Inserción exitosa.");
             } else {
                 System.out.println("Error al insertar datos.");
             }
@@ -330,7 +330,7 @@ public class Insercion {
 
             int filasAfectadas = statement.executeUpdate();
             if (filasAfectadas > 0) {
-                System.out.println("Inserción exitosa.");
+//                System.out.println("Inserción exitosa.");
             } else {
                 System.out.println("Error al insertar datos.");
             }
