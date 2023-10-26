@@ -20,7 +20,7 @@ public class Consulta {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/db_hierritos?serverTimezone=UTC",
                     "root",
-                    "root"
+                    "1234"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -1183,4 +1183,9 @@ public class Consulta {
             return ventasPorProducto;
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println(Consulta.obtenerUsuarioPorId("1"));
+    }
 }
+
