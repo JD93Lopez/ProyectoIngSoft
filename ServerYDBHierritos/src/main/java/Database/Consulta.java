@@ -683,13 +683,13 @@ public class Consulta {
                 producto.setCodigo(resultSet.getString("codigo"));
                 producto.setNombre(resultSet.getString("nombre"));
                 producto.setDescripcion(resultSet.getString("descripcion"));
-                producto.setExistencias(Double.parseDouble(resultSet.getString("existencia")));
-                producto.setpDescuento(Double.parseDouble(resultSet.getString("pDescuento")));
-                producto.setpIva(Double.parseDouble(resultSet.getString("pIva")));
-                producto.setPrecioCompra(Double.parseDouble(resultSet.getString("precioCompra")));
-                producto.setPrecioVenta(Double.parseDouble(resultSet.getString("precioVenta")));
-                producto.setCantidadMinima(Double.parseDouble(resultSet.getString("cantidadMinima")));
-                producto.setCantidadMaxima(Double.parseDouble(resultSet.getString("cantidadMaxima")));
+                producto.setExistencias(resultSet.getDouble("existencia"));
+                producto.setpDescuento(resultSet.getDouble("pDescuento"));
+                producto.setpIva(resultSet.getDouble("pIva"));
+                producto.setPrecioCompra(resultSet.getDouble("precioCompra"));
+                producto.setPrecioVenta(resultSet.getDouble("precioVenta"));
+                producto.setCantidadMinima(resultSet.getDouble("cantidadMinima"));
+                producto.setCantidadMaxima(resultSet.getDouble("cantidadMaxima"));
                 productos.add(producto);
 
             }

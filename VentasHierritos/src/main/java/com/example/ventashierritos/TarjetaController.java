@@ -129,7 +129,7 @@ public class TarjetaController {
     }
     public void setLabelDto(double dto) {
         if(dto!=0){
-            labelDto.setText("Dto: "+(dto*100)+"%");
+            labelDto.setText("Dto: "+((int) (dto * 100))+"%");
         }else {
             labelDto.setText("SinDto");
         }
