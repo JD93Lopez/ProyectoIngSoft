@@ -103,7 +103,7 @@ public class UsuarioActualizarInfoController {
         String nombres = textfieldNombresTrabajador.getText();
         String contrasena;
         if(textfieldContrasena.getText().equals("")){
-            contrasena = null;
+            contrasena = "";
         }else{
             contrasena = textfieldContrasena.getText();
         }
@@ -170,7 +170,7 @@ public class UsuarioActualizarInfoController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Rellenar Campos");
         alert.setHeaderText(null); // Opcional, puedes configurar un encabezado si lo deseas
-        alert.setContentText("Rellene la barra de búsqueda con el id \n del Usuario");
+        alert.setContentText("Rellene la barra de búsqueda con el nombre\n del Usuario");
 
         // Agregar un botón "Ok"
         ButtonType okButton = new ButtonType("Ok");
